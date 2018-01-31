@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Disrupty</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!-- Navigation menu labels -->
+    <string name="nav_create_subscription">New subscription</string>
+    <string name="nav_settings">Settings</string>
+
+
+    <!-- Generic -->
+    <string name="station_from">From station</string>
+    <string name="station_to">To station</string>
+
+    <string name="time">Time</string>
+    <string name="time_from">From</string>
+    <string name="time_to">to</string>
+
+
+    <string name="save">Save</string>
+
+
+    <!-- Create subscription page -->
+
+    <string name="time_from_default_value">6:00</string>
+    <string name="time_to_default_value">10:00</string>
+
+
+    <!-- Preferences page -->
+    <string name="pref_cat_general">General</string>
+    <string name="pref_check_interval">Disruption check interval</string>
+    <string name="pref_check_interval_summary">Check for any disruptions every %s seconds.</string>
+
+    <string name="pref_cat_api">NS API settings</string>
+    <string name="pref_api_username">Username</string>
+    <string name="pref_api_username_summary">Username for the NS API: %s</string>
+    <string name="pref_api_password">Password</string>
+    <string name="pref_api_password_summary">Password for the NS API: %s</string>
+    <string name="pref_api_pass_not_set">Not setup</string>
+    <string name="pref_api_pass_set">Set!</string>
+
+
+    <!-- Days -->
+    <string name="days">Days</string>
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_saturday">Saturday</string>
+    <string name="day_sunday">Sunday</string>
+
+</resources>

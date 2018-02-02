@@ -19,6 +19,9 @@
 
     <string name="save">Save</string>
 
+    <!-- Main page -->
+    <string name="no_subscriptions_setup">No subscriptions setup yet.</string>
+
 
     <!-- Create subscription page -->
 

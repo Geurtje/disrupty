@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/label_station_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="@string/station_from"
+        app:layout_constraintBaseline_toBaselineOf="@+id/input_station_from"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/input_station_from"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        app:layout_constraintLeft_toRightOf="@+id/label_station_from"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:id="@+id/label_station_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:text="@string/station_to"
+        app:layout_constraintBaseline_toBaselineOf="@+id/input_station_to"
+        app:layout_constraintLeft_toLeftOf="@+id/label_station_from"
+        tools:layout_editor_absoluteY="78dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/input_station_to"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        app:layout_constraintLeft_toLeftOf="@+id/input_station_from"
+        app:layout_constraintTop_toBottomOf="@+id/input_station_from"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/button_time_from"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="time"
+        android:text="@string/time_from_default_value"
+        app:layout_constraintBaseline_toBaselineOf="@+id/label_time_to"
+        app:layout_constraintLeft_toLeftOf="@+id/input_station_to"
+        app:layout_constraintRight_toLeftOf="@+id/label_time_to"
+        app:layout_constraintTop_toBottomOf="@+id/input_station_to" />
+
+    <Button
+        android:id="@+id/button_time_to"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="time"
+        android:text="@string/time_to_default_value"
+        app:layout_constraintLeft_toRightOf="@+id/label_time_to"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_station_to" />
+
+    <TextView
+        android:id="@+id/label_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:text="@string/time"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_time_from"
+        app:layout_constraintLeft_toLeftOf="@+id/label_station_to"
+        tools:layout_editor_absoluteY="148dp" />
+
+    <TextView
+        android:id="@+id/label_time_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/time_to"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_time_to"
+        app:layout_constraintLeft_toRightOf="@+id/button_time_from"
+        app:layout_constraintRight_toLeftOf="@+id/button_time_to" />
+
+
+    <TextView
+        android:id="@+id/label_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/days"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/label_time"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/button_time_from" />
+
+    <CheckBox
+        android:id="@+id/input_day_monday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day_monday"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/label_days"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/label_days"
+        android:checked="true" />
+
+
+    <CheckBox
+        android:id="@+id/input_day_tuesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day_tuesday"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/input_day_monday"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/input_day_monday"
+        android:checked="true" />
+
+    <CheckBox
+        android:id="@+id/input_day_wednesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day_wednesday"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/input_day_tuesday"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/input_day_tuesday"
+        android:checked="true" />
+
+
+    <CheckBox
+        android:id="@+id/input_day_thursday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day_thursday"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/input_day_wednesday"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/input_day_wednesday"
+        android:checked="true" />
+
+
+    <CheckBox
+        android:id="@+id/input_day_friday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day_friday"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/input_day_thursday"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/input_day_thursday"
+        android:checked="true" />
+
+
+    <CheckBox
+        android:id="@+id/input_day_saturday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day_saturday"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/input_day_friday"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/input_day_friday" />
+
+
+    <CheckBox
+        android:id="@+id/input_day_sunday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day_sunday"
+        android:layout_marginLeft="-15dp"
+        app:layout_constraintLeft_toLeftOf="@+id/input_day_saturday"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/input_day_saturday" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -24,6 +24,13 @@
         <activity
             android:name=".settings.DisruptyPreferenceActivity"
             android:label="@string/action_settings"
+            android:theme="@style/AppTheme"
+            />
+
+        <activity
+            android:name=".subscription.CreateSubscriptionActivity"
+            android:label="@string/nav_create_subscription"
+            android:theme="@style/AppTheme"
             />
 
 

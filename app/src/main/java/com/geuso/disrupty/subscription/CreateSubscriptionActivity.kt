@@ -5,6 +5,7 @@ import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.model.Subscription
@@ -84,6 +85,8 @@ class CreateSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         val rowsUpdated = dao.upsertSubscription(sub)
 
         Log.i(TAG, "Saved subscription with ID: $rowsUpdated.")
+        Toast.makeText(applicationContext, "Saved subscription with ID: $rowsUpdated.", Toast.LENGTH_SHORT).show()
+        finish()
 
     }
 

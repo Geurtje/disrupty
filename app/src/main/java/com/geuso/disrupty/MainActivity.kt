@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
+        create_subscription_floating_button.setOnClickListener { _ ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).show()
             val intent = Intent(this, CreateSubscriptionActivity::class.java)
@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> {
                 val intent = Intent(this, DisruptyPreferenceActivity::class.java)
                 startActivity(intent)
-
                 return true
             }
             else -> super.onOptionsItemSelected(item)

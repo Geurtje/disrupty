@@ -21,3 +21,8 @@ fun extractHourAndMinuteFromText(text: CharSequence) : Pair<Int, Int> {
     val calendar = Calendar.getInstance()
     return Pair(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))
 }
+
+fun formatTime(hour: Int, minute: Int) : String {
+    val minuteStr = String.format("%02d", minute)
+    return "$hour:$minuteStr"
+}

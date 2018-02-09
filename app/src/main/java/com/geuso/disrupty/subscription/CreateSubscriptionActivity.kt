@@ -61,7 +61,7 @@ class CreateSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         val timeFromHour: Int = timeFrom.first
         val timeFromMinute: Int = timeFrom.second
 
-        val timeTo: Pair<Int, Int> = extractHourAndMinuteFromText(button_time_from.text)
+        val timeTo: Pair<Int, Int> = extractHourAndMinuteFromText(button_time_to.text)
         val timeToHour: Int = timeTo.first
         val timeToMinute: Int = timeTo.second
 

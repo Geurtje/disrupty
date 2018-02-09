@@ -32,11 +32,8 @@ class ButtonTimePicketDialog : TimePickerDialog {
 
     override fun onTimeChanged(view: TimePicker?, hourOfDay: Int, minute: Int) {
         super.onTimeChanged(view, hourOfDay, minute)
-
-        val minuteStr = String.format("%02d", minute)
-        button.text = "${hourOfDay}:${minuteStr}"
+        button.text = formatTime(hourOfDay, minute)
     }
-
 
 
 }

@@ -17,11 +17,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         create_subscription_floating_button.setOnClickListener { _ ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-            val intent = Intent(this, CreateSubscriptionActivity::class.java)
-            startActivity(intent)
-
+            startActivity(Intent(this, CreateSubscriptionActivity::class.java))
         }
     }
 
@@ -44,4 +40,5 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }

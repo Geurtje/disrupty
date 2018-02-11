@@ -18,6 +18,10 @@
 
 
     <string name="save">Save</string>
+    <string name="delete">Delete</string>
+
+    <string name="confirm_positive">Yes</string>
+    <string name="confirm_negative">No</string>
 
     <!-- Main page -->
     <string name="no_subscriptions_setup">No subscriptions setup yet.</string>
@@ -27,6 +31,10 @@
 
     <string name="time_from_default_value">6:00</string>
     <string name="time_to_default_value">10:00</string>
+
+    <string name="delete_confirmation">Are you sure you permanently want to delete this subscription?</string>
+    <string name="delete_failure">There was an issue deleting this subscription</string>
+    <string name="delete_success">Subscription deleted</string>
 
 
     <!-- Preferences page -->

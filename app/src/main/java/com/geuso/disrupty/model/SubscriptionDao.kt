@@ -22,6 +22,10 @@ interface SubscriptionDao {
     @Delete
     fun deleteSubscription(subscription: Subscription): Int
 
+    // Note that the id parameter name isn't preserved and it's called arg0 in the query.
+    @Query("DELETE FROM subscriptions WHERE id = :arg0")
+    fun deleteSubscriptionById(id: Long): Int
+
 
     @Query("SELECT * FROM subscriptions")
     fun getAllSubscriptions(): Array<Subscription>

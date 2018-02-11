@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -57,9 +58,14 @@ class CreateSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
             populateFormWithSubscription(this.subscriptionId!!)
         }
 
+        if (subscriptionId == null) {
+            button_delete.visibility = View.GONE
+        }
+
         button_time_from.setOnClickListener(this)
         button_time_to.setOnClickListener(this)
         button_save.setOnClickListener(this)
+        button_delete.setOnClickListener(this)
 
     }
 
@@ -72,7 +78,35 @@ class CreateSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
             button_time_from -> ButtonTimePicketDialog(this, true, button_time_from).show()
             button_time_to -> ButtonTimePicketDialog(this, true, button_time_to).show()
             button_save -> saveSubscription()
+            button_delete -> deleteSubscription()
         }
+    }
+
+    private fun deleteSubscription() {
+        if (this.subscriptionId == null) {
+            return
+        }
+
+        val dialogBuilder = AlertDialog.Builder(this)
+
+        dialogBuilder.setMessage(R.string.delete_confirmation)
+                .setPositiveButton(R.string.confirm_positive, {
+                    _, _ ->
+                    val dao = AppDatabase.INSTANCE.subscriptionDao()
+                    val rowsDeleted = dao.deleteSubscriptionById(this.subscriptionId!!)
+
+                    if (rowsDeleted != 1) {
+                        Toast.makeText(this, R.string.delete_failure, Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        Toast.makeText(this, R.string.delete_success, Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                })
+                .setNegativeButton(R.string.confirm_negative, {
+                    dialogInterface, _ -> dialogInterface.cancel()
+                })
+                .show()
     }
 
     private fun saveSubscription() {

@@ -28,7 +28,7 @@
             />
 
         <activity
-            android:name=".subscription.CreateSubscriptionActivity"
+            android:name=".subscription.EditSubscriptionActivity"
             android:label="@string/nav_create_subscription"
             android:theme="@style/AppTheme"
             />

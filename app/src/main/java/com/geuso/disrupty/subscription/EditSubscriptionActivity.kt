@@ -15,23 +15,23 @@ import com.geuso.disrupty.model.Subscription
 import com.geuso.disrupty.util.ButtonTimePicketDialog
 import com.geuso.disrupty.util.extractHourAndMinuteFromText
 import com.geuso.disrupty.util.formatTime
-import kotlinx.android.synthetic.main.activity_create_subscription.*
+import kotlinx.android.synthetic.main.activity_edit_subscription.*
 
 
-class CreateSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
+class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
 
-        private val TAG = CreateSubscriptionActivity::class.qualifiedName
-        private const val LAYOUT_ID: Int = R.layout.activity_create_subscription
+        private val TAG = EditSubscriptionActivity::class.qualifiedName
+        private const val LAYOUT_ID: Int = R.layout.activity_edit_subscription
         private const val EXTRA_SUBSCRIPTION_ID = "SUBSCRIPTION_ID"
 
         fun start(context: Context) {
-            context.startActivity(Intent(context, CreateSubscriptionActivity::class.java))
+            context.startActivity(Intent(context, EditSubscriptionActivity::class.java))
         }
 
         fun start(context: Context, subscriptionId: Long) {
-            val intent = Intent(context, CreateSubscriptionActivity::class.java)
+            val intent = Intent(context, EditSubscriptionActivity::class.java)
             intent.putExtra(EXTRA_SUBSCRIPTION_ID, subscriptionId)
             context.startActivity(intent)
         }

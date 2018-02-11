@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.geuso.disrupty.settings.DisruptyPreferenceActivity
-import com.geuso.disrupty.subscription.CreateSubscriptionActivity
+import com.geuso.disrupty.subscription.EditSubscriptionActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         create_subscription_floating_button.setOnClickListener { _ ->
-            CreateSubscriptionActivity.start(this)
+            EditSubscriptionActivity.start(this)
         }
     }
 

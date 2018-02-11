@@ -1,35 +1,34 @@
 package com.geuso.disrupty.subscription
 
 import android.app.ListFragment
-import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.TextView
+import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
 
 class SubscriptionListFragment : ListFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        val allSubscriptions = AppDatabase.INSTANCE.subscriptionDao().loadAllSubscriptions()
-
-        val subscriptionListAdapter = SubscriptionListAdapter(context, allSubscriptions.toList())
-
-        super.setListAdapter(subscriptionListAdapter)
-
-
-        return super.onCreateView(inflater, container, savedInstanceState)
+    companion object {
+        val TAG = SubscriptionListFragment::class.qualifiedName
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
+        val allSubscriptions = AppDatabase.INSTANCE.subscriptionDao().getAllSubscriptions()
+        val subscriptionListAdapter = SubscriptionListAdapter(context, allSubscriptions.toList())
+        super.setListAdapter(subscriptionListAdapter)
     }
 
     override fun onListItemClick(l: ListView?, v: View?, position: Int, id: Long) {
         super.onListItemClick(l, v, position, id)
-
+        if (v != null) {
+            val subId = v.findViewById<TextView>(R.id.sub_row_id).text.toString().toLong()
+            Log.i(TAG, "Clinked on subscription at position $position, id: $subId")
+            CreateSubscriptionActivity.start(context, subId)
+        }
 
     }
 

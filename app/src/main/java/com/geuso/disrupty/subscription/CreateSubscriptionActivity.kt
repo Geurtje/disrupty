@@ -1,5 +1,7 @@
 package com.geuso.disrupty.subscription
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
@@ -11,15 +13,31 @@ import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.model.Subscription
 import com.geuso.disrupty.util.ButtonTimePicketDialog
 import com.geuso.disrupty.util.extractHourAndMinuteFromText
+import com.geuso.disrupty.util.formatTime
 import kotlinx.android.synthetic.main.activity_create_subscription.*
 
 
 class CreateSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
 
+    companion object {
 
-    private val TAG = CreateSubscriptionActivity::class.qualifiedName
-    private val layoutId : Int = R.layout.activity_create_subscription
+        private val TAG = CreateSubscriptionActivity::class.qualifiedName
+        private const val LAYOUT_ID: Int = R.layout.activity_create_subscription
+        private const val EXTRA_SUBSCRIPTION_ID = "SUBSCRIPTION_ID"
 
+        fun start(context: Context) {
+            context.startActivity(Intent(context, CreateSubscriptionActivity::class.java))
+        }
+
+        fun start(context: Context, subscriptionId: Long) {
+            val intent = Intent(context, CreateSubscriptionActivity::class.java)
+            intent.putExtra(EXTRA_SUBSCRIPTION_ID, subscriptionId)
+            context.startActivity(intent)
+        }
+
+    }
+
+    private var subscriptionId : Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
@@ -32,8 +50,12 @@ class CreateSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun onCreate(){
-        setContentView(layoutId)
+        setContentView(LAYOUT_ID)
 
+        if (intent.extras != null && intent.extras.containsKey(EXTRA_SUBSCRIPTION_ID)) {
+            this.subscriptionId = intent.extras.getLong(EXTRA_SUBSCRIPTION_ID)
+            populateFormWithSubscription(this.subscriptionId!!)
+        }
 
         button_time_from.setOnClickListener(this)
         button_time_to.setOnClickListener(this)
@@ -53,7 +75,7 @@ class CreateSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun saveSubscription() {
+    private fun saveSubscription() {
         val stationFrom: String = input_station_from.text.toString()
         val stationTo: String  = input_station_to.text.toString()
 
@@ -81,12 +103,40 @@ class CreateSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
                 mondayEnabled, tuesdayEnabled, wednesdayEnabled, thursdayEnabled, fridayEnabled, saturdayEnabled, sundayEnabled
         )
 
+        if (this.subscriptionId != null) {
+            sub.id = this.subscriptionId!!
+        }
+
+
         val dao = AppDatabase.INSTANCE.subscriptionDao()
         val rowsUpdated = dao.upsertSubscription(sub)
 
         Log.i(TAG, "Saved subscription with ID: $rowsUpdated.")
         Toast.makeText(applicationContext, "Saved subscription with ID: $rowsUpdated.", Toast.LENGTH_SHORT).show()
         finish()
+    }
+
+    private fun populateFormWithSubscription(subscriptionId : Long) {
+
+
+        val subscription = AppDatabase.INSTANCE.subscriptionDao().getSubscriptionById(subscriptionId)
+
+        Log.i(TAG, "Loading subscription $subscriptionId: $subscription")
+
+        input_station_from.setText(subscription.stationFrom)
+        input_station_to.setText(subscription.stationTo)
+
+        button_time_from.text = formatTime(subscription.timeFromHour, subscription.timeFromMinute)
+        button_time_to.text = formatTime(subscription.timeToHour, subscription.timeToMinute)
+
+
+        input_day_monday.isEnabled = subscription.monday
+        input_day_tuesday.isEnabled = subscription.tuesday
+        input_day_wednesday.isEnabled = subscription.wednesday
+        input_day_thursday.isEnabled = subscription.thursday
+        input_day_friday.isEnabled = subscription.friday
+        input_day_saturday.isEnabled = subscription.saturday
+        input_day_sunday.isEnabled = subscription.sunday
 
     }
 

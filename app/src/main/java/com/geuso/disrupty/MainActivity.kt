@@ -1,6 +1,5 @@
 package com.geuso.disrupty
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         create_subscription_floating_button.setOnClickListener { _ ->
-            startActivity(Intent(this, CreateSubscriptionActivity::class.java))
+            CreateSubscriptionActivity.start(this)
         }
     }
 
@@ -33,8 +32,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                val intent = Intent(this, DisruptyPreferenceActivity::class.java)
-                startActivity(intent)
+                DisruptyPreferenceActivity.start(this)
                 return true
             }
             else -> super.onOptionsItemSelected(item)

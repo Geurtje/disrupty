@@ -24,7 +24,11 @@ interface SubscriptionDao {
 
 
     @Query("SELECT * FROM subscriptions")
-    fun loadAllSubscriptions(): Array<Subscription>
+    fun getAllSubscriptions(): Array<Subscription>
+
+    // Note that the id parameter name isn't preserved and it's called arg0 in the query.
+    @Query("SELECT * FROM subscriptions WHERE id = :arg0")
+    fun getSubscriptionById(id: Long): Subscription
 
 
 }

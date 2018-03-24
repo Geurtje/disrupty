@@ -24,13 +24,17 @@ android {
     }
 
     testOptions {
-        unitTests.returnDefaultValues = true
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+        }
     }
 }
 
 dependencies {
     testImplementation 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation "org.robolectric:robolectric:3.8"
 
     // Don't move junit dependencies down... https://stackoverflow.com/a/44515592
 

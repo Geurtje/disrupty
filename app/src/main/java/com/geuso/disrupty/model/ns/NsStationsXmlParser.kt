@@ -1,14 +1,23 @@
 package com.geuso.disrupty.model.ns
 
+import android.util.Xml
+import org.xmlpull.v1.XmlPullParser
+import java.io.InputStream
 
-class NsStationsXmlParser() {
+// https://developer.android.com/training/basics/network-ops/xml.html
+class NsStationsXmlParser {
 
-    fun parse(stream: String): List<Station> {
+    fun parse(stream: InputStream): List<Station> {
 
+        val parser = Xml.newPullParser()
+        parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+        parser.setInput(stream, null)
 
 
         return ArrayList()
     }
+
+}
 
 //    private fun readFeed(parser: XmlPullParser): List<Station> {
 //        val entries = ArrayList<Station>()
@@ -28,4 +37,3 @@ class NsStationsXmlParser() {
 //        }
 //        return entries
 //    }
-}

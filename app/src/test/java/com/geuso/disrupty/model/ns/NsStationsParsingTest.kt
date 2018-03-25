@@ -1,11 +1,12 @@
 package com.geuso.disrupty.model.ns
 
+import assertk.assert
+import assertk.assertions.isEqualTo
+import assertk.assertions.isNotEmpty
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import java.io.InputStream
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /*
  * https://stackoverflow.com/questions/31272732/unit-testing-with-android-xmlpullparser-on-the-jvm
@@ -23,12 +24,24 @@ class NsStationsParsingTest {
 
         val stations = NsStationsXmlParser().parse(file.content as InputStream)
 
-        assertTrue(stations.isNotEmpty(), "Stations should not be empty")
+        assert(stations, "Stations list").isNotEmpty()
 
-        assertEquals(stations[0].code, "HT")
-        assertEquals(stations[1].code, "HTO")
-        assertEquals(stations[2].code, "HDE")
+        val firstStation = stations[0]
+        assert(firstStation.code, "First station code").isEqualTo("HT")
+        assert(firstStation.type, "First station type").isEqualTo("knooppuntIntercitystation")
+        assert(firstStation.name, "First station name").isEqualTo("'s-Hertogenbosch")
+        assert(firstStation.countryCode, "First station country code").isEqualTo("NL")
 
+        val secondStation = stations[1]
+        assert(secondStation.code, "Second station code").isEqualTo("HTO")
+        assert(secondStation.type, "Second station type").isEqualTo("stoptreinstation")
+        assert(secondStation.name, "Second station name").isEqualTo("'s-Hertogenbosch Oost")
+        assert(secondStation.countryCode, "Second station country code").isEqualTo("NL")
 
+        val thirdStation = stations[2]
+        assert(thirdStation.code, "Third station code").isEqualTo("HDE")
+        assert(thirdStation.type, "Third station type").isEqualTo("stoptreinstation")
+        assert(thirdStation.name, "Third station name").isEqualTo("'t Harde")
+        assert(thirdStation.countryCode, "Third station country code").isEqualTo("NL")
     }
 }

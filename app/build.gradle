@@ -55,4 +55,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     testCompile 'com.willowtreeapps.assertk:assertk:0.9'
 
+    // http://loopj.com/android-async-http/
+    compile 'com.loopj.android:android-async-http:1.4.9'
+
 }

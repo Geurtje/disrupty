@@ -10,7 +10,6 @@ import com.geuso.disrupty.R
 import com.geuso.disrupty.R.id.*
 import com.geuso.disrupty.model.Subscription
 import com.geuso.disrupty.util.formatTime
-import java.util.zip.Inflater
 
 /**
  * Created by Tom on 4-2-2018.

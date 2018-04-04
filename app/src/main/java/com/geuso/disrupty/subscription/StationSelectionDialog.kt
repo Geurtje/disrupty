@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
@@ -23,11 +22,13 @@ import kotlinx.android.synthetic.main.select_stations_dialog.*
 class StationSelectionDialog(
         context: Context,
         private val textField: AutoCompleteTextView
-) : Dialog(context), View.OnClickListener {
+) : Dialog(context), View.OnClickListener, AdapterView.OnItemClickListener {
 
     companion object {
         private val TAG = StationSelectionDialog::class.qualifiedName
     }
+
+    private var stationsListAdapter: StationsListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,9 @@ class StationSelectionDialog(
 
         search_field.setOnClickListener(this)
 
-        stations_list.adapter = StationsListAdapter(this.context)
+        stationsListAdapter = StationsListAdapter(this.context)
+        stations_list.adapter = stationsListAdapter
+        stations_list.onItemClickListener = this
 
         setFullScreenWindowProperties()
     }
@@ -61,25 +64,29 @@ class StationSelectionDialog(
         }
     }
 
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        textField.setText(stationsListAdapter!!.getItem(position))
+        dismiss()
+    }
+
 }
 
-class StationsListAdapter(context: Context): ArrayAdapter<String>(context, R.layout.station_list_row), AdapterView.OnItemClickListener {
+class StationsListAdapter(
+        context: Context
+) : ArrayAdapter<String>(context, R.layout.station_list_row) {
 
     companion object {
         private val TAG = StationsListAdapter::class.qualifiedName
     }
 
     private var stationsList: ArrayList<String>? = null
-    private val inflaterService: LayoutInflater
 
     init {
         initializeTrainStationsList()
-        inflaterService  = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
     }
 
     private fun initializeTrainStationsList() {
-        Log.i(TAG, "Querying ns api!")
+        Log.i(TAG, "Retrieving stations from NS API")
         NsRestClient.get(NsRestClient.PATH_STATIONS_LIST, null, object: TextHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
@@ -96,13 +103,7 @@ class StationsListAdapter(context: Context): ArrayAdapter<String>(context, R.lay
             override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
                 Log.e(TAG, "Failure: $statusCode, body: $responseBody")
             }
-
-
         })
-    }
-
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

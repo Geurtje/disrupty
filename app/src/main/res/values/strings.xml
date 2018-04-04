@@ -23,6 +23,8 @@
     <string name="confirm_positive">Yes</string>
     <string name="confirm_negative">No</string>
 
+    <string name="search">Search</string>
+
     <!-- Main page -->
     <string name="no_subscriptions_setup">No subscriptions setup yet.</string>
 

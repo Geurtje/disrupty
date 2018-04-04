@@ -62,6 +62,8 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
             button_delete.visibility = View.GONE
         }
 
+        input_station_from.setOnClickListener(this)
+        input_station_to.setOnClickListener(this)
         button_time_from.setOnClickListener(this)
         button_time_to.setOnClickListener(this)
         button_save.setOnClickListener(this)
@@ -75,6 +77,8 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         when (v) {
+            input_station_from -> StationSelectionDialog(this, input_station_from).show()
+            input_station_to -> StationSelectionDialog(this, input_station_to).show()
             button_time_from -> ButtonTimePicketDialog(this, true, button_time_from).show()
             button_time_to -> ButtonTimePicketDialog(this, true, button_time_to).show()
             button_save -> saveSubscription()

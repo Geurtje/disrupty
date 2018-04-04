@@ -10,6 +10,7 @@ object NsRestClient {
 
     private val TAG = NsRestClient::class.qualifiedName
     private const val BASE_URL = "http://webservices.ns.nl"
+    const val PATH_STATIONS_LIST = "/ns-api-stations-v2"
 
     private val client = AsyncHttpClient()
 

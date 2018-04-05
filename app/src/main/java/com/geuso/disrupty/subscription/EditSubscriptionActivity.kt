@@ -125,13 +125,13 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         val timeToHour: Int = timeTo.first
         val timeToMinute: Int = timeTo.second
 
-        val mondayEnabled: Boolean = input_day_monday.isEnabled
-        val tuesdayEnabled: Boolean = input_day_tuesday.isEnabled
-        val wednesdayEnabled: Boolean = input_day_wednesday.isEnabled
-        val thursdayEnabled: Boolean = input_day_thursday.isEnabled
-        val fridayEnabled: Boolean = input_day_friday.isEnabled
-        val saturdayEnabled: Boolean = input_day_saturday.isEnabled
-        val sundayEnabled: Boolean = input_day_sunday.isEnabled
+        val mondayEnabled: Boolean = input_day_monday.isChecked
+        val tuesdayEnabled: Boolean = input_day_tuesday.isChecked
+        val wednesdayEnabled: Boolean = input_day_wednesday.isChecked
+        val thursdayEnabled: Boolean = input_day_thursday.isChecked
+        val fridayEnabled: Boolean = input_day_friday.isChecked
+        val saturdayEnabled: Boolean = input_day_saturday.isChecked
+        val sundayEnabled: Boolean = input_day_sunday.isChecked
 
 
 
@@ -167,14 +167,13 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         button_time_from.text = formatTime(subscription.timeFromHour, subscription.timeFromMinute)
         button_time_to.text = formatTime(subscription.timeToHour, subscription.timeToMinute)
 
-
-        input_day_monday.isEnabled = subscription.monday
-        input_day_tuesday.isEnabled = subscription.tuesday
-        input_day_wednesday.isEnabled = subscription.wednesday
-        input_day_thursday.isEnabled = subscription.thursday
-        input_day_friday.isEnabled = subscription.friday
-        input_day_saturday.isEnabled = subscription.saturday
-        input_day_sunday.isEnabled = subscription.sunday
+        input_day_monday.isChecked = subscription.monday
+        input_day_tuesday.isChecked = subscription.tuesday
+        input_day_wednesday.isChecked = subscription.wednesday
+        input_day_thursday.isChecked = subscription.thursday
+        input_day_friday.isChecked = subscription.friday
+        input_day_saturday.isChecked = subscription.saturday
+        input_day_sunday.isChecked = subscription.sunday
 
     }
 

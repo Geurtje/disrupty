@@ -3,6 +3,8 @@ package com.geuso.disrupty.subscription
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -22,27 +24,30 @@ import kotlinx.android.synthetic.main.select_stations_dialog.*
 class StationSelectionDialog(
         context: Context,
         private val textField: AutoCompleteTextView
-) : Dialog(context), View.OnClickListener, AdapterView.OnItemClickListener {
+) : Dialog(context), AdapterView.OnItemClickListener {
 
     companion object {
         private val TAG = StationSelectionDialog::class.qualifiedName
     }
 
-    private var stationsListAdapter: StationsListAdapter? = null
+    private lateinit var stationsListAdapter: StationsListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.select_stations_dialog)
 
-
-        search_field.setOnClickListener(this)
-
         stationsListAdapter = StationsListAdapter(this.context)
         stations_list.adapter = stationsListAdapter
         stations_list.onItemClickListener = this
 
         setFullScreenWindowProperties()
+
+        search_field.addTextChangedListener(StationListFilterListener(this))
+    }
+
+    fun filterStations(filterTerm: String){
+        stationsListAdapter.filterStationsByTerm(filterTerm)
     }
 
     private fun setFullScreenWindowProperties() {
@@ -54,18 +59,8 @@ class StationSelectionDialog(
         window.attributes = windowParameters
     }
 
-    override fun onClick(v: View?) {
-        if (v == null){
-            return
-        }
-
-        when (v) {
-            search_field -> textField.setText("foo!")
-        }
-    }
-
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        textField.setText(stationsListAdapter!!.getItem(position))
+        textField.setText(stationsListAdapter.getItem(position))
         dismiss()
     }
 
@@ -79,7 +74,7 @@ class StationsListAdapter(
         private val TAG = StationsListAdapter::class.qualifiedName
     }
 
-    private var stationsList: ArrayList<String>? = null
+    private lateinit var stationsList: ArrayList<String>
 
     init {
         initializeTrainStationsList()
@@ -104,6 +99,39 @@ class StationsListAdapter(
                 Log.e(TAG, "Failure: $statusCode, body: $responseBody")
             }
         })
+    }
+
+    fun filterStationsByTerm(filterTerm: String){
+        // Null check in case api call wasn't able to initialize the stationsList,
+        // not sure if lateinit actually makes sense here
+        if (stationsList != null) {
+            val filteredStationsList = ArrayList<String>()
+
+            for (stationName in stationsList) {
+                if (stationName.contains(filterTerm, ignoreCase = false)){
+                    filteredStationsList.add(stationName)
+                }
+            }
+
+            clear()
+            addAll(filteredStationsList)
+        }
+    }
+}
+
+class StationListFilterListener(
+        private val selectionDialog: StationSelectionDialog
+) : TextWatcher {
+    override fun afterTextChanged(s: Editable?) {
+        selectionDialog.filterStations(s.toString())
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        // Intentionally empty, only apply a filter once the text has been updated
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        // Intentionally empty, only apply a filter once the text has been updated
     }
 
 }

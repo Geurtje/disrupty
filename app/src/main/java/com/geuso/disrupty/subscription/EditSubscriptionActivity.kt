@@ -12,12 +12,23 @@ import android.widget.Toast
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.model.Subscription
+import com.geuso.disrupty.subscription.EditSubscriptionActivity.Companion.EXTRA_SUBSCRIPTION_ID
 import com.geuso.disrupty.util.ButtonTimePicketDialog
 import com.geuso.disrupty.util.extractHourAndMinuteFromText
 import com.geuso.disrupty.util.formatTime
 import kotlinx.android.synthetic.main.activity_edit_subscription.*
 
 
+/**
+ * Activity for both creating, editing and deleting a subscription.
+ * If the intent that is used to start this activity has an extra called [EXTRA_SUBSCRIPTION_ID],
+ * this subscription ID will be loaded from the database. This flag is also the switch for showing
+ * a delete button.
+ *
+ * Stuff to improve:
+ * - Proper form validation: stations can't be empty, time range can't be negative.
+ * - Error handling in case of an unknown, to be verified in the SubscriptionDao.
+ */
 class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
@@ -50,7 +61,7 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         onCreate()
     }
 
-    fun onCreate(){
+    private fun onCreate(){
         setContentView(LAYOUT_ID)
 
         if (intent.extras != null && intent.extras.containsKey(EXTRA_SUBSCRIPTION_ID)) {

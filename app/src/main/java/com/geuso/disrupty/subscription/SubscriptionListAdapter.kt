@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.geuso.disrupty.R
 import com.geuso.disrupty.R.id.*
-import com.geuso.disrupty.model.Subscription
-import com.geuso.disrupty.util.formatTime
+import com.geuso.disrupty.model.db.Subscription
+import com.geuso.disrupty.model.db.TimeConverter
 
 /**
  * Created by Tom on 4-2-2018.
@@ -33,8 +33,8 @@ class SubscriptionListAdapter : ArrayAdapter<Subscription> {
         assignTextToView(view, sub_row_station_from, subscription.stationFrom)
         assignTextToView(view, sub_row_station_to, subscription.stationTo)
 
-        assignTextToView(view, sub_row_time_from, formatTime(subscription.timeFromHour, subscription.timeFromMinute))
-        assignTextToView(view, sub_row_time_to, formatTime(subscription.timeToHour, subscription.timeToMinute))
+        assignTextToView(view, sub_row_time_from, TimeConverter.INSTANCE.dateToTime(subscription.timeFrom))
+        assignTextToView(view, sub_row_time_to, TimeConverter.INSTANCE.dateToTime(subscription.timeTo))
 
         return view
     }

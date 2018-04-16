@@ -1,4 +1,4 @@
-package com.geuso.disrupty.model
+package com.geuso.disrupty.model.db
 
 import android.arch.persistence.room.*
 
@@ -25,12 +25,10 @@ interface SubscriptionDao {
     @Query("DELETE FROM subscriptions WHERE id = :id")
     fun deleteSubscriptionById(id: Long): Int
 
-
     @Query("SELECT * FROM subscriptions")
-    fun getAllSubscriptions(): Array<Subscription>
+    fun getAllSubscriptions(): List<Subscription>
 
     @Query("SELECT * FROM subscriptions WHERE id = :id")
     fun getSubscriptionById(id: Long): Subscription
-
 
 }

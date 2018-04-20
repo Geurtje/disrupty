@@ -12,8 +12,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.geuso.disrupty.R
-import com.geuso.disrupty.model.ns.NsRestClient
-import com.geuso.disrupty.model.ns.NsStationsXmlParser
+import com.geuso.disrupty.ns.NsRestClient
+import com.geuso.disrupty.ns.station.NsStationsXmlParser
 import com.loopj.android.http.TextHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.select_stations_dialog.*

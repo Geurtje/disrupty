@@ -1,4 +1,4 @@
-package com.geuso.disrupty.model.ns
+package com.geuso.disrupty.ns.station
 
 data class Station (var code: String,
                     var type: String,

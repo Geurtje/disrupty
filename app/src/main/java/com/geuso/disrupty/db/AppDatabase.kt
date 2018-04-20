@@ -5,9 +5,9 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import com.geuso.disrupty.App
-import com.geuso.disrupty.model.db.Subscription
-import com.geuso.disrupty.model.db.SubscriptionDao
-import com.geuso.disrupty.model.db.TimeConverter
+import com.geuso.disrupty.subscription.model.Subscription
+import com.geuso.disrupty.subscription.model.SubscriptionDao
+import com.geuso.disrupty.subscription.model.TimeConverter
 
 @Database(entities = [Subscription::class], version = 1)
 @TypeConverters(TimeConverter::class)

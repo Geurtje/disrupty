@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.geuso.disrupty.R
 import com.geuso.disrupty.R.id.*
-import com.geuso.disrupty.model.db.Subscription
-import com.geuso.disrupty.model.db.TimeConverter
+import com.geuso.disrupty.subscription.model.Subscription
+import com.geuso.disrupty.subscription.model.TimeConverter
 
 /**
  * Created by Tom on 4-2-2018.

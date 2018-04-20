@@ -1,4 +1,4 @@
-package com.geuso.disrupty.model.ns
+package com.geuso.disrupty.ns
 
 import android.preference.PreferenceManager
 import com.geuso.disrupty.App

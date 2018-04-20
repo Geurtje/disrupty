@@ -11,8 +11,8 @@ import android.view.View
 import android.widget.Toast
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
-import com.geuso.disrupty.model.db.Subscription
-import com.geuso.disrupty.model.db.TimeConverter
+import com.geuso.disrupty.subscription.model.Subscription
+import com.geuso.disrupty.subscription.model.TimeConverter
 import com.geuso.disrupty.subscription.EditSubscriptionActivity.Companion.EXTRA_SUBSCRIPTION_ID
 import com.geuso.disrupty.util.ButtonTimePicketDialog
 import com.geuso.disrupty.util.extractHourAndMinuteFromText

@@ -1,4 +1,4 @@
-package com.geuso.disrupty.model.db
+package com.geuso.disrupty.subscription.model
 
 import android.arch.persistence.room.*
 

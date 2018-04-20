@@ -1,9 +1,8 @@
-package com.geuso.disrupty.model.ns
+package com.geuso.disrupty.ns.station
 
 import assertk.assert
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNotEmpty
-import com.geuso.disrupty.ns.station.NsStationsXmlParser
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner

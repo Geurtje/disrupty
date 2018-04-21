@@ -50,8 +50,7 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.0.0"
 
-
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2-alpha1' // Using 1.0.2-alpha1 because of https://github.com/robolectric/robolectric/issues/3839
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     testImplementation 'com.willowtreeapps.assertk:assertk:0.9'
 

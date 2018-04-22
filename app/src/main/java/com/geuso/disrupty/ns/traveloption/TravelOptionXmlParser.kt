@@ -109,7 +109,7 @@ class TravelOptionXmlParser {
         val status = readText(parser)
         parser.require(XmlPullParser.END_TAG, NAMESPACE, "Status")
 
-        return Status.LOOKUP.getOrDefault(status, Status.UNKOWN)
+        return Status.LOOKUP.getOrDefault(status, Status.UNKNOWN)
     }
 
     private fun readOptimal(parser: XmlPullParser): Boolean {

@@ -1,6 +1,6 @@
 package com.geuso.disrupty.ns.traveloption
 
-class TravelOption (
+data class TravelOption (
        var notification: TravelOptionNotification?,
        var numberOfTransfers:  Int,
        var optimal: Boolean,
@@ -11,14 +11,14 @@ class TravelOption (
 
 
 
-class TravelOptionNotification(
+data class TravelOptionNotification(
         var severe: Boolean,
         var text: String
 )
 
 
 enum class Status(val key: String) {
-    UNKOWN("UNKOWN"),
+    UNKNOWN("UNKOWN"),
     ACCORDING_TO_PLAN("VOLGENS-PLAN"),
     CHANGED("GEWIJZIGD"),
     DELAYED("VERTRAAGD"),

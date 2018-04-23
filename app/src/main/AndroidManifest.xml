@@ -33,6 +33,11 @@
             android:theme="@style/AppTheme"
             />
 
+        <activity
+            android:name=".disruption.log.DisruptionCheckActivity"
+            android:label="@string/nav_disruption_check_log"
+            android:theme="@style/AppTheme"
+            />
 
     </application>
 

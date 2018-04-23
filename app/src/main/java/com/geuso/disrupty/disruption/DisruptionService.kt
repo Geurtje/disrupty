@@ -1,9 +1,17 @@
 package com.geuso.disrupty.disruption
 
+import android.util.Log
 import com.geuso.disrupty.db.AppDatabase
-import com.geuso.disrupty.model.db.Subscription
-import com.geuso.disrupty.model.db.SubscriptionDao
-import com.geuso.disrupty.model.db.TimeConverter
+import com.geuso.disrupty.disruption.model.DisruptionCheck
+import com.geuso.disrupty.ns.NsRestClient
+import com.geuso.disrupty.ns.traveloption.Status
+import com.geuso.disrupty.ns.traveloption.TravelOption
+import com.geuso.disrupty.ns.traveloption.TravelOptionXmlParser
+import com.geuso.disrupty.subscription.model.Subscription
+import com.geuso.disrupty.subscription.model.SubscriptionDao
+import com.geuso.disrupty.subscription.model.TimeConverter
+import com.loopj.android.http.TextHttpResponseHandler
+import cz.msebera.android.httpclient.Header
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -11,20 +19,51 @@ object DisruptionService {
 
     private val TAG = DisruptionService::class.qualifiedName
     private val subscriptionDao : SubscriptionDao = AppDatabase.INSTANCE.subscriptionDao()
+    private val disruptedStatuses : List<Status> = listOf(Status.DELAYED, Status.NOT_POSSIBLE)
 
 
     /**
-     * Will check disruptions for all subscriptions .
-     * @return a list of subscriptions which currently have a disruption
+     * For all currently active subscriptions, check if there are any disrupted travel options.
+     * If so, send a notification.
      */
-    fun checkSubscriptionsDisrupted() : List<Subscription> {
+    fun notifyDisruptedSubscriptions() {
         val subscriptionsToCheck = getSubscriptionsToCheck()
-        return getDisruptedSubscriptions(subscriptionsToCheck)
+        checkSubscriptionsAndNotifyIfDisrupted(subscriptionsToCheck)
+
     }
 
-    private fun getDisruptedSubscriptions(subscriptions: List<Subscription>) : List<Subscription> {
-        TODO("Implementation pending")
+    private fun checkSubscriptionsAndNotifyIfDisrupted(subscriptions: List<Subscription>) : List<Subscription> {
+        for (subscription in subscriptions) {
+            val params = NsRestClient.paramsForTravelOptions(subscription.stationFrom, subscription.stationTo)
+            NsRestClient.get(NsRestClient.PATH_TRAVEL_OPTIONS, params, object: TextHttpResponseHandler() {
+
+                override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
+                    val travelOptions = TravelOptionXmlParser().parse(responseBody!!.byteInputStream())
+
+                    Log.i(TAG, "### SUBSCRIPTION $subscription, number of travelOptions: ${travelOptions.size}")
+                    val isDisrupted = isDisrupted(travelOptions)
+
+                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, isDisrupted)
+                    saveDisruptionCheck(disruptionCheck)
+
+                    // todo send notification for disruptions
+                }
+
+                override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
+                    Log.e(TAG, "Failure: $statusCode, body: $responseBody")
+                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, false, false)
+                    saveDisruptionCheck(disruptionCheck)
+                }
+            })
+        }
+
+
         return Collections.emptyList()
+    }
+
+    private fun saveDisruptionCheck(disruptionCheck: DisruptionCheck) {
+        val disruptionCheckDao = AppDatabase.INSTANCE.disruptionCheckDao()
+        disruptionCheckDao.upsertDisruptionCheck(disruptionCheck)
     }
 
     /*
@@ -68,4 +107,14 @@ object DisruptionService {
     private fun isSubscriptionInTimeFrame(subscription: Subscription, currentTime: Date): Boolean {
         return currentTime.after(subscription.timeFrom) && currentTime.before(subscription.timeTo)
     }
+
+    private fun isDisrupted(travelOptions: List<TravelOption>) : Boolean {
+        for (travelOption in travelOptions) {
+            if (disruptedStatuses.contains(travelOption.status)) {
+                return true
+            }
+        }
+        return false
+    }
+
 }

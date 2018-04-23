@@ -11,6 +11,7 @@ object NsRestClient {
     private val TAG = NsRestClient::class.qualifiedName
     private const val BASE_URL = "http://webservices.ns.nl"
     const val PATH_STATIONS_LIST = "/ns-api-stations-v2"
+    const val PATH_TRAVEL_OPTIONS = "/ns-api-treinplanner"
 
     private val client = AsyncHttpClient()
 
@@ -30,6 +31,17 @@ object NsRestClient {
 
     private fun absoluteUrl(relativeUrl: String): String{
         return BASE_URL + relativeUrl
+    }
+
+    fun paramsForTravelOptions(stationFrom : String, stationTo : String) : RequestParams {
+        val paramsMap = HashMap<String, String>()
+
+        paramsMap["fromStation"] = stationFrom
+        paramsMap["toStation"] = stationTo
+        paramsMap["previousAdvices"] = "0"
+        paramsMap["nextAdvices"] = "2"
+
+        return RequestParams(paramsMap)
     }
 
 }

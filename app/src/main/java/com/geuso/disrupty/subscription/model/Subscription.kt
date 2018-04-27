@@ -1,18 +1,18 @@
-package com.geuso.disrupty.model
+package com.geuso.disrupty.subscription.model
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverters
+import java.util.*
 
 
 @Entity(tableName = "subscriptions")
 data class Subscription (
         @ColumnInfo(name = "station_from") var stationFrom : String = "",
         @ColumnInfo(name = "station_to") var stationTo : String = "",
-        @ColumnInfo(name = "time_from_hour") var timeFromHour : Int = 0,
-        @ColumnInfo(name = "time_from_minute") var timeFromMinute : Int = 0,
-        @ColumnInfo(name = "time_to_hour") var timeToHour : Int = 0,
-        @ColumnInfo(name = "time_to_minute") var timeToMinute : Int = 0,
+        @ColumnInfo(name = "time_from") @TypeConverters(TimeConverter::class) var timeFrom : Date,
+        @ColumnInfo(name = "time_to") @TypeConverters(TimeConverter::class) var timeTo : Date,
         @ColumnInfo(name = "day_monday") var monday : Boolean = false,
         @ColumnInfo(name = "day_tuesday") var tuesday : Boolean = false,
         @ColumnInfo(name = "day_wednesday") var wednesday : Boolean = false,

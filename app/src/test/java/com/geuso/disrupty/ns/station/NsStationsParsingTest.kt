@@ -1,4 +1,4 @@
-package com.geuso.disrupty.model.ns
+package com.geuso.disrupty.ns.station
 
 import assertk.assert
 import assertk.assertions.isEqualTo

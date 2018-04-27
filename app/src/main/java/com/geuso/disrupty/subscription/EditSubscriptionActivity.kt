@@ -11,11 +11,11 @@ import android.view.View
 import android.widget.Toast
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
-import com.geuso.disrupty.model.Subscription
+import com.geuso.disrupty.subscription.model.Subscription
+import com.geuso.disrupty.subscription.model.TimeConverter
 import com.geuso.disrupty.subscription.EditSubscriptionActivity.Companion.EXTRA_SUBSCRIPTION_ID
 import com.geuso.disrupty.util.ButtonTimePicketDialog
 import com.geuso.disrupty.util.extractHourAndMinuteFromText
-import com.geuso.disrupty.util.formatTime
 import kotlinx.android.synthetic.main.activity_edit_subscription.*
 
 
@@ -147,8 +147,8 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
 
 
         val sub = Subscription(stationFrom, stationTo,
-                timeFromHour, timeFromMinute,
-                timeToHour, timeToMinute,
+                TimeConverter.INSTANCE.fromTimeString("$timeFromHour:$timeFromMinute"),
+                TimeConverter.INSTANCE.fromTimeString("$timeToHour:$timeToMinute"),
                 mondayEnabled, tuesdayEnabled, wednesdayEnabled, thursdayEnabled, fridayEnabled, saturdayEnabled, sundayEnabled
         )
 
@@ -175,8 +175,8 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         input_station_from.setText(subscription.stationFrom)
         input_station_to.setText(subscription.stationTo)
 
-        button_time_from.text = formatTime(subscription.timeFromHour, subscription.timeFromMinute)
-        button_time_to.text = formatTime(subscription.timeToHour, subscription.timeToMinute)
+        button_time_from.text = TimeConverter.INSTANCE.dateToTime(subscription.timeFrom)
+        button_time_to.text = TimeConverter.INSTANCE.dateToTime(subscription.timeTo)
 
         input_day_monday.isChecked = subscription.monday
         input_day_tuesday.isChecked = subscription.tuesday

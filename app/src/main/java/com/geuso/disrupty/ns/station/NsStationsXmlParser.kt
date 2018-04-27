@@ -1,4 +1,4 @@
-package com.geuso.disrupty.model.ns
+package com.geuso.disrupty.ns.station
 
 import android.util.Xml
 import org.xmlpull.v1.XmlPullParser

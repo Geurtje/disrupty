@@ -33,7 +33,7 @@ android {
 
 dependencies {
     testImplementation 'junit:junit:4.12'
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testImplementation "org.robolectric:robolectric:3.8"
 
     // Don't move junit dependencies down... https://stackoverflow.com/a/44515592
@@ -44,18 +44,17 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:design:26.1.0'
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.2.21'
+    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.2.21'
 
     // Room https://developer.android.com/topic/libraries/architecture/adding-components.html
     implementation "android.arch.persistence.room:runtime:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.0.0"
 
-
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2-alpha1' // Using 1.0.2-alpha1 because of https://github.com/robolectric/robolectric/issues/3839
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    testCompile 'com.willowtreeapps.assertk:assertk:0.9'
+    testImplementation 'com.willowtreeapps.assertk:assertk:0.9'
 
     // http://loopj.com/android-async-http/
-    compile 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
 
 }

@@ -19,9 +19,30 @@ data class Subscription (
         @ColumnInfo(name = "day_thursday") var thursday : Boolean = false,
         @ColumnInfo(name = "day_friday") var friday : Boolean = false,
         @ColumnInfo(name = "day_saturday") var saturday : Boolean = false,
-        @ColumnInfo(name = "day_sunday") var sunday : Boolean = false
+        @ColumnInfo(name = "day_sunday") var sunday : Boolean = false,
+        @ColumnInfo(name = "status") @TypeConverters(StatusConverter::class) var status : Status = Status.UNKNOWN
 ) {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+}
+
+
+
+enum class Status(val key: String) {
+    UNKNOWN("unknown"),
+    OK("ok"),
+    NOT_OK("not-ok");
+
+    companion object {
+        val LOOKUP : Map<String, Status>
+
+        init {
+            LOOKUP = HashMap()
+            for (status in Status.values()) {
+                LOOKUP[status.key] = status
+            }
+        }
+    }
+
 }

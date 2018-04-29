@@ -46,7 +46,7 @@ class TravelOptionXmlParser {
         var notification : TravelOptionNotification? = null
         var numberOfTransfers = 0
         var optimal = false
-        var status = Status.ACCORDING_TO_PLAN
+        var status = DisruptionStatus.ACCORDING_TO_PLAN
 
 
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -104,12 +104,12 @@ class TravelOptionXmlParser {
         }
     }
 
-    private fun readStatus(parser: XmlPullParser): Status {
-        parser.require(XmlPullParser.START_TAG, NAMESPACE, "Status")
+    private fun readStatus(parser: XmlPullParser): DisruptionStatus {
+        parser.require(XmlPullParser.START_TAG, NAMESPACE, "DisruptionStatus")
         val status = readText(parser)
-        parser.require(XmlPullParser.END_TAG, NAMESPACE, "Status")
+        parser.require(XmlPullParser.END_TAG, NAMESPACE, "DisruptionStatus")
 
-        return Status.LOOKUP.getOrDefault(status, Status.UNKNOWN)
+        return DisruptionStatus.LOOKUP.getOrDefault(status, DisruptionStatus.UNKNOWN)
     }
 
     private fun readOptimal(parser: XmlPullParser): Boolean {

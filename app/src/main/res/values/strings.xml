@@ -73,4 +73,11 @@
     <string name="day_saturday">Saturday</string>
     <string name="day_sunday">Sunday</string>
 
+    <!-- Notifications -->
+    <string name="notify_disruption_detected_title">Route disrupted</string>
+    <string name="notify_disruption_detected_content">%1$s - %2$s : %3$s</string>
+    <string name="notify_disruption_resolved_title">Disruption resolved</string>
+    <string name="notify_disruption_resolved_content">%1$s - %2$s</string>
+
+
 </resources>

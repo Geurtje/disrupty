@@ -4,9 +4,7 @@ data class TravelOption (
        var notification: TravelOptionNotification?,
        var numberOfTransfers:  Int,
        var optimal: Boolean,
-       var status: Status
-//       var plannedTravelTime: String,
-//       var actualTravelTime: String,
+       var disruptionStatus: DisruptionStatus
 )
 
 
@@ -17,7 +15,7 @@ data class TravelOptionNotification(
 )
 
 
-enum class Status(val key: String) {
+enum class DisruptionStatus(val key: String) {
     UNKNOWN("UNKOWN"),
     ACCORDING_TO_PLAN("VOLGENS-PLAN"),
     CHANGED("GEWIJZIGD"),
@@ -28,11 +26,11 @@ enum class Status(val key: String) {
     PLAN_CHANGED("PLAN-GEWIJZIGD");
 
     companion object {
-        val LOOKUP : Map<String, Status>
+        val LOOKUP : Map<String, DisruptionStatus>
 
         init {
             LOOKUP = HashMap()
-            for (status in Status.values()) {
+            for (status in DisruptionStatus.values()) {
                 LOOKUP[status.key] = status
             }
         }

@@ -105,9 +105,9 @@ class TravelOptionXmlParser {
     }
 
     private fun readStatus(parser: XmlPullParser): DisruptionStatus {
-        parser.require(XmlPullParser.START_TAG, NAMESPACE, "DisruptionStatus")
+        parser.require(XmlPullParser.START_TAG, NAMESPACE, "Status")
         val status = readText(parser)
-        parser.require(XmlPullParser.END_TAG, NAMESPACE, "DisruptionStatus")
+        parser.require(XmlPullParser.END_TAG, NAMESPACE, "Status")
 
         return DisruptionStatus.LOOKUP.getOrDefault(status, DisruptionStatus.UNKNOWN)
     }

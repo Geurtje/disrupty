@@ -113,15 +113,23 @@ object DisruptionService {
      * Returns a Pair, the first entry is a boolean indicating if any of the traveloptions in
      * this list have a disruption. The second entry is the notification text part of that
      * traveloption.
+     *
+     * A List of traveloptions is considered disrupted if either of the following is true:
+     * - The status of any traveloption is "DELAYED" or "NOT_POSSIBLE"
+     * - Any traveloption has a notification that is marked as severe
      */
     private fun getDisruptedPairFromTravelOptions(travelOptions: List<TravelOption>) : Pair<Boolean, String?> {
         for (travelOption in travelOptions) {
-            if (DISRUPTED_STATUSES.contains(travelOption.disruptionStatus)) {
+            if (DISRUPTED_STATUSES.contains(travelOption.disruptionStatus) ||
+                    hasSevereNotification(travelOption)) {
                 return Pair(true, travelOption.notification?.text)
             }
         }
         return Pair(false, null)
     }
+
+    private fun hasSevereNotification(travelOption: TravelOption) : Boolean =
+            travelOption.notification != null && travelOption.notification!!.severe
 
     private fun shouldNotifyStatusChange(subscription: Subscription, status: Status): Boolean {
         if (subscription.status == status) {

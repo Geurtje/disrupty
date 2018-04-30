@@ -35,6 +35,7 @@ class SubscriptionListAdapter : ArrayAdapter<Subscription> {
 
         assignTextToView(view, sub_row_time_from, TimeConverter.INSTANCE.dateToTime(subscription.timeFrom))
         assignTextToView(view, sub_row_time_to, TimeConverter.INSTANCE.dateToTime(subscription.timeTo))
+        assignTextToView(view, sub_row_status, subscription.status.key)
 
         return view
     }

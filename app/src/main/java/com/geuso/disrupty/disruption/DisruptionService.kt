@@ -3,10 +3,12 @@ package com.geuso.disrupty.disruption
 import android.util.Log
 import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.disruption.model.DisruptionCheck
+import com.geuso.disrupty.notification.DisruptionNotificationService
 import com.geuso.disrupty.ns.NsRestClient
-import com.geuso.disrupty.ns.traveloption.Status
+import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.ns.traveloption.TravelOption
 import com.geuso.disrupty.ns.traveloption.TravelOptionXmlParser
+import com.geuso.disrupty.subscription.model.Status
 import com.geuso.disrupty.subscription.model.Subscription
 import com.geuso.disrupty.subscription.model.SubscriptionDao
 import com.geuso.disrupty.subscription.model.TimeConverter
@@ -19,8 +21,7 @@ object DisruptionService {
 
     private val TAG = DisruptionService::class.qualifiedName
     private val subscriptionDao : SubscriptionDao = AppDatabase.INSTANCE.subscriptionDao()
-    private val disruptedStatuses : List<Status> = listOf(Status.DELAYED, Status.NOT_POSSIBLE)
-
+    private val DISRUPTED_STATUSES : List<DisruptionStatus> = listOf(DisruptionStatus.DELAYED, DisruptionStatus.NOT_POSSIBLE)
 
     /**
      * For all currently active subscriptions, check if there are any disrupted travel options.
@@ -32,7 +33,7 @@ object DisruptionService {
 
     }
 
-    private fun checkSubscriptionsAndNotifyIfDisrupted(subscriptions: List<Subscription>) : List<Subscription> {
+    private fun checkSubscriptionsAndNotifyIfDisrupted(subscriptions: List<Subscription>) {
         for (subscription in subscriptions) {
             val params = NsRestClient.paramsForTravelOptions(subscription.stationFrom, subscription.stationTo)
             NsRestClient.get(NsRestClient.PATH_TRAVEL_OPTIONS, params, object: TextHttpResponseHandler() {
@@ -40,30 +41,30 @@ object DisruptionService {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
                     val travelOptions = TravelOptionXmlParser().parse(responseBody!!.byteInputStream())
 
-                    Log.i(TAG, "### SUBSCRIPTION $subscription, number of travelOptions: ${travelOptions.size}")
-                    val isDisrupted = isDisrupted(travelOptions)
+                    val isDisruptedPair = getDisruptedPairFromTravelOptions(travelOptions)
+                    val isDisrupted = isDisruptedPair.first
+                    val disruptionMessage =  isDisruptedPair.second
 
-                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, isDisrupted)
+                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, isDisrupted, disruptionMessage)
+                    val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
+
+                    if (shouldNotifyStatusChange(subscription, newSubscriptionStatus)) {
+                        Log.i(TAG, "Sending notification for subscription: $subscription, new status: $newSubscriptionStatus")
+                        DisruptionNotificationService.sendNotification(subscription, disruptionCheck, newSubscriptionStatus)
+                    }
+
                     saveDisruptionCheck(disruptionCheck)
-
-                    // todo send notification for disruptions
+                    saveSubscriptionIfNecessary(subscription, newSubscriptionStatus)
                 }
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
                     Log.e(TAG, "Failure: $statusCode, body: $responseBody")
-                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, false, false)
+                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, false, null, false)
                     saveDisruptionCheck(disruptionCheck)
+                    saveSubscriptionStatus(subscription, Status.UNKNOWN)
                 }
             })
         }
-
-
-        return Collections.emptyList()
-    }
-
-    private fun saveDisruptionCheck(disruptionCheck: DisruptionCheck) {
-        val disruptionCheckDao = AppDatabase.INSTANCE.disruptionCheckDao()
-        disruptionCheckDao.upsertDisruptionCheck(disruptionCheck)
     }
 
     /*
@@ -108,13 +109,56 @@ object DisruptionService {
         return currentTime.after(subscription.timeFrom) && currentTime.before(subscription.timeTo)
     }
 
-    private fun isDisrupted(travelOptions: List<TravelOption>) : Boolean {
+    /**
+     * Returns a Pair, the first entry is a boolean indicating if any of the traveloptions in
+     * this list have a disruption. The second entry is the notification text part of that
+     * traveloption.
+     *
+     * A List of traveloptions is considered disrupted if either of the following is true:
+     * - The status of any traveloption is "DELAYED" or "NOT_POSSIBLE"
+     * - Any traveloption has a notification that is marked as severe
+     */
+    private fun getDisruptedPairFromTravelOptions(travelOptions: List<TravelOption>) : Pair<Boolean, String?> {
         for (travelOption in travelOptions) {
-            if (disruptedStatuses.contains(travelOption.status)) {
-                return true
+            if (DISRUPTED_STATUSES.contains(travelOption.disruptionStatus) ||
+                    hasSevereNotification(travelOption)) {
+                return Pair(true, travelOption.notification?.text)
             }
         }
-        return false
+        return Pair(false, null)
     }
+
+    private fun hasSevereNotification(travelOption: TravelOption) : Boolean =
+            travelOption.notification != null && travelOption.notification!!.severe
+
+    private fun shouldNotifyStatusChange(subscription: Subscription, status: Status): Boolean {
+        if (subscription.status == status) {
+            return false
+        }
+
+        if (subscription.status == Status.UNKNOWN && status == Status.OK) {
+            return false
+        }
+
+        return true
+    }
+
+    private fun saveSubscriptionIfNecessary(subscription: Subscription, status: Status) {
+        if (subscription.status != status) {
+            saveSubscriptionStatus(subscription, status)
+        }
+    }
+
+    private fun saveDisruptionCheck(disruptionCheck: DisruptionCheck) {
+        val disruptionCheckDao = AppDatabase.INSTANCE.disruptionCheckDao()
+        disruptionCheckDao.upsertDisruptionCheck(disruptionCheck)
+    }
+
+    private fun saveSubscriptionStatus(subscription: Subscription, status: Status) {
+        subscription.status = status
+        val subscriptionDao = AppDatabase.INSTANCE.subscriptionDao()
+        subscriptionDao.upsertSubscription(subscription)
+    }
+
 
 }

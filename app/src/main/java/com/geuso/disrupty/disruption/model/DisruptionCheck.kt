@@ -12,6 +12,7 @@ data class DisruptionCheck (
         @ColumnInfo(name = "subscription_id") val subscriptionId: Long,
         @ColumnInfo(name = "date") @TypeConverters(DateTimeConverter::class) val checkTime: Date,
         @ColumnInfo(name = "disrupted") val isDisrupted: Boolean,
+        @ColumnInfo(name = "message") var message: String?,
         @ColumnInfo(name = "success") val success: Boolean = true
 ) {
     @ColumnInfo(name = "id")

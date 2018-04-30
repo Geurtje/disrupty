@@ -11,9 +11,10 @@ import android.view.View
 import android.widget.Toast
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
+import com.geuso.disrupty.subscription.EditSubscriptionActivity.Companion.EXTRA_SUBSCRIPTION_ID
+import com.geuso.disrupty.subscription.model.Status
 import com.geuso.disrupty.subscription.model.Subscription
 import com.geuso.disrupty.subscription.model.TimeConverter
-import com.geuso.disrupty.subscription.EditSubscriptionActivity.Companion.EXTRA_SUBSCRIPTION_ID
 import com.geuso.disrupty.util.ButtonTimePicketDialog
 import com.geuso.disrupty.util.extractHourAndMinuteFromText
 import kotlinx.android.synthetic.main.activity_edit_subscription.*
@@ -50,6 +51,7 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private var subscriptionId : Long? = null
+    private var subscription: Subscription? = null
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
@@ -144,12 +146,13 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         val saturdayEnabled: Boolean = input_day_saturday.isChecked
         val sundayEnabled: Boolean = input_day_sunday.isChecked
 
-
+        val status: Status = if (subscription != null) subscription!!.status else Status.UNKNOWN
 
         val sub = Subscription(stationFrom, stationTo,
                 TimeConverter.INSTANCE.fromTimeString("$timeFromHour:$timeFromMinute"),
                 TimeConverter.INSTANCE.fromTimeString("$timeToHour:$timeToMinute"),
-                mondayEnabled, tuesdayEnabled, wednesdayEnabled, thursdayEnabled, fridayEnabled, saturdayEnabled, sundayEnabled
+                mondayEnabled, tuesdayEnabled, wednesdayEnabled, thursdayEnabled, fridayEnabled, saturdayEnabled, sundayEnabled,
+                status
         )
 
         if (this.subscriptionId != null) {
@@ -166,8 +169,6 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun populateFormWithSubscription(subscriptionId : Long) {
-
-
         val subscription = AppDatabase.INSTANCE.subscriptionDao().getSubscriptionById(subscriptionId)
 
         Log.i(TAG, "Loading subscription $subscriptionId: $subscription")
@@ -186,6 +187,7 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         input_day_saturday.isChecked = subscription.saturday
         input_day_sunday.isChecked = subscription.sunday
 
+        this.subscription = subscription
     }
 
 }

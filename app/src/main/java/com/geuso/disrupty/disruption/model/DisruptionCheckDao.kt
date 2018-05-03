@@ -12,7 +12,7 @@ interface DisruptionCheckDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsertDisruptionCheck(disruptionCheck: DisruptionCheck): Long
 
-    @Query("SELECT * FROM disruptionChecks ORDER BY strftime('%s', date) desc LIMIT 50")
+    @Query("SELECT * FROM disruptionChecks ORDER BY id desc LIMIT 50")
     fun getLatestDisruptionChecks() : List<DisruptionCheck>
 
 }

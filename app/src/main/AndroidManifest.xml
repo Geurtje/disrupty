@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.geuso.disrupty">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -39,8 +42,24 @@
             android:theme="@style/AppTheme"
             />
 
-    </application>
+        <receiver android:name=".notification.AutoStart">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+        <receiver android:name=".notification.DisruptionCheckAlarm" android:exported="true">
+            <intent-filter>
+                <action android:name="disrupty.START_DISRUPTION_CHECK_ALARM"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".notification.DisruptionCheckService"
+            android:enabled="true"
+            android:process=":disruption_check_service"
+            android:label="Disrupty service checking for disruptions!"/>
+
+    </application>
 
 </manifest>

@@ -12,7 +12,7 @@
             android:key="disruption_check_interval"
             android:title="@string/pref_check_interval"
             android:summary="@string/pref_check_interval_summary"
-            android:defaultValue="60"
+            android:defaultValue="300"
             android:inputType="number" />
 
     </PreferenceCategory>

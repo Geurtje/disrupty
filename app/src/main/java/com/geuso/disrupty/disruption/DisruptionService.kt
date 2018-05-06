@@ -95,13 +95,13 @@ object DisruptionService {
     }
 
     private fun isSubscriptionActiveOnDay(subscription: Subscription, dayOfWeek: Int) = when (dayOfWeek) {
-        0 -> subscription.sunday
-        1 -> subscription.monday
-        2 -> subscription.tuesday
-        3 -> subscription.wednesday
-        4 -> subscription.thursday
-        5 -> subscription.friday
-        6 -> subscription.saturday
+        Calendar.SUNDAY -> subscription.sunday
+        Calendar.MONDAY -> subscription.monday
+        Calendar.TUESDAY -> subscription.tuesday
+        Calendar.WEDNESDAY -> subscription.wednesday
+        Calendar.THURSDAY -> subscription.thursday
+        Calendar.FRIDAY -> subscription.friday
+        Calendar.SATURDAY -> subscription.saturday
         else -> false
     }
 

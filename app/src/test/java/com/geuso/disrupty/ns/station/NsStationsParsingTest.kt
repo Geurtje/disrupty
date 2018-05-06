@@ -17,7 +17,7 @@ class NsStationsParsingTest {
 
     @Test
     fun parseStationsResponse() {
-        val file = NsStationsParsingTest::class.java.classLoader.getResource("test-ns-stations.xml")
+        val file = NsStationsParsingTest::class.java.classLoader.getResource("ns/stationslist/stations-list.xml")
 
         val stations = NsStationsXmlParser().parse(file.content as InputStream)
 

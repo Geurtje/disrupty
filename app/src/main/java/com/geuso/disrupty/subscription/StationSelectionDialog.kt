@@ -11,12 +11,14 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import com.geuso.disrupty.R
 import com.geuso.disrupty.ns.NsRestClient
 import com.geuso.disrupty.ns.station.NsStationsXmlParser
 import com.loopj.android.http.TextHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.select_stations_dialog.*
+import java.util.*
 
 /**
  * Created by Tom on 3-4-2018.
@@ -80,7 +82,9 @@ class StationsListAdapter(
         private val TAG = StationsListAdapter::class.qualifiedName
     }
 
-    private lateinit var stationsList: ArrayList<String>
+    // stationsList is mutable because it will be initialized later.
+    // Using lateinit will crash the app in case the api call to resolve the stations failed.
+    private var stationsList: ArrayList<String> = ArrayList(0)
 
     init {
         initializeTrainStationsList()
@@ -95,7 +99,7 @@ class StationsListAdapter(
 
                 stationsList = ArrayList(stationsObjectList.size)
                 for (station in stationsObjectList) {
-                    stationsList!!.add(station.name)
+                    stationsList.add(station.name)
                 }
 
                 addAll(stationsList)
@@ -103,14 +107,19 @@ class StationsListAdapter(
 
             override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
                 Log.e(TAG, "Failure: $statusCode, body: $responseBody")
+
+                val message = when (statusCode) {
+                    401 -> context.resources.getString(R.string.ns_authentication_failure)
+                    else -> context.resources.getString(R.string.ns_stations_list_failure, error?.message)
+                }
+
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             }
         })
     }
 
     fun filterStationsByTerm(filterTerm: String){
-        // Null check in case api call wasn't able to initialize the stationsList,
-        // not sure if lateinit actually makes sense here
-        if (stationsList != null) {
+        if (stationsList.isNotEmpty()) {
             val filteredStationsList = ArrayList<String>()
 
             for (stationName in stationsList) {

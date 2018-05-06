@@ -32,5 +32,6 @@ class DisruptyPreferenceActivity : PreferenceActivity() {
             addPreferencesFromResource(R.xml.settings)
         }
     }
+
 }
 

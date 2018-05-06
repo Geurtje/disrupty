@@ -123,7 +123,7 @@ class StationListFilterListener(
         private val selectionDialog: StationSelectionDialog
 ) : TextWatcher {
     override fun afterTextChanged(s: Editable?) {
-        selectionDialog.filterStations(s.toString())
+        selectionDialog.filterStations(s.toString().trim())
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

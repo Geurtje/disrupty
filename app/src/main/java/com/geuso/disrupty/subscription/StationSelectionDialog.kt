@@ -44,6 +44,7 @@ class StationSelectionDialog(
         setFullScreenWindowProperties()
 
         search_field.addTextChangedListener(StationListFilterListener(this))
+        setSearchFieldFocus()
     }
 
     fun filterStations(filterTerm: String){
@@ -57,6 +58,11 @@ class StationSelectionDialog(
         windowParameters.height = WindowManager.LayoutParams.MATCH_PARENT
 
         window.attributes = windowParameters
+    }
+
+    private fun setSearchFieldFocus() {
+        search_field.requestFocus()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

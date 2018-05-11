@@ -7,6 +7,7 @@ import android.support.v4.app.NotificationCompat
 import com.geuso.disrupty.App
 import com.geuso.disrupty.R
 import com.geuso.disrupty.disruption.model.DisruptionCheck
+import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.subscription.model.Status
 import com.geuso.disrupty.subscription.model.Subscription
 
@@ -17,7 +18,7 @@ object DisruptionNotificationService {
     private const val DISRUPTION_NOTIFICATION_ID = 1
 
 
-    fun sendNotification(subscription: Subscription, disruptionCheck: DisruptionCheck, newStatus: Status) {
+    fun sendNotification(subscription: Subscription, disruptionCheck: DisruptionCheck, newStatus: Status, disruptionStatusCause: DisruptionStatus) {
 
         val title: String
         val content: String
@@ -25,7 +26,7 @@ object DisruptionNotificationService {
         if (newStatus == Status.NOT_OK || newStatus == Status.UNKNOWN) {
             title = App.context.resources.getString(R.string.notify_disruption_detected_title)
             content = App.context.resources.getString(R.string.notify_disruption_detected_content,
-                    subscription.stationFrom, subscription.stationTo, disruptionCheck.message)
+                    subscription.stationFrom, subscription.stationTo, disruptionStatusCause.key, disruptionCheck.message)
         }
         else {
             title = App.context.resources.getString(R.string.notify_disruption_resolved_title)

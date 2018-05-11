@@ -41,16 +41,18 @@ object DisruptionService {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
                     val travelOptions = TravelOptionXmlParser().parse(responseBody!!.byteInputStream())
 
-                    val isDisruptedPair = getDisruptedPairFromTravelOptions(travelOptions)
-                    val isDisrupted = isDisruptedPair.first
-                    val disruptionMessage =  isDisruptedPair.second
+                    val isDisruptedTriple = getDisruptedPairFromTravelOptions(travelOptions)
+                    val isDisrupted = isDisruptedTriple.first
+                    val disruptionMessage =  isDisruptedTriple.second
 
                     val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, isDisrupted, disruptionMessage)
                     val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
 
                     if (shouldNotifyStatusChange(subscription, newSubscriptionStatus)) {
-                        Log.i(TAG, "Sending notification for subscription: $subscription, new status: $newSubscriptionStatus")
-                        DisruptionNotificationService.sendNotification(subscription, disruptionCheck, newSubscriptionStatus)
+                        val disruptionStatus = isDisruptedTriple.third
+                        Log.i(TAG, "Sending notification for subscription: $subscription, new status: $newSubscriptionStatus, disruption status: $disruptionStatus")
+
+                        DisruptionNotificationService.sendNotification(subscription, disruptionCheck, newSubscriptionStatus, disruptionStatus)
                     }
 
                     saveDisruptionCheck(disruptionCheck)
@@ -118,14 +120,16 @@ object DisruptionService {
      * - The status of any traveloption is "DELAYED" or "NOT_POSSIBLE"
      * - Any traveloption has a notification that is marked as severe
      */
-    private fun getDisruptedPairFromTravelOptions(travelOptions: List<TravelOption>) : Pair<Boolean, String?> {
+    private fun getDisruptedPairFromTravelOptions(travelOptions: List<TravelOption>) : Triple<Boolean, String?, DisruptionStatus> {
         for (travelOption in travelOptions) {
-            if (DISRUPTED_STATUSES.contains(travelOption.disruptionStatus) ||
-                    hasSevereNotification(travelOption)) {
-                return Pair(true, travelOption.notification?.text)
+            if (DISRUPTED_STATUSES.contains(travelOption.disruptionStatus)
+                ||    hasSevereNotification(travelOption)
+                &&  travelOption.disruptionStatus != DisruptionStatus.ACCORDING_TO_PLAN
+            ) {
+                return Triple(true, travelOption.notification?.text, travelOption.disruptionStatus)
             }
         }
-        return Pair(false, null)
+        return Triple(false, null, DisruptionStatus.ACCORDING_TO_PLAN)
     }
 
     private fun hasSevereNotification(travelOption: TravelOption) : Boolean =

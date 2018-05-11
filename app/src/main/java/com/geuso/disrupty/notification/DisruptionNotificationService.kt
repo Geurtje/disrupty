@@ -43,7 +43,7 @@ object DisruptionNotificationService {
         val notification = notificationBuilder
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setStyle(NotificationCompat.BigTextStyle())
                 .setContentTitle(title)

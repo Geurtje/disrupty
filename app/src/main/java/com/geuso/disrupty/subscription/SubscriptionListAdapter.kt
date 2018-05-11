@@ -1,11 +1,14 @@
 package com.geuso.disrupty.subscription
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.TextView
+import com.geuso.disrupty.App
 import com.geuso.disrupty.R
 import com.geuso.disrupty.R.id.*
 import com.geuso.disrupty.subscription.model.Subscription
@@ -35,7 +38,8 @@ class SubscriptionListAdapter : ArrayAdapter<Subscription> {
 
         assignTextToView(view, sub_row_time_from, TimeConverter.INSTANCE.dateToTime(subscription.timeFrom))
         assignTextToView(view, sub_row_time_to, TimeConverter.INSTANCE.dateToTime(subscription.timeTo))
-        assignTextToView(view, sub_row_status, subscription.status.key)
+
+        assignImageToView(view, sub_row_status_icon, subscription.status.iconResource)
 
         return view
     }
@@ -43,5 +47,10 @@ class SubscriptionListAdapter : ArrayAdapter<Subscription> {
     private fun assignTextToView(rowView: View, id: Int, text: String) {
         rowView.findViewById<TextView>(id).text = text
     }
+
+    private fun assignImageToView(rowView: View, id: Int, imageId: Int) {
+        rowView.findViewById<ImageView>(id).setImageDrawable(ContextCompat.getDrawable(App.context, imageId))
+    }
+
 }
 

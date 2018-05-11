@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.arch.persistence.room.TypeConverters
+import com.geuso.disrupty.R
 import java.util.*
 
 
@@ -29,10 +30,10 @@ data class Subscription (
 
 
 
-enum class Status(val key: String) {
-    UNKNOWN("unknown"),
-    OK("ok"),
-    NOT_OK("not-ok");
+enum class Status(val key: String, val iconResource: Int) {
+    UNKNOWN("unknown", R.drawable.ic_sub_status_unknown),
+    OK("ok", R.drawable.ic_sub_status_ok),
+    NOT_OK("not-ok", R.drawable.ic_sub_status_not_ok);
 
     companion object {
         val LOOKUP : Map<String, Status>

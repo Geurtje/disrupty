@@ -15,4 +15,7 @@ interface DisruptionCheckDao {
     @Query("SELECT * FROM disruptionChecks ORDER BY id desc LIMIT 50")
     fun getLatestDisruptionChecks() : List<DisruptionCheck>
 
+    @Query("SELECT * FROM disruptionChecks WHERE id = :id")
+    fun getDisruptionCheckById(id: Long) : DisruptionCheck
+
 }

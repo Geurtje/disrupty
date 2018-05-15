@@ -42,6 +42,12 @@
             android:theme="@style/AppTheme"
             />
 
+        <activity
+            android:name=".disruption.log.DisruptionCheckDetailActivity"
+            android:label="@string/nav_disruption_check_log"
+            android:theme="@style/AppTheme"
+            />
+
         <receiver android:name=".notification.AutoStart">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

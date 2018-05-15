@@ -45,7 +45,7 @@ object DisruptionService {
                     val isDisrupted = isDisruptedTriple.first
                     val disruptionMessage =  isDisruptedTriple.second
 
-                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, isDisrupted, disruptionMessage)
+                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, isDisrupted, disruptionMessage, responseBody)
                     val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
 
                     if (shouldNotifyStatusChange(subscription, newSubscriptionStatus)) {
@@ -61,7 +61,7 @@ object DisruptionService {
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
                     Log.e(TAG, "Failure: $statusCode, body: $responseBody")
-                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, false, null, false)
+                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, false, null, "$error\n\n\n$responseBody", false)
                     saveDisruptionCheck(disruptionCheck)
                     saveSubscriptionStatus(subscription, Status.UNKNOWN)
                 }

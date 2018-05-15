@@ -8,6 +8,7 @@
     <string name="nav_create_subscription">New subscription</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_disruption_check_log">Disruption check log</string>
+    <string name="nav_disruption_check_details">Disruption check details</string>
 
 
     <!-- Generic -->
@@ -61,6 +62,8 @@
     <string name="disruption_check_status_failure">DISRUPTED</string>
     <string name="disruption_check_success">success</string>
     <string name="disruption_check_failure">failure</string>
+
+    <string name="disruption_check_detail_missing_id">Unable to load disruption check details for empty disruption check id</string>
 
 
     <!-- Days -->

@@ -26,7 +26,7 @@ class SubscriptionListFragment : ListFragment() {
         super.onListItemClick(l, v, position, id)
         if (v != null) {
             val subId = v.findViewById<TextView>(R.id.sub_row_id).text.toString().toLong()
-            Log.i(TAG, "Clinked on subscription at position $position, id: $subId")
+            Log.i(TAG, "Clicked on subscription at position $position, id: $subId")
             EditSubscriptionActivity.start(context, subId)
         }
 

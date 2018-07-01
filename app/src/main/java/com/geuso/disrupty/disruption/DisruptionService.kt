@@ -1,6 +1,11 @@
 package com.geuso.disrupty.disruption
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.util.Log
+import android.widget.Toast
+import com.geuso.disrupty.App
+import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.disruption.model.DisruptionCheck
 import com.geuso.disrupty.notification.DisruptionNotificationService
@@ -28,8 +33,14 @@ object DisruptionService {
      * If so, send a notification.
      */
     fun notifyDisruptedSubscriptions() {
-        val subscriptionsToCheck = getSubscriptionsToCheck()
-        checkSubscriptionsAndNotifyIfDisrupted(subscriptionsToCheck)
+        if (isNetworkConnectionAvailable()) {
+            val subscriptionsToCheck = getSubscriptionsToCheck()
+            checkSubscriptionsAndNotifyIfDisrupted(subscriptionsToCheck)
+        }
+        else {
+            val alertMessage = App.context.resources.getString(R.string.disruption_check_no_network)
+            Toast.makeText(App.context, alertMessage, Toast.LENGTH_SHORT).show()
+        }
 
     }
 
@@ -164,5 +175,10 @@ object DisruptionService {
         subscriptionDao.upsertSubscription(subscription)
     }
 
+    private fun isNetworkConnectionAvailable() : Boolean {
+        val connectivityManager = App.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
+    }
 
 }

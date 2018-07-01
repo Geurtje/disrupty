@@ -65,6 +65,8 @@
 
     <string name="disruption_check_detail_missing_id">Unable to load disruption check details for empty disruption check id</string>
 
+    <!-- Disruption checks -->
+    <string name="disruption_check_no_network">No network connectivity, unable to check disruptions.</string>
 
     <!-- Days -->
     <string name="days">Days</string>

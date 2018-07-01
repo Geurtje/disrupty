@@ -1,8 +1,10 @@
 package com.geuso.disrupty.notification
 
 import android.app.Notification
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context.NOTIFICATION_SERVICE
+import android.os.Build
 import android.support.v4.app.NotificationCompat
 import com.geuso.disrupty.App
 import com.geuso.disrupty.R
@@ -11,9 +13,11 @@ import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.subscription.model.Status
 import com.geuso.disrupty.subscription.model.Subscription
 
+
 object DisruptionNotificationService {
 
     private val NOTIFICATION_MANAGER : NotificationManager = App.context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+    private const val NOTIFICATION_CHANNEL_NAME = "Disruption notifications"
     private const val NOTIFICATION_CHANNEL_ID = "disruption_notification_channel"
     private const val DISRUPTION_NOTIFICATION_ID = 1
 
@@ -49,6 +53,13 @@ object DisruptionNotificationService {
                 .setContentTitle(title)
                 .setContentText(content)
                 .build()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                    NOTIFICATION_CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH)
+            NOTIFICATION_MANAGER.createNotificationChannel(notificationChannel)
+        }
 
         NOTIFICATION_MANAGER.notify(DISRUPTION_NOTIFICATION_ID, notification)
     }

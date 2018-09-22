@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.geuso.disrupty.disruption.log.DisruptionCheckActivity
+import com.geuso.disrupty.notification.DisruptionCheckJobScheduler
 import com.geuso.disrupty.settings.DisruptyPreferenceActivity
 import com.geuso.disrupty.subscription.EditSubscriptionActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity() {
         create_subscription_floating_button.setOnClickListener { _ ->
             EditSubscriptionActivity.start(this)
         }
+
+        // Is this really necessary? I'm not sure whats a good way to force schedule jobs
+        DisruptionCheckJobScheduler.scheduleDisruptionCheckJobIfRequired()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

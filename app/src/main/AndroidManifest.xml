@@ -52,20 +52,16 @@
         <receiver android:name=".notification.AutoStart">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".notification.DisruptionCheckAlarm" android:exported="true">
-            <intent-filter>
-                <action android:name="disrupty.START_DISRUPTION_CHECK_ALARM"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
             </intent-filter>
         </receiver>
 
         <service
-            android:name=".notification.DisruptionCheckService"
+            android:name=".notification.DisruptionCheckJobService"
             android:enabled="true"
             android:process=":disruption_check_service"
-            android:label="Disrupty service checking for disruptions!"/>
+            android:label="Disrupty service checking for disruptions!"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
     </application>
 

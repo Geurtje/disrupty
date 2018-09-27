@@ -24,9 +24,10 @@ object DisruptionCheckJobScheduler {
     private fun scheduleJob(context: Context) {
         val componentName = ComponentName(context, DisruptionCheckJobService::class.java)
         val info = JobInfo.Builder(JOB_ID, componentName)
+                .setRequiresDeviceIdle(false)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
-                .setPeriodic(15 * 60 * 1000, 0)
+                .setPeriodic(15 * 60 * 1000, 5 * 60 * 1000)
                 .build()
 
         val resultCode = SCHEDULER.schedule(info)

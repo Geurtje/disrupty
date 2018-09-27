@@ -5,20 +5,6 @@
     https://stackoverflow.com/questions/5443491/adding-a-header-to-a-preferenceactivity -->
 
     <PreferenceCategory
-        android:title="@string/pref_cat_general"
-        android:persistent="false">
-
-        <com.geuso.disrupty.settings.FormattedSummaryEditTextPreference
-            android:key="disruption_check_interval"
-            android:title="@string/pref_check_interval"
-            android:summary="@string/pref_check_interval_summary"
-            android:defaultValue="300"
-            android:inputType="number" />
-
-    </PreferenceCategory>
-
-
-    <PreferenceCategory
         android:key="settings_category_api"
         android:title="@string/pref_cat_api"
         android:persistent="false">

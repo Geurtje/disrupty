@@ -3,7 +3,6 @@ package com.geuso.disrupty.disruption
 import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
-import android.widget.Toast
 import com.geuso.disrupty.App
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
@@ -39,7 +38,7 @@ object DisruptionService {
         }
         else {
             val alertMessage = App.context.resources.getString(R.string.disruption_check_no_network)
-            Toast.makeText(App.context, alertMessage, Toast.LENGTH_SHORT).show()
+            Log.e(TAG, alertMessage)
         }
 
     }

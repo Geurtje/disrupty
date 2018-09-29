@@ -29,6 +29,6 @@ interface SubscriptionDao {
     fun getAllSubscriptions(): List<Subscription>
 
     @Query("SELECT * FROM subscriptions WHERE id = :id")
-    fun getSubscriptionById(id: Long): Subscription
+    fun getSubscriptionById(id: Long): Subscription?
 
 }

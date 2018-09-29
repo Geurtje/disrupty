@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.disruption.model.DisruptionCheck
-import com.geuso.disrupty.subscription.model.Subscription
 import kotlinx.android.synthetic.main.disruption_check_detail_view.*
 
 class DisruptionCheckDetailActivity : AppCompatActivity() {
@@ -26,7 +25,6 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
     }
 
     private lateinit var disruptionCheck : DisruptionCheck
-    private lateinit var subscription : Subscription
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +37,18 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
 
         val disruptionCheckId = intent.extras.getLong(EXTRA_DISRUPTION_CHECK_ID)
         disruptionCheck = AppDatabase.INSTANCE.disruptionCheckDao().getDisruptionCheckById(disruptionCheckId)
-        subscription = AppDatabase.INSTANCE.subscriptionDao().getSubscriptionById(disruptionCheck.subscriptionId)
+        var subscription = AppDatabase.INSTANCE.subscriptionDao().getSubscriptionById(disruptionCheck.subscriptionId)
 
         setContentView(LAYOUT_ID)
 
-        dc_detail_station_from.text = subscription.stationFrom
-        dc_detail_station_to.text = subscription.stationTo
+        if (subscription != null) {
+            dc_detail_station_from.text = subscription.stationFrom
+            dc_detail_station_to.text = subscription.stationTo
+        }
+        else {
+            dc_detail_station_from.text = "unknown"
+            dc_detail_station_to.text = "unknown"
+        }
 
         dc_detail_timestamp.text = disruptionCheck.checkTime.toString()
         dc_detail_status.text = disruptionCheck.success.toString()

@@ -107,22 +107,20 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         val dialogBuilder = AlertDialog.Builder(this)
 
         dialogBuilder.setMessage(R.string.delete_confirmation)
-                .setPositiveButton(R.string.confirm_positive, {
-                    _, _ ->
+                .setPositiveButton(R.string.confirm_positive) { _, _ ->
                     val dao = AppDatabase.INSTANCE.subscriptionDao()
                     val rowsDeleted = dao.deleteSubscriptionById(this.subscriptionId!!)
 
                     if (rowsDeleted != 1) {
                         Toast.makeText(this, R.string.delete_failure, Toast.LENGTH_SHORT).show()
-                    }
-                    else {
+                    } else {
                         Toast.makeText(this, R.string.delete_success, Toast.LENGTH_SHORT).show()
                         finish()
                     }
-                })
-                .setNegativeButton(R.string.confirm_negative, {
+                }
+                .setNegativeButton(R.string.confirm_negative) {
                     dialogInterface, _ -> dialogInterface.cancel()
-                })
+                }
                 .show()
     }
 
@@ -171,23 +169,25 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
     private fun populateFormWithSubscription(subscriptionId : Long) {
         val subscription = AppDatabase.INSTANCE.subscriptionDao().getSubscriptionById(subscriptionId)
 
-        Log.i(TAG, "Loading subscription $subscriptionId: $subscription")
+        if (subscription != null) {
+            Log.i(TAG, "Loading subscription $subscriptionId: $subscription")
 
-        input_station_from.setText(subscription.stationFrom)
-        input_station_to.setText(subscription.stationTo)
+            input_station_from.setText(subscription.stationFrom)
+            input_station_to.setText(subscription.stationTo)
 
-        button_time_from.text = TimeConverter.INSTANCE.dateToTime(subscription.timeFrom)
-        button_time_to.text = TimeConverter.INSTANCE.dateToTime(subscription.timeTo)
+            button_time_from.text = TimeConverter.INSTANCE.dateToTime(subscription.timeFrom)
+            button_time_to.text = TimeConverter.INSTANCE.dateToTime(subscription.timeTo)
 
-        input_day_monday.isChecked = subscription.monday
-        input_day_tuesday.isChecked = subscription.tuesday
-        input_day_wednesday.isChecked = subscription.wednesday
-        input_day_thursday.isChecked = subscription.thursday
-        input_day_friday.isChecked = subscription.friday
-        input_day_saturday.isChecked = subscription.saturday
-        input_day_sunday.isChecked = subscription.sunday
+            input_day_monday.isChecked = subscription.monday
+            input_day_tuesday.isChecked = subscription.tuesday
+            input_day_wednesday.isChecked = subscription.wednesday
+            input_day_thursday.isChecked = subscription.thursday
+            input_day_friday.isChecked = subscription.friday
+            input_day_saturday.isChecked = subscription.saturday
+            input_day_sunday.isChecked = subscription.sunday
 
-        this.subscription = subscription
+            this.subscription = subscription
+        }
     }
 
 }

@@ -44,8 +44,6 @@
 
     <!-- Preferences page -->
     <string name="pref_cat_general">General</string>
-    <string name="pref_check_interval">Disruption check interval</string>
-    <string name="pref_check_interval_summary">Check for any disruptions every %s seconds.</string>
 
     <string name="pref_cat_api">NS API settings</string>
     <string name="pref_api_username">Username</string>

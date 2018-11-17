@@ -12,7 +12,7 @@ object DisruptionEvaluator {
      * - The status of any traveloption is "DELAYED" or "NOT_POSSIBLE"
      * - Any traveloption has a notification that is marked as severe
      */
-    fun getDisruptedPairFromTravelOptions(travelOptions: List<TravelOption>) : DisruptionCheckResult {
+    fun getDisruptionCheckResultFromTravelOptions(travelOptions: List<TravelOption>) : DisruptionCheckResult {
         for (travelOption in travelOptions) {
             if (DISRUPTED_STATUSES.contains(travelOption.disruptionStatus)
                     ||    hasSevereNotification(travelOption)

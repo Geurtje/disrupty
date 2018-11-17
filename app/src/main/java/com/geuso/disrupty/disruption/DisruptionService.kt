@@ -53,7 +53,7 @@ object DisruptionService {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
                     val travelOptions = TravelOptionXmlParser().parse(responseBody!!.byteInputStream())
 
-                    val disruptionCheckResult = DisruptionEvaluator.getDisruptedPairFromTravelOptions(travelOptions)
+                    val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
 
                     val isDisrupted = disruptionCheckResult.isDisrupted
                     val disruptionMessage =  disruptionCheckResult.message

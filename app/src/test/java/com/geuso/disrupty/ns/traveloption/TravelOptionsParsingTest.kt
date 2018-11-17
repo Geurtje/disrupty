@@ -12,7 +12,7 @@ import java.io.InputStream
 class TravelOptionsParsingTest {
 
     @Test
-    fun parseTravelOptionsResponse() {
+    fun `Test if NS travel options xml message is parsed correctly`() {
         val file = TravelOptionsParsingTest::class.java.classLoader.getResource("ns/traveloption/travel-options-response.xml")
 
         val travelOptions = TravelOptionXmlParser().parse(file.content as InputStream)

@@ -19,7 +19,7 @@ import org.robolectric.RobolectricTestRunner
 class DisruptionEvaluationTest {
 
     @Test
-    fun testUndisruptedEvaluation() {
+    fun `Test traveloptions not disrupted`() {
         val undisruptedTravelOption = TravelOption(null, 2, true, DisruptionStatus.ACCORDING_TO_PLAN)
         val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(undisruptedTravelOption))
 
@@ -29,7 +29,7 @@ class DisruptionEvaluationTest {
     }
 
     @Test
-    fun testDisruptedEvaluation(){
+    fun `Test delayed travel option is disrupted`(){
         val undisruptedTravelOption = TravelOption(null, 2, true, DisruptionStatus.ACCORDING_TO_PLAN)
         val disruptedTravelOption = TravelOption(null, 0, false, DisruptionStatus.DELAYED)
         val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(undisruptedTravelOption, disruptedTravelOption))
@@ -40,7 +40,7 @@ class DisruptionEvaluationTest {
     }
 
     @Test
-    fun testNotSevereNotificationNotReportedAsDisruption() {
+    fun `Test travel option with not severe notification is not disrupted`() {
         val travelOption = TravelOption(TravelOptionNotification(false, "this is a test message"), 2, true, DisruptionStatus.ACCORDING_TO_PLAN)
         val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
@@ -50,7 +50,7 @@ class DisruptionEvaluationTest {
     }
 
     @Test
-    fun `test severe notification not disrupted with status according to plan`() {
+    fun `Test travel option with severe notification is not disrupted when status is according to plan`(){
         val travelOption = TravelOption(TravelOptionNotification(true, "something bad is going on"), 0, true, DisruptionStatus.ACCORDING_TO_PLAN)
 
         val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
@@ -61,7 +61,7 @@ class DisruptionEvaluationTest {
     }
 
     @Test
-    fun `test severe notification disrupted with status changed`() {
+    fun `Test travel option with severe notification is disrupted when status is not according to plan`(){
         val travelOption = TravelOption(TravelOptionNotification(true, "something bad is going on"), 0, true, DisruptionStatus.CHANGED)
 
         val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))

@@ -30,7 +30,7 @@ class DisruptionEvaluationStatusTest(
     }
 
     @Test
-    fun `assert DisruptionStatus not disrupted`() {
+    fun `Assert DisruptionStatus disrupted or not based on status`() {
         println("Testing that DisruptionStatus $disruptionStatus is disrupted: $isDisrupted")
         val travelOption = TravelOption(null, 2, true, disruptionStatus)
         val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))

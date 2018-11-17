@@ -50,16 +50,26 @@ class DisruptionEvaluationTest {
     }
 
     @Test
-    fun testSevereNotificationNotReportedAsDisruptionWhenStatusIsGood() {
+    fun `test severe notification not disrupted with status according to plan`() {
         val travelOption = TravelOption(TravelOptionNotification(true, "something bad is going on"), 0, true, DisruptionStatus.ACCORDING_TO_PLAN)
 
         val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
-        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNotEqualTo(null)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isEqualTo(null)
     }
 
+    @Test
+    fun `test severe notification disrupted with status changed`() {
+        val travelOption = TravelOption(TravelOptionNotification(true, "something bad is going on"), 0, true, DisruptionStatus.CHANGED)
+
+        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+
+        assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(true)
+        assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.CHANGED)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNotEqualTo(null)
+    }
 
 
 

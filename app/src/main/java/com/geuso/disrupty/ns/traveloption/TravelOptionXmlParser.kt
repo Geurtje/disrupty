@@ -56,6 +56,7 @@ class TravelOptionXmlParser {
         var status = DisruptionStatus.ACCORDING_TO_PLAN
         var plannedDepartureTime: Instant? = null
         var currentDepartureTime: Instant? = null
+        var departureDelay: String? = null
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.eventType != XmlPullParser.START_TAG) {
@@ -70,11 +71,12 @@ class TravelOptionXmlParser {
                 "Optimaal" -> optimal = readOptimal(parser)
                 "GeplandeVertrekTijd" -> plannedDepartureTime = readInstant(parser, "GeplandeVertrekTijd")
                 "ActueleVertrekTijd" -> currentDepartureTime = readInstant(parser, "ActueleVertrekTijd")
+                "VertrekVertraging" -> departureDelay = readDepartureDelay(parser)
                 else -> skip(parser)
             }
         }
 
-        return TravelOption(notification, numberOfTransfers, optimal, status, plannedDepartureTime, currentDepartureTime)
+        return TravelOption(notification, numberOfTransfers, optimal, status, plannedDepartureTime, currentDepartureTime, departureDelay)
     }
 
     private fun readNotification(parser: XmlPullParser): TravelOptionNotification {
@@ -135,6 +137,13 @@ class TravelOptionXmlParser {
         val value = readText(parser)
         parser.require(XmlPullParser.END_TAG, NAMESPACE, elementName)
         return parseStringToInstant(value)
+    }
+
+    private fun readDepartureDelay(parser: XmlPullParser): String? {
+        parser.require(XmlPullParser.START_TAG, NAMESPACE, "VertrekVertraging")
+        val value = readText(parser)
+        parser.require(XmlPullParser.END_TAG, NAMESPACE, "VertrekVertraging")
+        return value
     }
 
     /**

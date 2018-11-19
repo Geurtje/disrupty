@@ -9,7 +9,8 @@ data class TravelOption (
         val optimal: Boolean,
         val disruptionStatus: DisruptionStatus,
         val plannedDepartureTime: Instant? = null,
-        val currentDepartureTime: Instant? = null
+        val currentDepartureTime: Instant? = null,
+        val departureDelay: String? = null
 )
 
 

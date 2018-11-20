@@ -1,11 +1,9 @@
-package com.geuso.disrupty.ns.disruption
+package com.geuso.disrupty.disruption
 
 import assertk.assert
 import assertk.assertions.isEqualTo
-import assertk.assertions.isNotEqualTo
 import assertk.assertions.isNotNull
 import assertk.assertions.isNull
-import com.geuso.disrupty.disruption.DisruptionEvaluator
 import com.geuso.disrupty.ns.instantOf
 import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.ns.traveloption.TravelOption

@@ -1,8 +1,7 @@
-package com.geuso.disrupty.ns.disruption
+package com.geuso.disrupty.disruption
 
 import assertk.assert
 import assertk.assertions.isEqualTo
-import com.geuso.disrupty.disruption.DisruptionEvaluator
 import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.ns.traveloption.TravelOption
 import org.junit.Test

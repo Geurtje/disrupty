@@ -4,6 +4,7 @@ import assertk.assert
 import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
+import com.geuso.disrupty.ns.instantOf
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -69,11 +70,6 @@ class TravelOptionsParsingTest {
         assert(firstTravelOption.plannedDepartureTime, "First travel option planned departure time").isEqualTo(instantOf("2018-11-17T20:35:00+0100"))
         assert(firstTravelOption.currentDepartureTime, "First travel option current departure time").isEqualTo(instantOf("2018-11-17T20:39:00+0100"))
         assert(firstTravelOption.departureDelay, "First travel option departure delay").isEqualTo("+4 min")
-    }
-
-    private fun instantOf(dateTimeStr: String): Instant {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-        return dateFormat.parse(dateTimeStr).toInstant()
     }
 
 }

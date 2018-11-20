@@ -3,7 +3,10 @@ package com.geuso.disrupty.ns.disruption
 import assertk.assert
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNotEqualTo
+import assertk.assertions.isNotNull
+import assertk.assertions.isNull
 import com.geuso.disrupty.disruption.DisruptionEvaluator
+import com.geuso.disrupty.ns.instantOf
 import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.ns.traveloption.TravelOption
 import com.geuso.disrupty.ns.traveloption.TravelOptionNotification
@@ -25,7 +28,7 @@ class DisruptionEvaluationTest {
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
-        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isEqualTo(null)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNull()
     }
 
     @Test
@@ -36,7 +39,7 @@ class DisruptionEvaluationTest {
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(true)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.DELAYED)
-        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isEqualTo(null)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNull()
     }
 
     @Test
@@ -46,7 +49,7 @@ class DisruptionEvaluationTest {
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
-        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isEqualTo(null)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNull()
     }
 
     @Test
@@ -57,7 +60,7 @@ class DisruptionEvaluationTest {
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
-        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isEqualTo(null)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNull()
     }
 
     @Test
@@ -68,9 +71,41 @@ class DisruptionEvaluationTest {
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(true)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.CHANGED)
-        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNotEqualTo(null)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNotNull()
     }
 
+
+    @Test
+    fun `Test travel option with 5 minute delay is disrupted`() {
+        val travelOption = TravelOption(null, 0, true, DisruptionStatus.CHANGED,
+                instantOf("2018-11-17T20:39:00+0100"),
+                instantOf("2018-11-17T20:44:00+0100"),
+                "+5 min"
+        )
+
+        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+
+        assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(true)
+        assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.CHANGED)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNull()
+        assert(disruptionCheckResult.departureDelay, "DisruptionCheckResult departure delay string").isEqualTo("+5 min")
+    }
+
+    @Test
+    fun `Test travel option with 2 minute delay is not disrupted`() {
+        val travelOption = TravelOption(null, 0, true, DisruptionStatus.CHANGED,
+                instantOf("2018-11-17T20:39:00+0100"),
+                instantOf("2018-11-17T20:41:00+0100"),
+                "+2 min"
+        )
+
+        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+
+        assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
+        assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNull()
+        assert(disruptionCheckResult.departureDelay, "DisruptionCheckResult departure delay string").isNull()
+    }
 
 
 }

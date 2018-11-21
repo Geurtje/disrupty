@@ -32,7 +32,7 @@ object DisruptionEvaluator {
     }
 
     private fun hasSevereNotification(travelOption: TravelOption) : Boolean =
-            travelOption.notification != null && travelOption.notification!!.severe
+            travelOption.notification != null && travelOption.notification.severe
 
 
     private fun hasSignificantDepartureDelay(travelOption: TravelOption): Boolean {

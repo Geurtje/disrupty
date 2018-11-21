@@ -12,7 +12,7 @@ import com.geuso.disrupty.subscription.model.Subscription
 import com.geuso.disrupty.subscription.model.SubscriptionDao
 import com.geuso.disrupty.subscription.model.TimeConverter
 
-@Database(entities = [Subscription::class, DisruptionCheck::class], version = 1)
+@Database(entities = [Subscription::class, DisruptionCheck::class], version = 1, exportSchema = false)
 @TypeConverters(TimeConverter::class, StatusConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 

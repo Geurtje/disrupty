@@ -38,7 +38,7 @@ object DisruptionCheckJobScheduler {
         }
     }
 
-    private fun unscheduleJob(context: Context) {
+    private fun unscheduleJob() {
         SCHEDULER.cancel(JOB_ID)
         Log.i(TAG, "Job $JOB_ID unscheduled")
     }

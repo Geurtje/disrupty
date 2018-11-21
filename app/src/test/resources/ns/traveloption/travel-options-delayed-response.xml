@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReisMogelijkheden>
+    <ReisMogelijkheid>
+        <Melding>
+            <Id>prio-5000370</Id>
+            <Ernstig>true</Ernstig>
+            <Text>Let op, verstoring Arnhem Centraal - Nijmegen</Text>
+        </Melding>
+        <Melding>
+            <Id></Id>
+            <Ernstig>true</Ernstig>
+            <Text>Let op, latere aankomst</Text>
+        </Melding>
+        <AantalOverstappen>0</AantalOverstappen>
+        <GeplandeReisTijd>0:12</GeplandeReisTijd>
+        <ActueleReisTijd>0:15</ActueleReisTijd>
+        <VertrekVertraging>+4 min</VertrekVertraging>
+        <AankomstVertraging>+7 min</AankomstVertraging>
+        <Optimaal>false</Optimaal>
+        <GeplandeVertrekTijd>2018-11-17T20:35:00+0100</GeplandeVertrekTijd>
+        <ActueleVertrekTijd>2018-11-17T20:39:00+0100</ActueleVertrekTijd>
+        <GeplandeAankomstTijd>2018-11-17T20:47:00+0100</GeplandeAankomstTijd>
+        <ActueleAankomstTijd>2018-11-17T20:54:00+0100</ActueleAankomstTijd>
+        <Status>VERTRAAGD</Status>
+        <ReisDeel reisSoort="TRAIN">
+            <Vervoerder>NS</Vervoerder>
+            <VervoerType>Intercity</VervoerType>
+            <RitNummer>3071</RitNummer>
+            <Status>VERTRAAGD</Status>
+            <OngeplandeStoringId>prio-5000370</OngeplandeStoringId>
+            <ReisStop>
+                <Naam>Arnhem Centraal</Naam>
+                <Tijd>2018-11-17T20:35:00+0100</Tijd>
+                <VertrekVertraging>+4 min</VertrekVertraging>
+                <Spoor wijziging="false">8</Spoor>
+            </ReisStop>
+            <ReisStop>
+                <Naam>Nijmegen</Naam>
+                <Tijd>2018-11-17T20:47:00+0100</Tijd>
+                <VertrekVertraging>+7 min</VertrekVertraging>
+                <Spoor wijziging="false">4a</Spoor>
+            </ReisStop>
+        </ReisDeel>
+    </ReisMogelijkheid>
+</ReisMogelijkheden>

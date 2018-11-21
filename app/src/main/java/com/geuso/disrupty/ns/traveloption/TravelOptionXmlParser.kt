@@ -1,16 +1,23 @@
 package com.geuso.disrupty.ns.traveloption
 
+import android.util.Log
 import android.util.Xml
+import com.geuso.disrupty.ns.NsRestClient
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.*
 
 class TravelOptionXmlParser {
 
     companion object {
+        private val TAG = TravelOptionXmlParser::class.qualifiedName
         private val NAMESPACE : String? = null
+        private const val DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZ"
+        private val DATE_FORMAT = SimpleDateFormat(DATETIME_PATTERN)
     }
 
     fun parse(stream: InputStream): List<TravelOption> {
@@ -41,13 +48,15 @@ class TravelOptionXmlParser {
         return travelOptions
     }
 
-    fun readTravelOption(parser: XmlPullParser): TravelOption {
+    private fun readTravelOption(parser: XmlPullParser): TravelOption {
 
         var notification : TravelOptionNotification? = null
         var numberOfTransfers = 0
         var optimal = false
         var status = DisruptionStatus.ACCORDING_TO_PLAN
-
+        var plannedDepartureTime: Instant? = null
+        var currentDepartureTime: Instant? = null
+        var departureDelay: String? = null
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.eventType != XmlPullParser.START_TAG) {
@@ -60,11 +69,14 @@ class TravelOptionXmlParser {
                 "AantalOverstappen" -> numberOfTransfers = readNumberOfTransfers(parser)
                 "Status" -> status = readStatus(parser)
                 "Optimaal" -> optimal = readOptimal(parser)
+                "GeplandeVertrekTijd" -> plannedDepartureTime = readInstant(parser, "GeplandeVertrekTijd")
+                "ActueleVertrekTijd" -> currentDepartureTime = readInstant(parser, "ActueleVertrekTijd")
+                "VertrekVertraging" -> departureDelay = readDepartureDelay(parser)
                 else -> skip(parser)
             }
         }
 
-        return TravelOption(notification, numberOfTransfers, optimal, status)
+        return TravelOption(notification, numberOfTransfers, optimal, status, plannedDepartureTime, currentDepartureTime, departureDelay)
     }
 
     private fun readNotification(parser: XmlPullParser): TravelOptionNotification {
@@ -120,6 +132,20 @@ class TravelOptionXmlParser {
         return optimal.toBoolean()
     }
 
+    private fun readInstant(parser: XmlPullParser, elementName: String): Instant? {
+        parser.require(XmlPullParser.START_TAG, NAMESPACE, elementName)
+        val value = readText(parser)
+        parser.require(XmlPullParser.END_TAG, NAMESPACE, elementName)
+        return parseStringToInstant(value)
+    }
+
+    private fun readDepartureDelay(parser: XmlPullParser): String? {
+        parser.require(XmlPullParser.START_TAG, NAMESPACE, "VertrekVertraging")
+        val value = readText(parser)
+        parser.require(XmlPullParser.END_TAG, NAMESPACE, "VertrekVertraging")
+        return value
+    }
+
     /**
      * Extracts text from an xml element.
      */
@@ -145,4 +171,15 @@ class TravelOptionXmlParser {
             }
         }
     }
+
+    private fun parseStringToInstant(dateTimeStr: String): Instant? {
+        return try {
+            DATE_FORMAT.parse(dateTimeStr).toInstant()
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to parse string '$dateTimeStr' to format '$DATETIME_PATTERN'.", e)
+            null
+        }
+    }
+
+
 }

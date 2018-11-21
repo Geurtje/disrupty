@@ -1,10 +1,16 @@
 package com.geuso.disrupty.ns.traveloption
 
+import java.time.Instant
+import java.util.*
+
 data class TravelOption (
-       var notification: TravelOptionNotification?,
-       var numberOfTransfers:  Int,
-       var optimal: Boolean,
-       var disruptionStatus: DisruptionStatus
+        val notification: TravelOptionNotification?,
+        val numberOfTransfers:  Int,
+        val optimal: Boolean,
+        val disruptionStatus: DisruptionStatus,
+        val plannedDepartureTime: Instant? = null,
+        val currentDepartureTime: Instant? = null,
+        val departureDelay: String? = null
 )
 
 
@@ -35,5 +41,4 @@ enum class DisruptionStatus(val key: String) {
             }
         }
     }
-
 }

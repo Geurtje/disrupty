@@ -9,8 +9,6 @@ import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.disruption.model.DisruptionCheck
 import com.geuso.disrupty.notification.DisruptionNotificationService
 import com.geuso.disrupty.ns.NsRestClient
-import com.geuso.disrupty.ns.traveloption.DisruptionStatus
-import com.geuso.disrupty.ns.traveloption.TravelOption
 import com.geuso.disrupty.ns.traveloption.TravelOptionXmlParser
 import com.geuso.disrupty.subscription.model.Status
 import com.geuso.disrupty.subscription.model.Subscription
@@ -25,7 +23,7 @@ object DisruptionService {
 
     private val TAG = DisruptionService::class.qualifiedName
     private val subscriptionDao : SubscriptionDao = AppDatabase.INSTANCE.subscriptionDao()
-    private val DISRUPTED_STATUSES : List<DisruptionStatus> = listOf(DisruptionStatus.DELAYED, DisruptionStatus.NOT_POSSIBLE)
+
 
     /**
      * For all currently active subscriptions, check if there are any disrupted travel options.
@@ -55,15 +53,16 @@ object DisruptionService {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
                     val travelOptions = TravelOptionXmlParser().parse(responseBody!!.byteInputStream())
 
-                    val isDisruptedTriple = getDisruptedPairFromTravelOptions(travelOptions)
-                    val isDisrupted = isDisruptedTriple.first
-                    val disruptionMessage =  isDisruptedTriple.second
+                    val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
+
+                    val isDisrupted = disruptionCheckResult.isDisrupted
+                    val disruptionMessage =  resolveDisruptionMessage(disruptionCheckResult)
 
                     val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, isDisrupted, disruptionMessage, responseBody)
                     val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
 
                     if (shouldNotifyStatusChange(subscription, newSubscriptionStatus)) {
-                        val disruptionStatus = isDisruptedTriple.third
+                        val disruptionStatus = disruptionCheckResult.disruptionStatus
                         Log.i(TAG, "Sending notification for subscription: $subscription, new status: $newSubscriptionStatus, disruption status: $disruptionStatus")
 
                         DisruptionNotificationService.sendNotification(subscription, disruptionCheck, newSubscriptionStatus, disruptionStatus)
@@ -81,6 +80,17 @@ object DisruptionService {
                 }
             })
         }
+    }
+
+    private fun resolveDisruptionMessage(disruptionCheckResult: DisruptionEvaluator.DisruptionCheckResult): String {
+        if (disruptionCheckResult.departureDelay != null) {
+            return disruptionCheckResult.departureDelay
+        }
+        else if (disruptionCheckResult.message != null) {
+            return disruptionCheckResult.message
+        }
+
+        return "";
     }
 
     /*
@@ -125,36 +135,13 @@ object DisruptionService {
         return currentTime.after(subscription.timeFrom) && currentTime.before(subscription.timeTo)
     }
 
-    /**
-     * Returns a Pair, the first entry is a boolean indicating if any of the traveloptions in
-     * this list have a disruption. The second entry is the notification text part of that
-     * traveloption.
-     *
-     * A List of traveloptions is considered disrupted if either of the following is true:
-     * - The status of any traveloption is "DELAYED" or "NOT_POSSIBLE"
-     * - Any traveloption has a notification that is marked as severe
-     */
-    private fun getDisruptedPairFromTravelOptions(travelOptions: List<TravelOption>) : Triple<Boolean, String?, DisruptionStatus> {
-        for (travelOption in travelOptions) {
-            if (DISRUPTED_STATUSES.contains(travelOption.disruptionStatus)
-                ||    hasSevereNotification(travelOption)
-                &&  travelOption.disruptionStatus != DisruptionStatus.ACCORDING_TO_PLAN
-            ) {
-                return Triple(true, travelOption.notification?.text, travelOption.disruptionStatus)
-            }
-        }
-        return Triple(false, null, DisruptionStatus.ACCORDING_TO_PLAN)
-    }
 
-    private fun hasSevereNotification(travelOption: TravelOption) : Boolean =
-            travelOption.notification != null && travelOption.notification!!.severe
-
-    private fun shouldNotifyStatusChange(subscription: Subscription, status: Status): Boolean {
-        if (subscription.status == status) {
+    private fun shouldNotifyStatusChange(subscription: Subscription, newStatus: Status): Boolean {
+        if (subscription.status == newStatus) {
             return false
         }
 
-        if (subscription.status == Status.UNKNOWN && status == Status.OK) {
+        if (subscription.status == Status.UNKNOWN && newStatus == Status.OK) {
             return false
         }
 

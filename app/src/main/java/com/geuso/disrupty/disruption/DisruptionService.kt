@@ -56,7 +56,7 @@ object DisruptionService {
                     val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
 
                     val isDisrupted = disruptionCheckResult.isDisrupted
-                    val disruptionMessage =  disruptionCheckResult.message
+                    val disruptionMessage =  resolveDisruptionMessage(disruptionCheckResult)
 
                     val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, isDisrupted, disruptionMessage, responseBody)
                     val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
@@ -80,6 +80,17 @@ object DisruptionService {
                 }
             })
         }
+    }
+
+    private fun resolveDisruptionMessage(disruptionCheckResult: DisruptionEvaluator.DisruptionCheckResult): String {
+        if (disruptionCheckResult.departureDelay != null) {
+            return disruptionCheckResult.departureDelay
+        }
+        else if (disruptionCheckResult.message != null) {
+            return disruptionCheckResult.message
+        }
+
+        return "";
     }
 
     /*
@@ -125,12 +136,12 @@ object DisruptionService {
     }
 
 
-    private fun shouldNotifyStatusChange(subscription: Subscription, status: Status): Boolean {
-        if (subscription.status == status) {
+    private fun shouldNotifyStatusChange(subscription: Subscription, newStatus: Status): Boolean {
+        if (subscription.status == newStatus) {
             return false
         }
 
-        if (subscription.status == Status.UNKNOWN && status == Status.OK) {
+        if (subscription.status == Status.UNKNOWN && newStatus == Status.OK) {
             return false
         }
 

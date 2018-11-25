@@ -14,6 +14,7 @@ import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.subscription.EditSubscriptionActivity.Companion.EXTRA_SUBSCRIPTION_ID
 import com.geuso.disrupty.subscription.model.Status
 import com.geuso.disrupty.subscription.model.Subscription
+import com.geuso.disrupty.subscription.model.SubscriptionDao
 import com.geuso.disrupty.subscription.model.TimeConverter
 import com.geuso.disrupty.util.ButtonTimePicketDialog
 import com.geuso.disrupty.util.extractHourAndMinuteFromText
@@ -50,6 +51,7 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private lateinit var subscriptionDao: SubscriptionDao
     private var subscriptionId : Long? = null
     private var subscription: Subscription? = null
 
@@ -65,6 +67,8 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCreate(){
         setContentView(LAYOUT_ID)
+
+        subscriptionDao = AppDatabase.getInstance(this).subscriptionDao()
 
         if (intent.extras != null && intent.extras.containsKey(EXTRA_SUBSCRIPTION_ID)) {
             this.subscriptionId = intent.extras.getLong(EXTRA_SUBSCRIPTION_ID)
@@ -108,7 +112,7 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
 
         dialogBuilder.setMessage(R.string.delete_confirmation)
                 .setPositiveButton(R.string.confirm_positive) { _, _ ->
-                    val dao = AppDatabase.INSTANCE.subscriptionDao()
+                    val dao = AppDatabase.getInstance(applicationContext).subscriptionDao()
                     val rowsDeleted = dao.deleteSubscriptionById(this.subscriptionId!!)
 
                     if (rowsDeleted != 1) {
@@ -158,16 +162,15 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         }
 
 
-        val dao = AppDatabase.INSTANCE.subscriptionDao()
-        val rowsUpdated = dao.upsertSubscription(sub)
+        val subscriptionId = subscriptionDao.upsertSubscription(sub)
 
-        Log.i(TAG, "Saved subscription with ID: $rowsUpdated.")
-        Toast.makeText(applicationContext, "Saved subscription with ID: $rowsUpdated.", Toast.LENGTH_SHORT).show()
+        Log.i(TAG, "Saved subscription with ID: $subscriptionId.")
+        Toast.makeText(applicationContext, "Saved subscription with ID: $subscriptionId.", Toast.LENGTH_SHORT).show()
         finish()
     }
 
     private fun populateFormWithSubscription(subscriptionId : Long) {
-        val subscription = AppDatabase.INSTANCE.subscriptionDao().getSubscriptionById(subscriptionId)
+        val subscription = subscriptionDao.getSubscriptionById(subscriptionId)
 
         if (subscription != null) {
             Log.i(TAG, "Loading subscription $subscriptionId: $subscription")

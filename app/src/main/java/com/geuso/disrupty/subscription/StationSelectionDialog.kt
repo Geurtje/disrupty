@@ -92,7 +92,7 @@ class StationsListAdapter(
 
     private fun initializeTrainStationsList() {
         Log.i(TAG, "Retrieving stations from NS API")
-        NsRestClient.get(NsRestClient.PATH_STATIONS_LIST, null, object: TextHttpResponseHandler() {
+        NsRestClient(context).get(NsRestClient.PATH_STATIONS_LIST, null, object: TextHttpResponseHandler() {
 
             override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
                 val stationsObjectList = NsStationsXmlParser().parse(responseBody!!.byteInputStream())

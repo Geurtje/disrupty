@@ -17,12 +17,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        create_subscription_floating_button.setOnClickListener { _ ->
+        create_subscription_floating_button.setOnClickListener {
             EditSubscriptionActivity.start(this)
         }
 
         // Is this really necessary? I'm not sure whats a good way to force schedule jobs
-        DisruptionCheckJobScheduler.scheduleDisruptionCheckJobIfRequired()
+        DisruptionCheckJobScheduler(applicationContext).scheduleDisruptionCheckJobIfRequired()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

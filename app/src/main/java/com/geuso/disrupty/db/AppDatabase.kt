@@ -4,7 +4,7 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
-import com.geuso.disrupty.App
+import android.content.Context
 import com.geuso.disrupty.disruption.model.DisruptionCheck
 import com.geuso.disrupty.disruption.model.DisruptionCheckDao
 import com.geuso.disrupty.subscription.model.StatusConverter
@@ -21,7 +21,12 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         private const val DB_NAME = "disrupty-db"
-        val INSTANCE: AppDatabase = Room.databaseBuilder<AppDatabase>(App.context, AppDatabase::class.java, DB_NAME).allowMainThreadQueries().build()
+
+        fun getInstance(context: Context) : AppDatabase {
+            return Room.databaseBuilder<AppDatabase>(context, AppDatabase::class.java, DB_NAME)
+                    .allowMainThreadQueries() // TODO not this...
+                    .build()
+        }
     }
 
 

@@ -7,7 +7,7 @@ import android.content.Intent
 class AutoStart : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        DisruptionCheckJobScheduler.scheduleDisruptionCheckJobIfRequired()
+        DisruptionCheckJobScheduler(context).scheduleDisruptionCheckJobIfRequired()
     }
 
 }

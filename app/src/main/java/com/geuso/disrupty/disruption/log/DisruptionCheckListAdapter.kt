@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.geuso.disrupty.App
 import com.geuso.disrupty.R
 import com.geuso.disrupty.R.id.*
 import com.geuso.disrupty.disruption.model.DisruptionCheck
@@ -34,8 +33,8 @@ class DisruptionCheckListAdapter (
         assignTextToView(view, disruption_check_row_id, disruptionCheck.id.toString())
         assignTextToView(view, disruption_check_subscription_id, disruptionCheck.subscriptionId.toString())
 
-        assignTextToView(view, disruption_check_status, App.context.resources.getString(statusText))
-        assignTextToView(view, disruption_check_result, App.context.resources.getString(checkResult))
+        assignTextToView(view, disruption_check_status, context.resources.getString(statusText))
+        assignTextToView(view, disruption_check_result, context.resources.getString(checkResult))
         assignTextToView(view, disruption_check_timestamp, DateTimeConverter.INSTANCE.stringToDateTime(disruptionCheck.checkTime))
 
         return view

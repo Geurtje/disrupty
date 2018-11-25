@@ -16,7 +16,7 @@ class DisruptionCheckListFragment : ListFragment() {
     override fun onResume() {
         super.onResume()
 
-        val disruptionCheckList = AppDatabase.INSTANCE.disruptionCheckDao().getLatestDisruptionChecks()
+        val disruptionCheckList = AppDatabase.getInstance(context).disruptionCheckDao().getLatestDisruptionChecks()
         super.setListAdapter(DisruptionCheckListAdapter(context, disruptionCheckList))
     }
 

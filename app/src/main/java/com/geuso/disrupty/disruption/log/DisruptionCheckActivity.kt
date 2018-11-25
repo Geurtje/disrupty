@@ -45,7 +45,7 @@ class DisruptionCheckActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun triggerDisruptionCheck() {
-        DisruptionService.notifyDisruptedSubscriptions()
+        DisruptionService(applicationContext).notifyDisruptedSubscriptions()
     }
 
 

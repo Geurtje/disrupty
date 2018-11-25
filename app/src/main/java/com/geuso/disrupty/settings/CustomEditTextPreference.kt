@@ -1,10 +1,8 @@
 package com.geuso.disrupty.settings
 
-import android.app.Application
 import android.content.Context
 import android.preference.EditTextPreference
 import android.util.AttributeSet
-import com.geuso.disrupty.App
 import com.geuso.disrupty.R
 
 /**
@@ -38,9 +36,9 @@ class PasswordSetEditTextPreference : EditTextPreference {
     override fun getSummary(): CharSequence {
         val summary = super.getSummary().toString()
 
-        var setStr = App.context.resources.getString(R.string.pref_api_pass_not_set)
+        var setStr = context.resources.getString(R.string.pref_api_pass_not_set)
         if (text != null && text.isNotEmpty()) {
-            setStr = App.context.resources.getString(R.string.pref_api_pass_set)
+            setStr = context.resources.getString(R.string.pref_api_pass_set)
         }
         return String.format(summary, setStr)
     }

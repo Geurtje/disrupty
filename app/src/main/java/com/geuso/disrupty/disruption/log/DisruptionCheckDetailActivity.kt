@@ -24,8 +24,6 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var disruptionCheck : DisruptionCheck
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,8 +34,8 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
         }
 
         val disruptionCheckId = intent.extras.getLong(EXTRA_DISRUPTION_CHECK_ID)
-        disruptionCheck = AppDatabase.INSTANCE.disruptionCheckDao().getDisruptionCheckById(disruptionCheckId)
-        var subscription = AppDatabase.INSTANCE.subscriptionDao().getSubscriptionById(disruptionCheck.subscriptionId)
+        val disruptionCheck = AppDatabase.getInstance(applicationContext).disruptionCheckDao().getDisruptionCheckById(disruptionCheckId)
+        val subscription = AppDatabase.getInstance(applicationContext).subscriptionDao().getSubscriptionById(disruptionCheck.subscriptionId)
 
         setContentView(LAYOUT_ID)
 

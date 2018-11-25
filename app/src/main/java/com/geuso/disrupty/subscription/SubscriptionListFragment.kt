@@ -17,7 +17,7 @@ class SubscriptionListFragment : ListFragment() {
     override fun onResume() {
         super.onResume()
 
-        val allSubscriptions = AppDatabase.INSTANCE.subscriptionDao().getAllSubscriptions()
+        val allSubscriptions = AppDatabase.getInstance(context).subscriptionDao().getAllSubscriptions()
         val subscriptionListAdapter = SubscriptionListAdapter(context, allSubscriptions.toList())
         super.setListAdapter(subscriptionListAdapter)
     }

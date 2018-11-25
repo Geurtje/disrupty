@@ -3,10 +3,10 @@ package com.geuso.disrupty.disruption
 import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
-import com.geuso.disrupty.App
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.disruption.model.DisruptionCheck
+import com.geuso.disrupty.disruption.model.DisruptionCheckDao
 import com.geuso.disrupty.notification.DisruptionNotificationService
 import com.geuso.disrupty.ns.NsRestClient
 import com.geuso.disrupty.ns.traveloption.TravelOptionXmlParser
@@ -19,10 +19,15 @@ import cz.msebera.android.httpclient.Header
 import java.util.*
 import kotlin.collections.ArrayList
 
-object DisruptionService {
+class DisruptionService(val context: Context) {
 
-    private val TAG = DisruptionService::class.qualifiedName
-    private val subscriptionDao : SubscriptionDao = AppDatabase.INSTANCE.subscriptionDao()
+    private val subscriptionDao: SubscriptionDao = AppDatabase.getInstance(context).subscriptionDao()
+    private val disruptionCheckDao: DisruptionCheckDao = AppDatabase.getInstance(context).disruptionCheckDao()
+
+    companion object {
+        private val TAG = DisruptionService::class.qualifiedName
+
+    }
 
 
     /**
@@ -35,16 +40,18 @@ object DisruptionService {
             checkSubscriptionsAndNotifyIfDisrupted(subscriptionsToCheck)
         }
         else {
-            val alertMessage = App.context.resources.getString(R.string.disruption_check_no_network)
+            val alertMessage = context.resources.getString(R.string.disruption_check_no_network)
             Log.e(TAG, alertMessage)
         }
 
     }
 
     private fun checkSubscriptionsAndNotifyIfDisrupted(subscriptions: List<Subscription>) {
+        val nsRestClient = NsRestClient(context)
+
         for (subscription in subscriptions) {
-            val params = NsRestClient.paramsForTravelOptions(subscription.stationFrom, subscription.stationTo)
-            NsRestClient.get(NsRestClient.PATH_TRAVEL_OPTIONS, params, object: TextHttpResponseHandler() {
+            val params = nsRestClient.paramsForTravelOptions(subscription.stationFrom, subscription.stationTo)
+            nsRestClient.get(NsRestClient.PATH_TRAVEL_OPTIONS, params, object: TextHttpResponseHandler() {
 
                 override fun getUseSynchronousMode(): Boolean {
                     return false
@@ -65,7 +72,7 @@ object DisruptionService {
                         val disruptionStatus = disruptionCheckResult.disruptionStatus
                         Log.i(TAG, "Sending notification for subscription: $subscription, new status: $newSubscriptionStatus, disruption status: $disruptionStatus")
 
-                        DisruptionNotificationService.sendNotification(subscription, disruptionCheck, newSubscriptionStatus, disruptionStatus)
+                        DisruptionNotificationService.sendNotification(context, subscription, disruptionCheck, newSubscriptionStatus, disruptionStatus)
                     }
 
                     saveDisruptionCheck(disruptionCheck)
@@ -155,18 +162,16 @@ object DisruptionService {
     }
 
     private fun saveDisruptionCheck(disruptionCheck: DisruptionCheck) {
-        val disruptionCheckDao = AppDatabase.INSTANCE.disruptionCheckDao()
         disruptionCheckDao.upsertDisruptionCheck(disruptionCheck)
     }
 
     private fun saveSubscriptionStatus(subscription: Subscription, status: Status) {
         subscription.status = status
-        val subscriptionDao = AppDatabase.INSTANCE.subscriptionDao()
         subscriptionDao.upsertSubscription(subscription)
     }
 
     private fun isNetworkConnectionAvailable() : Boolean {
-        val connectivityManager = App.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
     }

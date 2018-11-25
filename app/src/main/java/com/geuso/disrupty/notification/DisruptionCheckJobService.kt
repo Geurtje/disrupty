@@ -16,7 +16,7 @@ class DisruptionCheckJobService : JobService() {
         Log.d(TAG, "DisruptionCheckJob started")
 
         Thread(Runnable {
-            DisruptionService.notifyDisruptedSubscriptions()
+            DisruptionService(applicationContext).notifyDisruptedSubscriptions()
             Log.d(TAG, "DisruptionCheckJob finished")
             jobFinished(params, false)
         }).start()

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.geuso.disrupty.App
 import com.geuso.disrupty.R
 import com.geuso.disrupty.R.id.*
 import com.geuso.disrupty.subscription.model.Subscription
@@ -17,15 +16,14 @@ import com.geuso.disrupty.subscription.model.TimeConverter
 /**
  * Created by Tom on 4-2-2018.
  */
-class SubscriptionListAdapter : ArrayAdapter<Subscription> {
+class SubscriptionListAdapter(context: Context, items: List<Subscription>) :
+        ArrayAdapter<Subscription>(context, rowLayoutId, sub_row_id, items) {
 
 
     companion object {
         private const val rowLayoutId = R.layout.subscription_list_row
 
     }
-
-    constructor(context: Context, items: List<Subscription>) : super(context, rowLayoutId, sub_row_id, items)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
@@ -49,7 +47,7 @@ class SubscriptionListAdapter : ArrayAdapter<Subscription> {
     }
 
     private fun assignImageToView(rowView: View, id: Int, imageId: Int) {
-        rowView.findViewById<ImageView>(id).setImageDrawable(ContextCompat.getDrawable(App.context, imageId))
+        rowView.findViewById<ImageView>(id).setImageDrawable(ContextCompat.getDrawable(context, imageId))
     }
 
 }

@@ -5,7 +5,7 @@ import com.geuso.disrupty.ns.traveloption.TravelOption
 
 object DisruptionEvaluator {
 
-    private val DISRUPTED_STATUSES : List<DisruptionStatus> = listOf(DisruptionStatus.DELAYED, DisruptionStatus.NOT_POSSIBLE)
+    private val DISRUPTED_STATUSES : List<DisruptionStatus> = listOf(DisruptionStatus.NOT_POSSIBLE)
     private const val MINIMUM_DELAY_MS = 120_000 // 2 minutes in ms
 
     /**

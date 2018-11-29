@@ -30,13 +30,13 @@ class DisruptionEvaluationTest {
     }
 
     @Test
-    fun `Test delayed travel option is disrupted`(){
+    fun `Test delayed travel option is disrupted not disrupted without departure times`(){
         val undisruptedTravelOption = TravelOption(null, 2, true, DisruptionStatus.ACCORDING_TO_PLAN)
         val disruptedTravelOption = TravelOption(null, 0, false, DisruptionStatus.DELAYED)
         val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(undisruptedTravelOption, disruptedTravelOption))
 
-        assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(true)
-        assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.DELAYED)
+        assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
+        assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
         assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNull()
     }
 
@@ -92,6 +92,22 @@ class DisruptionEvaluationTest {
     @Test
     fun `Test travel option with 2 minute delay is not disrupted`() {
         val travelOption = TravelOption(null, 0, true, DisruptionStatus.CHANGED,
+                instantOf("2018-11-17T20:39:00+0100"),
+                instantOf("2018-11-17T20:41:00+0100"),
+                "+2 min"
+        )
+
+        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+
+        assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
+        assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
+        assert(disruptionCheckResult.message, "DisruptionCheckResult message").isNull()
+        assert(disruptionCheckResult.departureDelay, "DisruptionCheckResult departure delay string").isNull()
+    }
+
+    @Test
+    fun `Test travel option with 2 minute delay and status delayed is not disrupted`() {
+        val travelOption = TravelOption(null, 0, true, DisruptionStatus.DELAYED,
                 instantOf("2018-11-17T20:39:00+0100"),
                 instantOf("2018-11-17T20:41:00+0100"),
                 "+2 min"

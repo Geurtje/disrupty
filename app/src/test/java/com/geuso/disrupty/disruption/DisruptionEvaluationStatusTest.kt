@@ -20,7 +20,7 @@ class DisruptionEvaluationStatusTest(
                 arrayOf(DisruptionStatus.UNKNOWN, false),
                 arrayOf(DisruptionStatus.ACCORDING_TO_PLAN, false),
                 arrayOf(DisruptionStatus.CHANGED, false),
-                arrayOf(DisruptionStatus.DELAYED, true),
+                arrayOf(DisruptionStatus.DELAYED, false),
                 arrayOf(DisruptionStatus.NEW, false),
                 arrayOf(DisruptionStatus.NOT_OPTIMAL, false),
                 arrayOf(DisruptionStatus.NOT_POSSIBLE, true),

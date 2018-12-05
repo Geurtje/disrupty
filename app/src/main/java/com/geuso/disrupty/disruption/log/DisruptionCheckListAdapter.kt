@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.geuso.disrupty.R
 import com.geuso.disrupty.R.id.*
+import com.geuso.disrupty.db.InstantConverter
 import com.geuso.disrupty.disruption.model.DisruptionCheck
-import com.geuso.disrupty.util.DateTimeConverter
 
 class DisruptionCheckListAdapter (
         context: Context,
@@ -35,7 +35,7 @@ class DisruptionCheckListAdapter (
 
         assignTextToView(view, disruption_check_status, context.resources.getString(statusText))
         assignTextToView(view, disruption_check_result, context.resources.getString(checkResult))
-        assignTextToView(view, disruption_check_timestamp, DateTimeConverter.INSTANCE.stringToDateTime(disruptionCheck.checkTime))
+        assignTextToView(view, disruption_check_timestamp, InstantConverter().format(disruptionCheck.timestamp))
 
         return view
     }

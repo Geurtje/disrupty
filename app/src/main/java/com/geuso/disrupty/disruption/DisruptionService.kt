@@ -16,6 +16,7 @@ import com.geuso.disrupty.subscription.model.SubscriptionDao
 import com.geuso.disrupty.subscription.model.TimeConverter
 import com.loopj.android.http.TextHttpResponseHandler
 import cz.msebera.android.httpclient.Header
+import java.time.Instant
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -65,7 +66,7 @@ class DisruptionService(val context: Context) {
                     val isDisrupted = disruptionCheckResult.isDisrupted
                     val disruptionMessage =  resolveDisruptionMessage(disruptionCheckResult)
 
-                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, isDisrupted, disruptionMessage, responseBody)
+                    val disruptionCheck = DisruptionCheck(subscription.id, Instant.now(), isDisrupted, disruptionMessage, responseBody)
                     val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
 
                     if (shouldNotifyStatusChange(subscription, newSubscriptionStatus)) {
@@ -81,7 +82,7 @@ class DisruptionService(val context: Context) {
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
                     Log.e(TAG, "Failure: $statusCode, body: $responseBody")
-                    val disruptionCheck = DisruptionCheck(subscription.id, Calendar.getInstance().time, false, null, "$error\n\n\n$responseBody", false)
+                    val disruptionCheck = DisruptionCheck(subscription.id, Instant.now(), false, null, "$error\n\n\n$responseBody", false)
                     saveDisruptionCheck(disruptionCheck)
                     saveSubscriptionStatus(subscription, Status.UNKNOWN)
                 }

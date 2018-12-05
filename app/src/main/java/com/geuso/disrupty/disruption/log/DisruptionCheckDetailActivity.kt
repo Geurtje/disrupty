@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
+import com.geuso.disrupty.db.InstantConverter
 import com.geuso.disrupty.disruption.model.DisruptionCheck
 import kotlinx.android.synthetic.main.disruption_check_detail_view.*
 
@@ -48,7 +49,7 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
             dc_detail_station_to.text = "unknown"
         }
 
-        dc_detail_timestamp.text = disruptionCheck.checkTime.toString()
+        dc_detail_timestamp.text = InstantConverter().format(disruptionCheck.timestamp)
         dc_detail_status.text = disruptionCheck.success.toString()
 
         dc_detail_response.text = disruptionCheck.response

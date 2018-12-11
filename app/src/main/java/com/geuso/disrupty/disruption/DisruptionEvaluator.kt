@@ -20,8 +20,10 @@ class DisruptionEvaluator(
     private val minimumDelayInMs: Int
 
     init {
-        val minimumDelayInMinutes = sharedPreferences.getInt("pref_disruption_minimum_delay_time",
-                context.resources.getInteger(R.integer.default_delay_disruption_window_in_minutes))
+        // For whatever reason sharedPreferences.getInt is unable to return an Integer,
+        // so we need to get the String value and cast it...
+        val minimumDelayInMinutes = Integer.parseInt(sharedPreferences.getString("pref_disruption_minimum_delay_time",
+                context.resources.getInteger(R.integer.default_delay_disruption_window_in_minutes).toString()))
 
         minimumDelayInMs = minimumDelayInMinutes * 60_000 // 1 minute = 60.000 ms
     }

@@ -1,5 +1,8 @@
 package com.geuso.disrupty.disruption
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.content.res.Resources
 import assertk.assert
 import assertk.assertions.isEqualTo
 import com.geuso.disrupty.ns.traveloption.DisruptionStatus
@@ -7,6 +10,7 @@ import com.geuso.disrupty.ns.traveloption.TravelOption
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.mockito.Mockito
 
 @RunWith(Parameterized::class)
 class DisruptionEvaluationStatusTest(
@@ -26,13 +30,23 @@ class DisruptionEvaluationStatusTest(
                 arrayOf(DisruptionStatus.NOT_POSSIBLE, true),
                 arrayOf(DisruptionStatus.PLAN_CHANGED, false)
         )
+
+        private val sharedPreferences = Mockito.mock(SharedPreferences::class.java)
+        private val context = Mockito.mock(Context::class.java)
+
+        init {
+            Mockito.`when`(sharedPreferences.getInt(Mockito.eq("pref_disruption_minimum_delay_time"), Mockito.anyInt()))
+                    .thenReturn(2)
+            Mockito.`when`(context.resources)
+                    .thenReturn(Mockito.mock(Resources::class.java))
+        }
     }
 
     @Test
     fun `Assert DisruptionStatus disrupted or not based on status`() {
         println("Testing that DisruptionStatus $disruptionStatus is disrupted: $isDisrupted")
         val travelOption = TravelOption(null, 2, true, disruptionStatus)
-        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+        val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(isDisrupted)
     }

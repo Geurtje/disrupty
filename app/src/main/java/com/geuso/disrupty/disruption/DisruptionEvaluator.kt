@@ -1,12 +1,31 @@
 package com.geuso.disrupty.disruption
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
+import com.geuso.disrupty.R
 import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.ns.traveloption.TravelOption
 
-object DisruptionEvaluator {
+/*
+* TODO remove the SharedPreferences dependency. The reason it's present because I wasn't able to
+* mock return a mocked instance from PreferenceManager.getDefaultSharedPreferences(context).
+* Thus, the only reason its present is for unit testing. */
+class DisruptionEvaluator(
+        context: Context,
+        sharedPreferences: SharedPreferences
+) {
 
-    private val DISRUPTED_STATUSES : List<DisruptionStatus> = listOf(DisruptionStatus.NOT_POSSIBLE)
-    private const val MINIMUM_DELAY_MS = 120_000 // 2 minutes in ms
+    private val disruptedStatuses : List<DisruptionStatus> = listOf(DisruptionStatus.NOT_POSSIBLE)
+    private val minimumDelayInMs: Int
+
+    init {
+        val minimumDelayInMinutes = sharedPreferences.getInt("pref_disruption_minimum_delay_time",
+                context.resources.getInteger(R.integer.default_delay_disruption_window_in_minutes))
+
+        minimumDelayInMs = minimumDelayInMinutes * 60_000 // 1 minute = 60.000 ms
+    }
+
 
     /**
      * A List of traveloptions is considered disrupted if either of the following is true:
@@ -16,7 +35,7 @@ object DisruptionEvaluator {
      */
     fun getDisruptionCheckResultFromTravelOptions(travelOptions: List<TravelOption>) : DisruptionCheckResult {
         for (travelOption in travelOptions) {
-            if ((DISRUPTED_STATUSES.contains(travelOption.disruptionStatus)
+            if ((disruptedStatuses.contains(travelOption.disruptionStatus)
                     || hasSevereNotification(travelOption)
                     || hasSignificantDepartureDelay(travelOption)
                             ) &&  travelOption.disruptionStatus != DisruptionStatus.ACCORDING_TO_PLAN
@@ -41,7 +60,7 @@ object DisruptionEvaluator {
 
         if (planned != null && current != null) {
             val minusSeconds = current.minusSeconds(planned.epochSecond)
-            if (minusSeconds.toEpochMilli() > MINIMUM_DELAY_MS) {
+            if (minusSeconds.toEpochMilli() > minimumDelayInMs) {
                 return true
             }
         }

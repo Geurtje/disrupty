@@ -20,8 +20,8 @@ class DisruptionEvaluator(
     private val minimumDelayInMs: Int
 
     init {
-        // For whatever reason sharedPreferences.getInt is unable to return an Integer,
-        // so we need to get the String value and cast it...
+        // For whatever reason sharedPreferences.getInt throws a ClassCastException,
+        // so we need to get the String value and manually convert it...
         val minimumDelayInMinutes = Integer.parseInt(sharedPreferences.getString("pref_disruption_minimum_delay_time",
                 context.resources.getInteger(R.integer.default_delay_disruption_window_in_minutes).toString()))
 

@@ -2,6 +2,7 @@ package com.geuso.disrupty.disruption
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.preference.PreferenceManager
 import android.util.Log
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
@@ -61,7 +62,9 @@ class DisruptionService(val context: Context) {
                 override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
                     val travelOptions = TravelOptionXmlParser().parse(responseBody!!.byteInputStream())
 
-                    val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
+
+                    val disruptionEvaluator = DisruptionEvaluator(context, PreferenceManager.getDefaultSharedPreferences(context))
+                    val disruptionCheckResult = disruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
 
                     val isDisrupted = disruptionCheckResult.isDisrupted
                     val disruptionMessage =  resolveDisruptionMessage(disruptionCheckResult)

@@ -1,5 +1,8 @@
 package com.geuso.disrupty.disruption
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.content.res.Resources
 import assertk.assert
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNotNull
@@ -10,6 +13,7 @@ import com.geuso.disrupty.ns.traveloption.TravelOption
 import com.geuso.disrupty.ns.traveloption.TravelOptionNotification
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
 
 /*
@@ -19,10 +23,23 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class DisruptionEvaluationTest {
 
+    companion object {
+        private val sharedPreferences = Mockito.mock(SharedPreferences::class.java)
+        private val context = Mockito.mock(Context::class.java)
+
+        init {
+            Mockito.`when`(sharedPreferences.getInt(Mockito.eq("pref_disruption_minimum_delay_time"), Mockito.anyInt()))
+                    .thenReturn(2)
+            Mockito.`when`(context.resources)
+                    .thenReturn(Mockito.mock(Resources::class.java))
+        }
+    }
+
+
     @Test
     fun `Test traveloptions not disrupted`() {
         val undisruptedTravelOption = TravelOption(null, 2, true, DisruptionStatus.ACCORDING_TO_PLAN)
-        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(undisruptedTravelOption))
+        val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(undisruptedTravelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
@@ -33,7 +50,7 @@ class DisruptionEvaluationTest {
     fun `Test delayed travel option is disrupted not disrupted without departure times`(){
         val undisruptedTravelOption = TravelOption(null, 2, true, DisruptionStatus.ACCORDING_TO_PLAN)
         val disruptedTravelOption = TravelOption(null, 0, false, DisruptionStatus.DELAYED)
-        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(undisruptedTravelOption, disruptedTravelOption))
+        val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(undisruptedTravelOption, disruptedTravelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
@@ -43,7 +60,7 @@ class DisruptionEvaluationTest {
     @Test
     fun `Test travel option with not severe notification is not disrupted`() {
         val travelOption = TravelOption(TravelOptionNotification(false, "this is a test message"), 2, true, DisruptionStatus.ACCORDING_TO_PLAN)
-        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+        val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
@@ -54,7 +71,7 @@ class DisruptionEvaluationTest {
     fun `Test travel option with severe notification is not disrupted when status is according to plan`(){
         val travelOption = TravelOption(TravelOptionNotification(true, "something bad is going on"), 0, true, DisruptionStatus.ACCORDING_TO_PLAN)
 
-        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+        val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
@@ -65,7 +82,7 @@ class DisruptionEvaluationTest {
     fun `Test travel option with severe notification is disrupted when status is not according to plan`(){
         val travelOption = TravelOption(TravelOptionNotification(true, "something bad is going on"), 0, true, DisruptionStatus.CHANGED)
 
-        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+        val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(true)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.CHANGED)
@@ -81,7 +98,7 @@ class DisruptionEvaluationTest {
                 "+5 min"
         )
 
-        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+        val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(true)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.CHANGED)
@@ -97,7 +114,7 @@ class DisruptionEvaluationTest {
                 "+2 min"
         )
 
-        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+        val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)
@@ -113,7 +130,7 @@ class DisruptionEvaluationTest {
                 "+2 min"
         )
 
-        val disruptionCheckResult = DisruptionEvaluator.getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
+        val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
         assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(false)
         assert(disruptionCheckResult.disruptionStatus, "DisruptionCheckResult status").isEqualTo(DisruptionStatus.ACCORDING_TO_PLAN)

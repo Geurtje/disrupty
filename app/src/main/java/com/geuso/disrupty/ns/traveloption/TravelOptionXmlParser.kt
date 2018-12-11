@@ -17,7 +17,6 @@ class TravelOptionXmlParser {
         private val TAG = TravelOptionXmlParser::class.qualifiedName
         private val NAMESPACE : String? = null
         private const val DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZ"
-        private val DATE_FORMAT = SimpleDateFormat(DATETIME_PATTERN)
     }
 
     fun parse(stream: InputStream): List<TravelOption> {
@@ -174,7 +173,7 @@ class TravelOptionXmlParser {
 
     private fun parseStringToInstant(dateTimeStr: String): Instant? {
         return try {
-            DATE_FORMAT.parse(dateTimeStr).toInstant()
+            SimpleDateFormat(DATETIME_PATTERN).parse(dateTimeStr).toInstant()
         } catch (e: Exception) {
             Log.w(TAG, "Failed to parse string '$dateTimeStr' to format '$DATETIME_PATTERN'.", e)
             null

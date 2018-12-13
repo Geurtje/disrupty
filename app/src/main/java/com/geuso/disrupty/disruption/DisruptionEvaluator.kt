@@ -37,10 +37,13 @@ class DisruptionEvaluator(
      */
     fun getDisruptionCheckResultFromTravelOptions(travelOptions: List<TravelOption>) : DisruptionCheckResult {
         for (travelOption in travelOptions) {
-            if ((disruptedStatuses.contains(travelOption.disruptionStatus)
+            if (travelOption.disruptionStatus == DisruptionStatus.ACCORDING_TO_PLAN) {
+                continue
+            }
+
+            if (disruptedStatuses.contains(travelOption.disruptionStatus)
                     || hasSevereNotification(travelOption)
                     || hasSignificantDepartureDelay(travelOption)
-                            ) &&  travelOption.disruptionStatus != DisruptionStatus.ACCORDING_TO_PLAN
             ) {
                 return DisruptionCheckResult(true,
                         travelOption.notification?.text,

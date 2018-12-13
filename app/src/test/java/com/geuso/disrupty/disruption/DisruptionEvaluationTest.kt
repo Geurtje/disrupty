@@ -28,8 +28,8 @@ class DisruptionEvaluationTest {
         private val context = Mockito.mock(Context::class.java)
 
         init {
-            Mockito.`when`(sharedPreferences.getInt(Mockito.eq("pref_disruption_minimum_delay_time"), Mockito.anyInt()))
-                    .thenReturn(2)
+            Mockito.`when`(sharedPreferences.getString(Mockito.eq("pref_disruption_minimum_delay_time"), Mockito.anyString()))
+                    .thenReturn("2")
             Mockito.`when`(context.resources)
                     .thenReturn(Mockito.mock(Resources::class.java))
         }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Generic subscription display -->
+    <string name="station_from">From station</string>
+    <string name="station_to">To station</string>
+
+    <string name="time">Time</string>
+    <string name="time_from">From</string>
+    <string name="time_to">to</string>
+
+
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+
+    <string name="confirm_positive">Yes</string>
+    <string name="confirm_negative">No</string>
+
+    <string name="search">Search</string>
+
+    <string name="default_subscription_from_time">8:00</string>
+    <string name="default_subscription_to_time">10:00</string>
+
+
+    <!-- Subscription overview -->
+    <string name="no_subscriptions_setup">No subscriptions setup yet</string>
+
+    <!-- Deletion -->
+    <string name="subscription_delete_confirmation">Are you sure you permanently want to delete this subscription?</string>
+    <string name="subscription_delete_success">Subscription deleted</string>
+    <string name="subscription_delete_failure">There was an issue deleting this subscription</string>
+
+</resources>

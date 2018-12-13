@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Category NS API login details -->
+    <string name="pref_cat_api">NS API settings</string>
+    <string name="pref_api_username">Username</string>
+    <string name="pref_api_username_summary">Username for the NS API: %s</string>
+    <string name="pref_api_password">Password</string>
+    <string name="pref_api_password_summary">Password for the NS API: %s</string>
+    <string name="pref_api_pass_not_set">not yet setup</string>
+    <string name="pref_api_pass_set">filled in</string>
+
+    <!-- Category Disruption configuration properties-->
+    <string name="pref_cat_disruption">Disruption configuration</string>
+    <string name="pref_disruption_delay_window_title">Acceptable departure delay</string>
+    <string name="pref_disruption_delay_window_summary">Minimum number of minutes before a delayed departure time is considered disrupted: %s minutes.</string>
+    <integer name="default_delay_disruption_window_in_minutes">3</integer>
+
+</resources>

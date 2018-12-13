@@ -110,15 +110,15 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
 
         val dialogBuilder = AlertDialog.Builder(this)
 
-        dialogBuilder.setMessage(R.string.delete_confirmation)
+        dialogBuilder.setMessage(R.string.subscription_delete_confirmation)
                 .setPositiveButton(R.string.confirm_positive) { _, _ ->
                     val dao = AppDatabase.getInstance(applicationContext).subscriptionDao()
                     val rowsDeleted = dao.deleteSubscriptionById(this.subscriptionId!!)
 
                     if (rowsDeleted != 1) {
-                        Toast.makeText(this, R.string.delete_failure, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.subscription_delete_failure, Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this, R.string.delete_success, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.subscription_delete_success, Toast.LENGTH_SHORT).show()
                         finish()
                     }
                 }

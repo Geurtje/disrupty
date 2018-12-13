@@ -70,7 +70,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="time"
-        android:text="@string/time_from_default_value"
+        android:text="@string/default_subscription_from_time"
         app:layout_constraintBaseline_toBaselineOf="@+id/label_time_to"
         app:layout_constraintLeft_toLeftOf="@+id/input_station_to"
         app:layout_constraintRight_toLeftOf="@+id/label_time_to"
@@ -85,7 +85,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="time"
-        android:text="@string/time_to_default_value"
+        android:text="@string/default_subscription_to_time"
         app:layout_constraintLeft_toRightOf="@+id/label_time_to"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_station_to" />

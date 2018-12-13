@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="disruption_title_check_log">Disruption check log</string>
+    <string name="disruption_title_check_details">Disruption check details</string>
+
+    <!-- Disruption check log -->
+    <string name="trigger_disruption_check">Trigger disruption check</string>
+
+    <string name="disruption_check_status_success">OK</string>
+    <string name="disruption_check_status_failure">DISRUPTED</string>
+    <string name="disruption_check_success">success</string>
+    <string name="disruption_check_failure">failure</string>
+
+    <string name="disruption_check_detail_missing_id">Unable to load disruption check details for empty disruption check id</string>
+
+    <!-- Disruption checks -->
+    <string name="disruption_check_no_network">No network connectivity, unable to check disruptions.</string>
+
+
+    <!-- Notifications -->
+    <string name="notify_disruption_detected_title">Route disrupted</string>
+    <string name="notify_disruption_detected_content">%1$s - %2$s [%3$s] : %4$s</string>
+    <string name="notify_disruption_resolved_title">Disruption resolved</string>
+    <string name="notify_disruption_resolved_content">%1$s - %2$s</string>
+
+</resources>

@@ -62,8 +62,11 @@
         app:layout_constraintRight_toRightOf="parent"
         android:focusable="false" />
 
-    <Button
-        android:id="@+id/button_time_from"
+    <!-- android:focusable needs to be false so that we can skip the first focus event and
+        show the timepicker dialog on the click event.-->
+    <EditText
+        android:id="@+id/input_time_from"
+        android:focusable="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
@@ -76,8 +79,12 @@
         app:layout_constraintRight_toLeftOf="@+id/label_time_to"
         app:layout_constraintTop_toBottomOf="@+id/input_station_to" />
 
-    <Button
-        android:id="@+id/button_time_to"
+
+    <!-- android:focusable needs to be false so that we can skip the first focus event and
+        show the timepicker dialog on the click event.-->
+    <EditText
+        android:id="@+id/input_time_to"
+        android:focusable="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
@@ -96,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:text="@string/time"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button_time_from"
+        app:layout_constraintBaseline_toBaselineOf="@+id/input_time_from"
         app:layout_constraintLeft_toLeftOf="@+id/label_station_to"
         tools:layout_editor_absoluteY="148dp" />
 
@@ -107,9 +114,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/time_to"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button_time_to"
-        app:layout_constraintLeft_toRightOf="@+id/button_time_from"
-        app:layout_constraintRight_toLeftOf="@+id/button_time_to" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/input_time_to"
+        app:layout_constraintLeft_toRightOf="@+id/input_time_from"
+        app:layout_constraintRight_toLeftOf="@+id/input_time_to" />
 
 
     <TextView
@@ -120,7 +127,7 @@
         android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="@+id/label_time"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/button_time_from" />
+        app:layout_constraintTop_toBottomOf="@+id/input_time_from" />
 
     <CheckBox
         android:id="@+id/input_day_monday"

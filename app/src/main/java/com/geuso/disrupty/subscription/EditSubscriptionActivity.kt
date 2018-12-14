@@ -16,7 +16,7 @@ import com.geuso.disrupty.subscription.model.Status
 import com.geuso.disrupty.subscription.model.Subscription
 import com.geuso.disrupty.subscription.model.SubscriptionDao
 import com.geuso.disrupty.subscription.model.TimeConverter
-import com.geuso.disrupty.util.ButtonTimePicketDialog
+import com.geuso.disrupty.util.EditTextTimePicketDialog
 import com.geuso.disrupty.util.extractHourAndMinuteFromText
 import kotlinx.android.synthetic.main.activity_edit_subscription.*
 
@@ -81,8 +81,8 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
 
         input_station_from.setOnClickListener(this)
         input_station_to.setOnClickListener(this)
-        button_time_from.setOnClickListener(this)
-        button_time_to.setOnClickListener(this)
+        input_time_from.setOnClickListener(this)
+        input_time_to.setOnClickListener(this)
         button_save.setOnClickListener(this)
         button_delete.setOnClickListener(this)
 
@@ -96,8 +96,8 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         when (v) {
             input_station_from -> StationSelectionDialog(this, input_station_from).show()
             input_station_to -> StationSelectionDialog(this, input_station_to).show()
-            button_time_from -> ButtonTimePicketDialog(this, true, button_time_from).show()
-            button_time_to -> ButtonTimePicketDialog(this, true, button_time_to).show()
+            input_time_from -> EditTextTimePicketDialog(this, true, input_time_from).show()
+            input_time_to -> EditTextTimePicketDialog(this, true, input_time_to).show()
             button_save -> saveSubscription()
             button_delete -> deleteSubscription()
         }
@@ -132,11 +132,11 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
         val stationFrom: String = input_station_from.text.toString()
         val stationTo: String  = input_station_to.text.toString()
 
-        val timeFrom: Pair<Int, Int> = extractHourAndMinuteFromText(button_time_from.text)
+        val timeFrom: Pair<Int, Int> = extractHourAndMinuteFromText(input_time_from.text)
         val timeFromHour: Int = timeFrom.first
         val timeFromMinute: Int = timeFrom.second
 
-        val timeTo: Pair<Int, Int> = extractHourAndMinuteFromText(button_time_to.text)
+        val timeTo: Pair<Int, Int> = extractHourAndMinuteFromText(input_time_to.text)
         val timeToHour: Int = timeTo.first
         val timeToMinute: Int = timeTo.second
 
@@ -178,8 +178,8 @@ class EditSubscriptionActivity : AppCompatActivity(), View.OnClickListener {
             input_station_from.setText(subscription.stationFrom)
             input_station_to.setText(subscription.stationTo)
 
-            button_time_from.text = TimeConverter.INSTANCE.dateToTime(subscription.timeFrom)
-            button_time_to.text = TimeConverter.INSTANCE.dateToTime(subscription.timeTo)
+            input_time_from.setText(TimeConverter.INSTANCE.dateToTime(subscription.timeFrom))
+            input_time_to.setText(TimeConverter.INSTANCE.dateToTime(subscription.timeTo))
 
             input_day_monday.isChecked = subscription.monday
             input_day_tuesday.isChecked = subscription.tuesday

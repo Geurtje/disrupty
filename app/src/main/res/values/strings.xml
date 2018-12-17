@@ -2,11 +2,7 @@
     <string name="app_name">Disrupty</string>
     <string name="action_settings">Settings</string>
     <string name="action_disruption_check_log">Disruption check log</string>
-
-
-    <!-- Navigation menu labels -->
-    <string name="nav_create_subscription">New subscription</string>
-    <string name="nav_settings">Settings</string>
+    <string name="action_subscription_title_create">New subscription</string>
 
 
     <!-- NS related messages-->

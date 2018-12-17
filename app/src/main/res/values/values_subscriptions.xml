@@ -15,14 +15,24 @@
     <string name="confirm_positive">Yes</string>
     <string name="confirm_negative">No</string>
 
-    <string name="search">Search</string>
-
     <string name="default_subscription_from_time">8:00</string>
     <string name="default_subscription_to_time">10:00</string>
 
+    <!-- Generic accessibility hints -->
+    <string name="subscription_hint_departure_station">Departure station for this subscription</string>
+    <string name="subscription_hint_destination_station">Destination station for this subscription</string>
+    <string name="subscription_hint_start_time_window">Starting time from which disruptions should be checked for this subscription</string>
+    <string name="subscription_hint_end_time_window">End time until which disruptions should be checked for this subscription</string>
+
+
+    <!-- Station selection dialog -->
+    <string name="search">Search</string>
+    <string name="subscription_hint_search_station">Search for stations by station name</string>
 
     <!-- Subscription overview -->
+    <!--suppress UnusedResources -->
     <string name="no_subscriptions_setup">No subscriptions setup yet</string>
+    <string name="subscription_row_status_description">Status indicator of this subscription</string>
 
     <!-- Deletion -->
     <string name="subscription_delete_confirmation">Are you sure you permanently want to delete this subscription?</string>

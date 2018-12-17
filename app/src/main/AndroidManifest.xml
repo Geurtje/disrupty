@@ -34,7 +34,7 @@
 
         <activity
             android:name=".subscription.EditSubscriptionActivity"
-            android:label="@string/nav_create_subscription"
+            android:label="@string/action_subscription_title_create"
             android:theme="@style/AppTheme"
             />
 

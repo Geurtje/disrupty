@@ -1,5 +1,6 @@
 package com.geuso.disrupty.ns.traveloption
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.util.Xml
 import com.geuso.disrupty.ns.NsRestClient
@@ -171,6 +172,7 @@ class TravelOptionXmlParser {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun parseStringToInstant(dateTimeStr: String): Instant? {
         return try {
             SimpleDateFormat(DATETIME_PATTERN).parse(dateTimeStr).toInstant()

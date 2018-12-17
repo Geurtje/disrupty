@@ -1,5 +1,6 @@
 package com.geuso.disrupty.subscription.model
 
+import android.annotation.SuppressLint
 import android.arch.persistence.room.TypeConverter
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -12,6 +13,7 @@ import java.util.*
 class TimeConverter {
 
     companion object {
+        @SuppressLint("SimpleDateFormat")
         private val TIME_FORMAT : DateFormat = SimpleDateFormat("HH:mm")
         val INSTANCE : TimeConverter = TimeConverter()
     }

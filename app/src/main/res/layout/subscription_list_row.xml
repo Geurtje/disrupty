@@ -83,6 +83,6 @@
         app:layout_constraintHorizontal_bias="0.79"
         app:layout_constraintStart_toEndOf="@+id/sub_row_station_to"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_sub_status_unknown" />
+        app:srcCompat="@drawable/ic_subscription_status_unkown" />
 
 </android.support.constraint.ConstraintLayout>

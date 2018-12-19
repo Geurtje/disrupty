@@ -31,9 +31,9 @@ data class Subscription (
 
 
 enum class Status(val key: String, val iconResource: Int) {
-    UNKNOWN("unknown", R.drawable.ic_sub_status_unknown),
-    OK("ok", R.drawable.ic_sub_status_ok),
-    NOT_OK("not-ok", R.drawable.ic_sub_status_not_ok);
+    UNKNOWN("unknown", R.drawable.ic_subscription_status_unkown),
+    OK("ok", R.drawable.ic_subscription_status_ok),
+    NOT_OK("not-ok", R.drawable.ic_subscription_status_not_ok);
 
     companion object {
         val LOOKUP : Map<String, Status>

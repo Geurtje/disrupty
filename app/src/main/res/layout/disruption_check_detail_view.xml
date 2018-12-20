@@ -48,18 +48,29 @@
         app:layout_constraintStart_toEndOf="@+id/dc_detail_timestamp"
         app:layout_constraintTop_toTopOf="@+id/dc_detail_timestamp" />
 
+    <include
+        android:id="@+id/dc_result_layout"
+        layout="@layout/disruption_check_detail_result_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dc_detail_status" />
+
     <ScrollView
+        android:id="@+id/dc_scrollview_response"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dc_detail_timestamp"
+        app:layout_constraintTop_toBottomOf="@id/dc_result_layout"
         app:layout_constraintVertical_bias="1.0">
 
         <TextView

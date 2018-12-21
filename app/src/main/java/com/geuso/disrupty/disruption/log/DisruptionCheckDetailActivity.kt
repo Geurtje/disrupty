@@ -3,13 +3,20 @@ package com.geuso.disrupty.disruption.log
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.widget.TextView
 import android.widget.Toast
 import com.geuso.disrupty.R
 import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.db.InstantConverter
+import com.geuso.disrupty.disruption.DisruptionEvaluator
 import com.geuso.disrupty.disruption.model.DisruptionCheck
+import com.geuso.disrupty.ns.traveloption.TravelOptionXmlParser
+import kotlinx.android.synthetic.main.disruption_check_detail_result_view.*
 import kotlinx.android.synthetic.main.disruption_check_detail_view.*
+import java.io.ByteArrayInputStream
 
 class DisruptionCheckDetailActivity : AppCompatActivity() {
 
@@ -54,6 +61,46 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
 
         dc_detail_response.text = disruptionCheck.response
 
+        populateResponseResults(disruptionCheck)
+    }
+
+    fun populateResponseResults(disruptionCheck: DisruptionCheck) {
+        val travelOptions = TravelOptionXmlParser().parse(ByteArrayInputStream(disruptionCheck.response.toByteArray(Charsets.UTF_8)))
+        val disruptionEvaluator = DisruptionEvaluator(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
+
+        val (isDisrupted, message, disruptionStatus, departureDelay) = disruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
+
+        val disruptionImage = if (isDisrupted) R.drawable.ic_subscription_status_not_ok
+            else R.drawable.ic_subscription_status_ok
+
+        dc_result_status_icon.setImageDrawable(ContextCompat.getDrawable(baseContext, disruptionImage))
+
+        setTextOrGreyedOutDefault(baseContext, dc_result_message, message, R.string.disruption_check_result_message, R.string.disruption_check_default_result_message)
+        setTextOrGreyedOutDefault(baseContext, dc_result_departure_delay, departureDelay, R.string.disruption_check_result_delay, R.string.disruption_check_default_result_delay)
+
+        dc_result_travel_option_status.text = disruptionStatus.key
+    }
+
+    /**
+     * Populates a given TextView with a formatted text message. If the message is not populated
+     * then a default message can be specified. If the message is missing then a grayed out
+     * colour will be applied to the TextView.
+     *
+     * @param context
+     * @param view The TextView to populate with the text
+     * @param text The text message to be displayed
+     * @param textResource The main resource in which the text message should be placed, [text] or [defaultStringResource] will be used to format this string.
+     * @param defaultStringResource The fallback text resource to use if [text] is empty
+     */
+    private fun setTextOrGreyedOutDefault(context: Context, view: TextView, text: String?, textResource: Int, defaultStringResource: Int) {
+        val isValueMissing = text.isNullOrBlank()
+        val value = if (isValueMissing) context.resources.getString(defaultStringResource)
+            else text
+
+        view.text = context.resources.getString(textResource, value)
+        if (isValueMissing) {
+            view.setTextColor(ContextCompat.getColor(context, R.color.text_grayed_out))
+        }
     }
 
 

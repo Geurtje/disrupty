@@ -16,6 +16,7 @@ import com.geuso.disrupty.disruption.model.DisruptionCheck
 import com.geuso.disrupty.ns.traveloption.TravelOptionXmlParser
 import kotlinx.android.synthetic.main.disruption_check_detail_result_view.*
 import kotlinx.android.synthetic.main.disruption_check_detail_view.*
+import org.xmlpull.v1.XmlPullParserException
 import java.io.ByteArrayInputStream
 
 class DisruptionCheckDetailActivity : AppCompatActivity() {
@@ -64,8 +65,15 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
         populateResponseResults(disruptionCheck)
     }
 
-    fun populateResponseResults(disruptionCheck: DisruptionCheck) {
-        val travelOptions = TravelOptionXmlParser().parse(ByteArrayInputStream(disruptionCheck.response.toByteArray(Charsets.UTF_8)))
+    private fun populateResponseResults(disruptionCheck: DisruptionCheck) {
+        val travelOptions = try {
+            TravelOptionXmlParser().parse(ByteArrayInputStream(disruptionCheck.response.toByteArray(Charsets.UTF_8)))
+        }
+        catch (e : XmlPullParserException) {
+            // Don't provide a summary in case of a malformed xml response
+            return
+        }
+
         val disruptionEvaluator = DisruptionEvaluator(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
 
         val (isDisrupted, message, disruptionStatus, departureDelay) = disruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)

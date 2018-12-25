@@ -21,7 +21,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dc_result_top_line"
-        app:srcCompat="@drawable/ic_subscription_status_unkown" />
+        app:srcCompat="@drawable/ic_subscription_status_unknown" />
 
     <android.support.constraint.Guideline
         android:id="@+id/dc_result_guideline"

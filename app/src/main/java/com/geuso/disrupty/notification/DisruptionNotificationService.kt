@@ -3,11 +3,13 @@ package com.geuso.disrupty.notification
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import com.geuso.disrupty.R
+import com.geuso.disrupty.disruption.log.DisruptionCheckDetailActivity
 import com.geuso.disrupty.disruption.model.DisruptionCheck
 import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.subscription.model.Status
@@ -41,15 +43,24 @@ object DisruptionNotificationService {
                     subscription.stationFrom, subscription.stationTo)
         }
 
-        notify(context, title, content)
+        notify(context, title, content, disruptionCheck)
     }
 
     private fun notify(context: Context,
                        title: String,
-                       content: String) {
+                       content: String,
+                       disruptionCheck: DisruptionCheck) {
 
         val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
         val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val targetIntent = DisruptionCheckDetailActivity.intent(context, disruptionCheck)
+        val pendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                targetIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         val notification = notificationBuilder
                 .setDefaults(Notification.DEFAULT_ALL)
@@ -59,6 +70,8 @@ object DisruptionNotificationService {
                 .setStyle(NotificationCompat.BigTextStyle())
                 .setContentTitle(title)
                 .setContentText(content)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
                 .build()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

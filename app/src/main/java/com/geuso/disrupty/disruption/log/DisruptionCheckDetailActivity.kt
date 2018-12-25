@@ -27,9 +27,15 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
         private const val EXTRA_DISRUPTION_CHECK_ID = "DISRUPTION_CHECK"
 
         fun start(context: Context, disruptionCheck: DisruptionCheck) {
+            val intent = intent(context, disruptionCheck)
+            context.startActivity(intent)
+        }
+
+        fun intent(context: Context, disruptionCheck: DisruptionCheck) : Intent {
             val intent = Intent(context, DisruptionCheckDetailActivity::class.java)
             intent.putExtra(EXTRA_DISRUPTION_CHECK_ID, disruptionCheck.id)
-            context.startActivity(intent)
+
+            return intent
         }
     }
 

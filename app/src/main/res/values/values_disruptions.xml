@@ -14,6 +14,15 @@
 
     <string name="disruption_check_detail_missing_id">Unable to load disruption check details for empty disruption check id</string>
 
+    <!-- Detail view -->
+    <string name="disruption_check_result_message">Message: %1$s</string>
+    <string name="disruption_check_result_delay">Delay: %1$s</string>
+
+    <string name="disruption_check_default_result_message">no message</string>
+    <string name="disruption_check_default_result_delay">no delay</string>
+
+    <string name="disruption_check_status_indicator">Status indicator of this disruption check</string>
+
     <!-- Disruption checks -->
     <string name="disruption_check_no_network">No network connectivity, unable to check disruptions.</string>
 

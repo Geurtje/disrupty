@@ -1,9 +1,6 @@
 package com.geuso.disrupty.notification
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
@@ -54,13 +51,16 @@ object DisruptionNotificationService {
         val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
         val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
+        // Notification with back stack
+        // https://developer.android.com/training/notify-user/navigation#build_a_pendingintent_with_a_back_stack
         val targetIntent = DisruptionCheckDetailActivity.intent(context, disruptionCheck)
-        val pendingIntent = PendingIntent.getActivity(
-                context,
-                0,
-                targetIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        )
+        val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
+            // Add the intent, which inflates the back stack
+            addNextIntentWithParentStack(targetIntent)
+            // Get the PendingIntent containing the entire back stack
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
 
         val notification = notificationBuilder
                 .setDefaults(Notification.DEFAULT_ALL)
@@ -70,7 +70,7 @@ object DisruptionNotificationService {
                 .setStyle(NotificationCompat.BigTextStyle())
                 .setContentTitle(title)
                 .setContentText(content)
-                .setContentIntent(pendingIntent)
+                .setContentIntent(resultPendingIntent)
                 .setAutoCancel(true)
                 .build()
 

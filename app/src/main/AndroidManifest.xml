@@ -30,24 +30,28 @@
             android:name=".settings.DisruptyPreferenceActivity"
             android:label="@string/action_settings"
             android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
             />
 
         <activity
             android:name=".subscription.EditSubscriptionActivity"
             android:label="@string/action_subscription_title_create"
             android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
             />
 
         <activity
             android:name=".disruption.log.DisruptionCheckActivity"
             android:label="@string/disruption_title_check_log"
             android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
             />
 
         <activity
             android:name=".disruption.log.DisruptionCheckDetailActivity"
             android:label="@string/disruption_title_check_details"
             android:theme="@style/AppTheme"
+            android:parentActivityName=".disruption.log.DisruptionCheckActivity"
             />
 
         <receiver android:name=".notification.AutoStart">

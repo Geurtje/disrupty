@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import com.geuso.disrupty.R
@@ -50,7 +51,13 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
 
         val disruptionCheckId = intent.extras.getLong(EXTRA_DISRUPTION_CHECK_ID)
         val disruptionCheck = AppDatabase.getInstance(applicationContext).disruptionCheckDao().getDisruptionCheckById(disruptionCheckId)
-        val subscription = AppDatabase.getInstance(applicationContext).subscriptionDao().getSubscriptionById(disruptionCheck.subscriptionId)
+
+        if (disruptionCheck == null) {
+            Log.w(TAG, "Failed to show details for DisruptionCheck id '$disruptionCheckId' because it does not exist.")
+            finish()
+        }
+
+        val subscription = AppDatabase.getInstance(applicationContext).subscriptionDao().getSubscriptionById(disruptionCheck!!.subscriptionId)
 
         setContentView(LAYOUT_ID)
 

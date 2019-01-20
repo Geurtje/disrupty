@@ -72,22 +72,22 @@ class DisruptionService(val context: Context) {
                     val disruptionCheck = DisruptionCheck(subscription.id, Instant.now(), isDisrupted, disruptionMessage, responseBody)
                     val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
 
+                    insertDisruptionCheckAndAssignId(disruptionCheck)
+                    updateSubscriptionIfNecessary(subscription, newSubscriptionStatus)
+
                     if (shouldNotifyStatusChange(subscription, newSubscriptionStatus)) {
                         val disruptionStatus = disruptionCheckResult.disruptionStatus
                         Log.i(TAG, "Sending notification for subscription: $subscription, new status: $newSubscriptionStatus, disruption status: $disruptionStatus")
 
                         DisruptionNotificationService.sendNotification(context, subscription, disruptionCheck, newSubscriptionStatus, disruptionStatus)
                     }
-
-                    saveDisruptionCheck(disruptionCheck)
-                    saveSubscriptionIfNecessary(subscription, newSubscriptionStatus)
                 }
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
                     Log.e(TAG, "Failure: $statusCode, body: $responseBody")
                     val disruptionCheck = DisruptionCheck(subscription.id, Instant.now(), false, null, "$error\n\n\n$responseBody", false)
-                    saveDisruptionCheck(disruptionCheck)
-                    saveSubscriptionStatus(subscription, Status.UNKNOWN)
+                    insertDisruptionCheckAndAssignId(disruptionCheck)
+                    updateSubscriptionIfNecessary(subscription, Status.UNKNOWN)
                 }
             })
         }
@@ -159,19 +159,16 @@ class DisruptionService(val context: Context) {
         return true
     }
 
-    private fun saveSubscriptionIfNecessary(subscription: Subscription, status: Status) {
+    private fun updateSubscriptionIfNecessary(subscription: Subscription, status: Status) {
         if (subscription.status != status) {
-            saveSubscriptionStatus(subscription, status)
+            subscription.status = status
+            subscriptionDao.upsertSubscription(subscription)
         }
     }
 
-    private fun saveDisruptionCheck(disruptionCheck: DisruptionCheck) {
-        disruptionCheckDao.upsertDisruptionCheck(disruptionCheck)
-    }
-
-    private fun saveSubscriptionStatus(subscription: Subscription, status: Status) {
-        subscription.status = status
-        subscriptionDao.upsertSubscription(subscription)
+    private fun insertDisruptionCheckAndAssignId(disruptionCheck: DisruptionCheck) {
+        val disruptionId = disruptionCheckDao.upsertDisruptionCheck(disruptionCheck)
+        disruptionCheck.id = disruptionId
     }
 
     private fun isNetworkConnectionAvailable() : Boolean {

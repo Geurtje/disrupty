@@ -72,15 +72,18 @@ class DisruptionService(val context: Context) {
                     val disruptionCheck = DisruptionCheck(subscription.id, Instant.now(), isDisrupted, disruptionMessage, responseBody)
                     val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
 
+                    val oldSubscriptionStatus = subscription.status
+
                     insertDisruptionCheckAndAssignId(disruptionCheck)
                     updateSubscriptionIfNecessary(subscription, newSubscriptionStatus)
 
-                    if (shouldNotifyStatusChange(subscription, newSubscriptionStatus)) {
+                    if (shouldNotifyStatusChange(oldSubscriptionStatus, newSubscriptionStatus)) {
                         val disruptionStatus = disruptionCheckResult.disruptionStatus
                         Log.i(TAG, "Sending notification for subscription: $subscription, new status: $newSubscriptionStatus, disruption status: $disruptionStatus")
 
                         DisruptionNotificationService.sendNotification(context, subscription, disruptionCheck, newSubscriptionStatus, disruptionStatus)
                     }
+
                 }
 
                 override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
@@ -147,12 +150,12 @@ class DisruptionService(val context: Context) {
     }
 
 
-    private fun shouldNotifyStatusChange(subscription: Subscription, newStatus: Status): Boolean {
-        if (subscription.status == newStatus) {
+    private fun shouldNotifyStatusChange(oldStatus: Status, newStatus: Status): Boolean {
+        if (oldStatus == newStatus) {
             return false
         }
 
-        if (subscription.status == Status.UNKNOWN && newStatus == Status.OK) {
+        if (oldStatus == Status.UNKNOWN && newStatus == Status.OK) {
             return false
         }
 

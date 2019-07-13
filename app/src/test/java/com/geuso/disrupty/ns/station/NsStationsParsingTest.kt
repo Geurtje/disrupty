@@ -1,6 +1,6 @@
 package com.geuso.disrupty.ns.station
 
-import assertk.assert
+import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNotEmpty
 import org.junit.Test
@@ -21,24 +21,24 @@ class NsStationsParsingTest {
 
         val stations = NsStationsXmlParser().parse(file.content as InputStream)
 
-        assert(stations, "Stations list").isNotEmpty()
+        assertThat(stations, "Stations list").isNotEmpty()
 
         val firstStation = stations[0]
-        assert(firstStation.code, "First station code").isEqualTo("HT")
-        assert(firstStation.type, "First station type").isEqualTo("knooppuntIntercitystation")
-        assert(firstStation.name, "First station name").isEqualTo("'s-Hertogenbosch")
-        assert(firstStation.countryCode, "First station country code").isEqualTo("NL")
+        assertThat(firstStation.code, "First station code").isEqualTo("HT")
+        assertThat(firstStation.type, "First station type").isEqualTo("knooppuntIntercitystation")
+        assertThat(firstStation.name, "First station name").isEqualTo("'s-Hertogenbosch")
+        assertThat(firstStation.countryCode, "First station country code").isEqualTo("NL")
 
         val secondStation = stations[1]
-        assert(secondStation.code, "Second station code").isEqualTo("HTO")
-        assert(secondStation.type, "Second station type").isEqualTo("stoptreinstation")
-        assert(secondStation.name, "Second station name").isEqualTo("'s-Hertogenbosch Oost")
-        assert(secondStation.countryCode, "Second station country code").isEqualTo("NL")
+        assertThat(secondStation.code, "Second station code").isEqualTo("HTO")
+        assertThat(secondStation.type, "Second station type").isEqualTo("stoptreinstation")
+        assertThat(secondStation.name, "Second station name").isEqualTo("'s-Hertogenbosch Oost")
+        assertThat(secondStation.countryCode, "Second station country code").isEqualTo("NL")
 
         val thirdStation = stations[2]
-        assert(thirdStation.code, "Third station code").isEqualTo("HDE")
-        assert(thirdStation.type, "Third station type").isEqualTo("stoptreinstation")
-        assert(thirdStation.name, "Third station name").isEqualTo("'t Harde")
-        assert(thirdStation.countryCode, "Third station country code").isEqualTo("NL")
+        assertThat(thirdStation.code, "Third station code").isEqualTo("HDE")
+        assertThat(thirdStation.type, "Third station type").isEqualTo("stoptreinstation")
+        assertThat(thirdStation.name, "Third station name").isEqualTo("'t Harde")
+        assertThat(thirdStation.countryCode, "Third station country code").isEqualTo("NL")
     }
 }

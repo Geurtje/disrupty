@@ -3,7 +3,7 @@ package com.geuso.disrupty.disruption
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
-import assertk.assert
+import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.ns.traveloption.TravelOption
@@ -48,6 +48,6 @@ class DisruptionEvaluationStatusTest(
         val travelOption = TravelOption(null, 2, true, disruptionStatus)
         val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(travelOption))
 
-        assert(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(isDisrupted)
+        assertThat(disruptionCheckResult.isDisrupted, "DisruptionCheckResult isDisrupted").isEqualTo(isDisrupted)
     }
 }

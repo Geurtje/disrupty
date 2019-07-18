@@ -1,0 +1,137 @@
+{
+  "links": {},
+  "payload": [
+    {
+      "sporen": [
+        {
+          "spoorNummer": "1"
+        },
+        {
+          "spoorNummer": "3"
+        },
+        {
+          "spoorNummer": "3a"
+        },
+        {
+          "spoorNummer": "3b"
+        },
+        {
+          "spoorNummer": "4"
+        },
+        {
+          "spoorNummer": "4a"
+        },
+        {
+          "spoorNummer": "4b"
+        },
+        {
+          "spoorNummer": "6"
+        },
+        {
+          "spoorNummer": "6a"
+        },
+        {
+          "spoorNummer": "6b"
+        },
+        {
+          "spoorNummer": "7"
+        },
+        {
+          "spoorNummer": "7a"
+        },
+        {
+          "spoorNummer": "7b"
+        }
+      ],
+      "synoniemen": [
+        "Hertogenbosch (\u0027s)",
+        "Den Bosch"
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": true,
+      "code": "HT",
+      "namen": {
+        "lang": "\u0027s-Hertogenbosch",
+        "kort": "Den Bosch",
+        "middel": "\u0027s-Hertogenbosch"
+      },
+      "stationType": "KNOOPPUNT_INTERCITY_STATION",
+      "land": "NL",
+      "UICCode": "8400319",
+      "lat": 51.69048,
+      "lng": 5.29362,
+      "radius": 525,
+      "naderenRadius": 1200,
+      "EVACode": "8400319"
+    },
+    {
+      "sporen": [
+        {
+          "spoorNummer": "1"
+        },
+        {
+          "spoorNummer": "2"
+        }
+      ],
+      "synoniemen": [
+        "Hertogenbosch Oost (\u0027s)",
+        "Den Bosch Oost"
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": true,
+      "code": "HTO",
+      "namen": {
+        "lang": "\u0027s-Hertogenbosch Oost",
+        "kort": "Dn Bosch O",
+        "middel": "\u0027s-Hertogenb. O."
+      },
+      "stationType": "STOPTREIN_STATION",
+      "land": "NL",
+      "UICCode": "8400320",
+      "lat": 51.700553894043,
+      "lng": 5.3183331489563,
+      "radius": 200,
+      "naderenRadius": 1200,
+      "EVACode": "8400320"
+    },
+    {
+      "sporen": [
+        {
+          "spoorNummer": "1"
+        },
+        {
+          "spoorNummer": "2"
+        },
+        {
+          "spoorNummer": "3"
+        },
+        {
+          "spoorNummer": "4"
+        }
+      ],
+      "synoniemen": [
+        "Harde (\u0027t)"
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": false,
+      "code": "HDE",
+      "namen": {
+        "lang": "\u0027t Harde",
+        "kort": "\u0027t Harde",
+        "middel": "\u0027t Harde"
+      },
+      "stationType": "STOPTREIN_STATION",
+      "land": "NL",
+      "UICCode": "8400388",
+      "lat": 52.4091682,
+      "lng": 5.893611,
+      "radius": 200,
+      "naderenRadius": 1200,
+      "EVACode": "8400388"
+    }
+  ],
+  "meta": {}
+}

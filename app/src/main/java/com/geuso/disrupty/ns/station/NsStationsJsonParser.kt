@@ -6,6 +6,8 @@ import org.json.JSONObject
 class NsStationsJsonParser {
 
     companion object {
+        private const val PAYLOAD = "payload"
+
         private const val STATION_CODE = "code"
         private const val STATION_STATION_TYPE = "stationType"
         private const val STATION_COUNTRY_CODE = "land"
@@ -17,12 +19,14 @@ class NsStationsJsonParser {
     fun parseStations(json: JSONObject) : List<Station> {
         val stationsList = arrayListOf<Station>()
 
-        val stationsJsonArray = json.get("payload") as JSONArray
+        if (json.has(PAYLOAD)) {
+            val stationsJsonArray = json.get(PAYLOAD) as JSONArray
 
-        val numberOfStations = stationsJsonArray.length()
-        for (i in 0 until numberOfStations) {
-            val station = parseStation(stationsJsonArray.get(i) as JSONObject)
-            stationsList.add(station)
+            val numberOfStations = stationsJsonArray.length()
+            for (i in 0 until numberOfStations) {
+                val station = parseStation(stationsJsonArray.get(i) as JSONObject)
+                stationsList.add(station)
+            }
         }
 
         return stationsList

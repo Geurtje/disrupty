@@ -13,11 +13,12 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import com.geuso.disrupty.R
-import com.geuso.disrupty.ns.NsRestClient
-import com.geuso.disrupty.ns.station.NsStationsXmlParser
-import com.loopj.android.http.TextHttpResponseHandler
+import com.geuso.disrupty.ns.NsPublicTravelRestClient
+import com.geuso.disrupty.ns.station.NsStationsJsonParser
+import com.loopj.android.http.JsonHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.select_stations_dialog.*
+import org.json.JSONObject
 import java.util.*
 
 /**
@@ -92,17 +93,19 @@ class StationsListAdapter(
 
     private fun initializeTrainStationsList() {
         Log.i(TAG, "Retrieving stations from NS API")
-        NsRestClient(context).get(NsRestClient.PATH_STATIONS_LIST, null, object: TextHttpResponseHandler() {
+        NsPublicTravelRestClient(context).get(NsPublicTravelRestClient.PATH_STATIONS_LIST, null,  object: JsonHttpResponseHandler() {
+            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
+                super.onSuccess(statusCode, headers, response)
+                if (response != null) {
+                    val stationsObjectList = NsStationsJsonParser().parseStations(response)
 
-            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
-                val stationsObjectList = NsStationsXmlParser().parse(responseBody!!.byteInputStream())
+                    stationsList = ArrayList(stationsObjectList.size)
+                    for (station in stationsObjectList) {
+                        stationsList.add(station.name)
+                    }
 
-                stationsList = ArrayList(stationsObjectList.size)
-                for (station in stationsObjectList) {
-                    stationsList.add(station.name)
+                    addAll(stationsList)
                 }
-
-                addAll(stationsList)
             }
 
             override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {

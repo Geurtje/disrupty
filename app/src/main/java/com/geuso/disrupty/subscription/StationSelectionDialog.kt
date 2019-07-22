@@ -13,11 +13,13 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import com.geuso.disrupty.R
-import com.geuso.disrupty.ns.NsRestClient
-import com.geuso.disrupty.ns.station.NsStationsXmlParser
-import com.loopj.android.http.TextHttpResponseHandler
+import com.geuso.disrupty.ns.NsPublicTravelRestClient
+import com.geuso.disrupty.ns.station.NsStationsJsonParser
+import com.loopj.android.http.JsonHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.select_stations_dialog.*
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 
 /**
@@ -92,30 +94,41 @@ class StationsListAdapter(
 
     private fun initializeTrainStationsList() {
         Log.i(TAG, "Retrieving stations from NS API")
-        NsRestClient(context).get(NsRestClient.PATH_STATIONS_LIST, null, object: TextHttpResponseHandler() {
+        NsPublicTravelRestClient(context).get(NsPublicTravelRestClient.PATH_STATIONS_LIST, null,  object: JsonHttpResponseHandler() {
 
-            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
-                val stationsObjectList = NsStationsXmlParser().parse(responseBody!!.byteInputStream())
+            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
+                super.onSuccess(statusCode, headers, response)
+                if (response != null) {
+                    val stationsObjectList = NsStationsJsonParser().parseStations(response)
 
-                stationsList = ArrayList(stationsObjectList.size)
-                for (station in stationsObjectList) {
-                    stationsList.add(station.name)
+                    stationsList = ArrayList(stationsObjectList.size)
+                    for (station in stationsObjectList) {
+                        stationsList.add(station.name)
+                    }
+
+                    addAll(stationsList)
                 }
-
-                addAll(stationsList)
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
-                Log.e(TAG, "Failure: $statusCode, body: $responseBody")
+            override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, throwable: Throwable?) {
+                Log.e(TAG, "Failure: $statusCode, body: $responseBody", throwable)
+                handleFailure(statusCode, throwable?.message)
+            }
 
-                val message = when (statusCode) {
-                    401 -> context.resources.getString(R.string.ns_authentication_failure)
-                    else -> context.resources.getString(R.string.ns_stations_list_failure, error?.message)
-                }
-
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONObject?) {
+                Log.e(TAG, "Failure: $statusCode, body: $errorResponse", throwable)
+                handleFailure(statusCode, errorResponse?.getString("message"))
             }
         })
+    }
+
+    private fun handleFailure(statusCode: Int, message: String?) {
+        val message = when (statusCode) {
+            401 -> context.resources.getString(R.string.ns_authentication_failure)
+            else -> context.resources.getString(R.string.ns_stations_list_failure, message)
+        }
+
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     fun filterStationsByTerm(filterTerm: String){

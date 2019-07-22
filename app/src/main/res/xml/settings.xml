@@ -10,6 +10,11 @@
         android:persistent="false">
 
         <com.geuso.disrupty.settings.FormattedSummaryEditTextPreference
+            android:key="api_ns_api_key"
+            android:title="@string/pref_ns_api_key"
+            android:summary="@string/pref_ns_api_key_summary" />
+
+        <com.geuso.disrupty.settings.FormattedSummaryEditTextPreference
             android:key="api_ns_username"
             android:title="@string/pref_api_username"
             android:summary="@string/pref_api_username_summary" />

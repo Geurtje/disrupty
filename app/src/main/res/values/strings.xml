@@ -6,7 +6,7 @@
 
 
     <!-- NS related messages-->
-    <string name="ns_authentication_failure">Authentication failure with the NS api, did you correctly setup your account?</string>
+    <string name="ns_authentication_failure">Authentication failure with the NS api, did you correctly setup the API key?</string>
     <string name="ns_stations_list_failure">Failed to get stations list from NS: %1$s</string>
 
     <string name="station_divider">-</string>

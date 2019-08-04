@@ -1,0 +1,861 @@
+{
+  "trips": [
+    {
+      "plannedDurationInMinutes": 35,
+      "transfers": 0,
+      "status": "NORMAL",
+      "legs": [
+        {
+          "idx": "0",
+          "name": "IC 3020 ",
+          "travelType": "PUBLIC_TRANSIT",
+          "direction": "Den Helder",
+          "cancelled": false,
+          "changePossible": true,
+          "alternativeTransport": false,
+          "journeyDetailRef": "1|497817|0|884|29072019",
+          "origin": {
+            "type": "STATION",
+            "prognosisType": "PROGNOSED",
+            "plannedTimeZoneOffset": 120,
+            "plannedDateTime": "2019-07-29T07:31:00+0200",
+            "actualTimeZoneOffset": 120,
+            "actualDateTime": "2019-07-29T07:31:00+0200",
+            "plannedTrack": "11",
+            "checkinStatus": "CHECKIN",
+            "notes": [
+              {
+                "value": "Station Accessible or Travel Assistance",
+                "key": "IS",
+                "noteType": "ATTRIBUTE",
+                "priority": 0,
+                "isPresentationRequired": false
+              },
+              {
+                "value": "Travel Assistance available at this station",
+                "key": "SS",
+                "noteType": "ATTRIBUTE",
+                "priority": 0,
+                "isPresentationRequired": false
+              },
+              {
+                "value": "ah",
+                "key": "EK",
+                "noteType": "INFOTEXT",
+                "isPresentationRequired": false
+              }
+            ],
+            "name": "Arnhem Centraal",
+            "lng": 5.901364,
+            "lat": 51.984538,
+            "countryCode": "NL",
+            "uicCode": "8400071",
+            "weight": -1,
+            "products": -1
+          },
+          "destination": {
+            "type": "STATION",
+            "prognosisType": "PROGNOSED",
+            "plannedTimeZoneOffset": 120,
+            "plannedDateTime": "2019-07-29T08:06:00+0200",
+            "actualTimeZoneOffset": 120,
+            "actualDateTime": "2019-07-29T08:06:00+0200",
+            "plannedTrack": "5",
+            "exitSide": "LEFT",
+            "checkinStatus": "CHECKOUT",
+            "notes": [
+              {
+                "value": "Station Accessible or Travel Assistance",
+                "key": "IS",
+                "noteType": "ATTRIBUTE",
+                "priority": 0,
+                "isPresentationRequired": false
+              },
+              {
+                "value": "Travel Assistance available at this station",
+                "key": "SS",
+                "noteType": "ATTRIBUTE",
+                "priority": 0,
+                "isPresentationRequired": false
+              },
+              {
+                "value": "ut",
+                "key": "EK",
+                "noteType": "INFOTEXT",
+                "isPresentationRequired": false
+              }
+            ],
+            "name": "Utrecht Centraal",
+            "lng": 5.110997,
+            "lat": 52.089774,
+            "countryCode": "NL",
+            "uicCode": "8400621",
+            "weight": -1,
+            "products": -1
+          },
+          "product": {
+            "number": "3020",
+            "categoryCode": "IC",
+            "shortCategoryName": "IC",
+            "longCategoryName": "Intercity",
+            "operatorCode": "ns",
+            "operatorName": "NS",
+            "type": "TRAIN",
+            "displayName": "NS Intercity"
+          },
+          "notes": [
+            {
+              "value": "+eas, source RAST attributonstation, durch TPSI berechnet",
+              "key": "ES",
+              "noteType": "ATTRIBUTE",
+              "priority": 0,
+              "routeIdxFrom": 4,
+              "routeIdxTo": 4,
+              "isPresentationRequired": false
+            },
+            {
+              "value": "+eas, source RAST attributonstation, durch TPSI berechnet",
+              "key": "ES",
+              "noteType": "ATTRIBUTE",
+              "priority": 0,
+              "routeIdxFrom": 13,
+              "routeIdxTo": 13,
+              "isPresentationRequired": false
+            }
+          ],
+          "messages": [],
+          "stops": [
+            {
+              "notes": [
+                {
+                  "value": "Station Accessible or Travel Assistance",
+                  "key": "IS",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "Travel Assistance available at this station",
+                  "key": "SS",
+                  "type": "A",
+                  "priority": 0
+                }
+              ],
+              "routeIdx": 4,
+              "departurePrognosisType": "PROGNOSED",
+              "plannedDepartureDateTime": "2019-07-29T07:31:00+0200",
+              "plannedDepartureTimeZoneOffset": 120,
+              "actualDepartureDateTime": "2019-07-29T07:31:00+0200",
+              "plannedDepartureTrack": "11",
+              "arrivalPrognosisType": "PROGNOSED",
+              "plannedArrivalDateTime": "2019-07-29T07:26:00+0200",
+              "plannedArrivalTimeZoneOffset": 120,
+              "plannedArrivalTrack": "11",
+              "cancelled": false,
+              "name": "Arnhem Centraal",
+              "lng": 5.901364,
+              "lat": 51.984538,
+              "countryCode": "NL",
+              "uicCode": "8400071"
+            },
+            {
+              "notes": [],
+              "passing": true,
+              "name": "Oosterbeek",
+              "lng": 5.84000015258789,
+              "lat": 51.9949989318848,
+              "countryCode": "NL",
+              "uicCode": "8400489"
+            },
+            {
+              "notes": [],
+              "passing": true,
+              "name": "Wolfheze",
+              "lng": 5.7936110496521,
+              "lat": 52.0055541992188,
+              "countryCode": "NL",
+              "uicCode": "8400704"
+            },
+            {
+              "notes": [
+                {
+                  "value": "Station Accessible or Travel Assistance",
+                  "key": "IS",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "Travel Assistance available at this station",
+                  "key": "SS",
+                  "type": "A",
+                  "priority": 0
+                }
+              ],
+              "routeIdx": 7,
+              "departurePrognosisType": "PROGNOSED",
+              "plannedDepartureDateTime": "2019-07-29T07:41:00+0200",
+              "plannedDepartureTimeZoneOffset": 120,
+              "actualDepartureDateTime": "2019-07-29T07:41:00+0200",
+              "plannedDepartureTrack": "3",
+              "arrivalPrognosisType": "PROGNOSED",
+              "plannedArrivalDateTime": "2019-07-29T07:41:00+0200",
+              "plannedArrivalTimeZoneOffset": 120,
+              "actualArrivalDateTime": "2019-07-29T07:41:00+0200",
+              "plannedArrivalTrack": "3",
+              "cancelled": false,
+              "name": "Ede-Wageningen",
+              "lng": 5.671636,
+              "lat": 52.028189,
+              "countryCode": "NL",
+              "uicCode": "8400200"
+            },
+            {
+              "notes": [
+                {
+                  "value": "Station Accessible or Travel Assistance",
+                  "key": "IS",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "Station is Accessible",
+                  "key": "SH",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "Travel Assistance available at this station",
+                  "key": "SS",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "terugsteken exception",
+                  "key": "TA",
+                  "type": "A",
+                  "priority": 100
+                }
+              ],
+              "routeIdx": 8,
+              "departurePrognosisType": "PROGNOSED",
+              "plannedDepartureDateTime": "2019-07-29T07:47:00+0200",
+              "plannedDepartureTimeZoneOffset": 120,
+              "actualDepartureDateTime": "2019-07-29T07:47:00+0200",
+              "plannedDepartureTrack": "1",
+              "arrivalPrognosisType": "PROGNOSED",
+              "plannedArrivalDateTime": "2019-07-29T07:47:00+0200",
+              "plannedArrivalTimeZoneOffset": 120,
+              "actualArrivalDateTime": "2019-07-29T07:47:00+0200",
+              "plannedArrivalTrack": "1",
+              "cancelled": false,
+              "name": "Veenendaal-De Klomp",
+              "lng": 5.573357,
+              "lat": 52.045826,
+              "countryCode": "NL",
+              "uicCode": "8400637"
+            },
+            {
+              "notes": [],
+              "passing": true,
+              "name": "Maarn",
+              "lng": 5.36999988555908,
+              "lat": 52.0641670227051,
+              "countryCode": "NL",
+              "uicCode": "8400417"
+            },
+            {
+              "notes": [],
+              "passing": true,
+              "name": "Bunnik",
+              "lng": 5.19444465637207,
+              "lat": 52.0630569458008,
+              "countryCode": "NL",
+              "uicCode": "8400141"
+            },
+            {
+              "notes": [],
+              "passing": true,
+              "name": "Utrecht Vaartsche Rijn",
+              "lng": 5.121667,
+              "lat": 52.078889,
+              "countryCode": "NL",
+              "uicCode": "8400606"
+            },
+            {
+              "notes": [
+                {
+                  "value": "Station Accessible or Travel Assistance",
+                  "key": "IS",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "Travel Assistance available at this station",
+                  "key": "SS",
+                  "type": "A",
+                  "priority": 0
+                }
+              ],
+              "routeIdx": 13,
+              "plannedDepartureDateTime": "2019-07-29T08:08:00+0200",
+              "plannedDepartureTimeZoneOffset": 120,
+              "plannedDepartureTrack": "5",
+              "arrivalPrognosisType": "PROGNOSED",
+              "plannedArrivalDateTime": "2019-07-29T08:06:00+0200",
+              "plannedArrivalTimeZoneOffset": 120,
+              "actualArrivalDateTime": "2019-07-29T08:06:00+0200",
+              "plannedArrivalTrack": "5",
+              "cancelled": false,
+              "name": "Utrecht Centraal",
+              "lng": 5.110997,
+              "lat": 52.089774,
+              "countryCode": "NL",
+              "uicCode": "8400621"
+            }
+          ],
+          "steps": [],
+          "crowdForecast": "LOW",
+          "punctuality": 90.9,
+          "shorterStock": false,
+          "journeyDetail": [
+            {
+              "type": "TRAIN_XML",
+              "link": {
+                "uri": "https://ews-rpx.ns.nl/mobile-api-serviceinfo?companycode\u003dns\u0026ritnummer\u003d3020\u0026datetime\u003d2019-07-29T07:31:00+02:00"
+              }
+            }
+          ],
+          "reachable": false
+        }
+      ],
+      "overviewPolyLine": [],
+      "checksum": "4794a417_2",
+      "crowdForecast": "LOW",
+      "punctuality": 90.9,
+      "ctxRecon": "arnu|fromStation\u003d8400071|toStation\u003d8400621|plannedFromTime\u003d2019-07-29T07:31:00+02:00|plannedArrivalTime\u003d2019-07-29T08:06:00+02:00|yearCard\u003dfalse|excludeHighSpeedTrains\u003dfalse",
+      "actualDurationInMinutes": 35,
+      "idx": 0,
+      "optimal": false,
+      "fares": [
+        {
+          "priceInCents": 1140,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 684,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 3762,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 2258,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 60700,
+          "product": "TRAJECT_VRIJ_MAAND",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 3010,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 912,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 582060,
+          "product": "BUSINESS_CARD_TRAJECT_VRIJ_JAAR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 48500,
+          "product": "TRAJECT_VRIJ_JAAR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 35900,
+          "product": "TRAJECT_VRIJ_MAAND",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 2280,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 1368,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 1881,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 1129,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 1505,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 345312,
+          "product": "BUSINESS_CARD_TRAJECT_VRIJ_JAAR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 28800,
+          "product": "TRAJECT_VRIJ_JAAR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 1824,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        }
+      ],
+      "productFare": {
+        "priceInCents": 1140,
+        "product": "OVCHIPKAART_ENKELE_REIS",
+        "travelClass": "SECOND_CLASS",
+        "priceInCentsExcludingSupplement": 1140,
+        "discountType": "NO_DISCOUNT"
+      },
+      "fareOptions": {
+        "isInternationalBookable": false,
+        "isInternational": false,
+        "isEticketBuyable": true,
+        "isPossibleWithOvChipkaart": true
+      },
+      "type": "NS",
+      "shareUrl": {
+        "uri": "https://www.ns.nl/rpx?ctx\u003darnu%7CfromStation%3D8400071%7CtoStation%3D8400621%7CplannedFromTime%3D2019-07-29T07%3A31%3A00%2B02%3A00%7CplannedArrivalTime%3D2019-07-29T08%3A06%3A00%2B02%3A00%7CyearCard%3Dfalse%7CexcludeHighSpeedTrains%3Dfalse"
+      },
+      "realtime": true,
+      "routeId": "1;64"
+    },
+    {
+      "plannedDurationInMinutes": 35,
+      "transfers": 0,
+      "status": "ADDITIONAL",
+      "legs": [
+        {
+          "idx": "0",
+          "name": "IC 3122 ",
+          "travelType": "PUBLIC_TRANSIT",
+          "direction": "Schiphol Airport",
+          "cancelled": false,
+          "changePossible": true,
+          "alternativeTransport": false,
+          "journeyDetailRef": "1|1942|1|884|29072019",
+          "origin": {
+            "type": "STATION",
+            "prognosisType": "PROGNOSED",
+            "plannedTimeZoneOffset": 120,
+            "plannedDateTime": "2019-07-29T07:46:00+0200",
+            "plannedTrack": "11",
+            "checkinStatus": "CHECKIN",
+            "notes": [
+              {
+                "value": "Station Accessible or Travel Assistance",
+                "key": "IS",
+                "noteType": "ATTRIBUTE",
+                "priority": 0,
+                "isPresentationRequired": false
+              },
+              {
+                "value": "Travel Assistance available at this station",
+                "key": "SS",
+                "noteType": "ATTRIBUTE",
+                "priority": 0,
+                "isPresentationRequired": false
+              },
+              {
+                "value": "ah",
+                "key": "EK",
+                "noteType": "INFOTEXT",
+                "isPresentationRequired": false
+              }
+            ],
+            "name": "Arnhem Centraal",
+            "lng": 5.901364,
+            "lat": 51.984538,
+            "countryCode": "NL",
+            "uicCode": "8400071",
+            "weight": -1,
+            "products": -1
+          },
+          "destination": {
+            "type": "STATION",
+            "prognosisType": "PROGNOSED",
+            "plannedTimeZoneOffset": 120,
+            "plannedDateTime": "2019-07-29T08:21:00+0200",
+            "plannedTrack": "5",
+            "checkinStatus": "CHECKOUT",
+            "notes": [
+              {
+                "value": "Station Accessible or Travel Assistance",
+                "key": "IS",
+                "noteType": "ATTRIBUTE",
+                "priority": 0,
+                "isPresentationRequired": false
+              },
+              {
+                "value": "Travel Assistance available at this station",
+                "key": "SS",
+                "noteType": "ATTRIBUTE",
+                "priority": 0,
+                "isPresentationRequired": false
+              },
+              {
+                "value": "ut",
+                "key": "EK",
+                "noteType": "INFOTEXT",
+                "isPresentationRequired": false
+              }
+            ],
+            "name": "Utrecht Centraal",
+            "lng": 5.110997,
+            "lat": 52.089774,
+            "countryCode": "NL",
+            "uicCode": "8400621",
+            "weight": -1,
+            "products": -1
+          },
+          "product": {
+            "number": "3122",
+            "categoryCode": "IC",
+            "shortCategoryName": "IC",
+            "longCategoryName": "Intercity",
+            "operatorCode": "ns",
+            "operatorName": "NS",
+            "type": "TRAIN",
+            "displayName": "NS Intercity"
+          },
+          "notes": [
+            {
+              "value": "+eas, source RAST attributonstation, durch TPSI berechnet",
+              "key": "ES",
+              "noteType": "ATTRIBUTE",
+              "priority": 0,
+              "routeIdxFrom": 4,
+              "routeIdxTo": 4,
+              "isPresentationRequired": false
+            },
+            {
+              "value": "+eas, source RAST attributonstation, durch TPSI berechnet",
+              "key": "ES",
+              "noteType": "ATTRIBUTE",
+              "priority": 0,
+              "routeIdxFrom": 13,
+              "routeIdxTo": 13,
+              "isPresentationRequired": false
+            }
+          ],
+          "messages": [],
+          "stops": [
+            {
+              "notes": [
+                {
+                  "value": "Station Accessible or Travel Assistance",
+                  "key": "IS",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "Travel Assistance available at this station",
+                  "key": "SS",
+                  "type": "A",
+                  "priority": 0
+                }
+              ],
+              "routeIdx": 4,
+              "plannedDepartureDateTime": "2019-07-29T07:46:00+0200",
+              "plannedDepartureTimeZoneOffset": 120,
+              "plannedDepartureTrack": "11",
+              "plannedArrivalDateTime": "2019-07-29T07:40:00+0200",
+              "plannedArrivalTimeZoneOffset": 120,
+              "plannedArrivalTrack": "11",
+              "cancelled": false,
+              "name": "Arnhem Centraal",
+              "lng": 5.901364,
+              "lat": 51.984538,
+              "countryCode": "NL",
+              "uicCode": "8400071"
+            },
+            {
+              "notes": [
+                {
+                  "value": "Station Accessible or Travel Assistance",
+                  "key": "IS",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "Travel Assistance available at this station",
+                  "key": "SS",
+                  "type": "A",
+                  "priority": 0
+                }
+              ],
+              "routeIdx": 7,
+              "plannedDepartureDateTime": "2019-07-29T07:56:00+0200",
+              "plannedDepartureTimeZoneOffset": 120,
+              "plannedDepartureTrack": "3",
+              "plannedArrivalDateTime": "2019-07-29T07:56:00+0200",
+              "plannedArrivalTimeZoneOffset": 120,
+              "plannedArrivalTrack": "3",
+              "cancelled": false,
+              "name": "Ede-Wageningen",
+              "lng": 5.671636,
+              "lat": 52.028189,
+              "countryCode": "NL",
+              "uicCode": "8400200"
+            },
+            {
+              "notes": [
+                {
+                  "value": "Station Accessible or Travel Assistance",
+                  "key": "IS",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "Travel Assistance available at this station",
+                  "key": "SS",
+                  "type": "A",
+                  "priority": 0
+                }
+              ],
+              "routeIdx": 10,
+              "plannedDepartureDateTime": "2019-07-29T08:12:00+0200",
+              "plannedDepartureTimeZoneOffset": 120,
+              "plannedDepartureTrack": "2",
+              "plannedArrivalDateTime": "2019-07-29T08:12:00+0200",
+              "plannedArrivalTimeZoneOffset": 120,
+              "plannedArrivalTrack": "2",
+              "cancelled": false,
+              "name": "Driebergen-Zeist",
+              "lng": 5.259894,
+              "lat": 52.065135,
+              "countryCode": "NL",
+              "uicCode": "8400182"
+            },
+            {
+              "notes": [
+                {
+                  "value": "Station Accessible or Travel Assistance",
+                  "key": "IS",
+                  "type": "A",
+                  "priority": 0
+                },
+                {
+                  "value": "Travel Assistance available at this station",
+                  "key": "SS",
+                  "type": "A",
+                  "priority": 0
+                }
+              ],
+              "routeIdx": 13,
+              "plannedDepartureDateTime": "2019-07-29T08:25:00+0200",
+              "plannedDepartureTimeZoneOffset": 120,
+              "plannedDepartureTrack": "5",
+              "plannedArrivalDateTime": "2019-07-29T08:21:00+0200",
+              "plannedArrivalTimeZoneOffset": 120,
+              "plannedArrivalTrack": "5",
+              "cancelled": false,
+              "name": "Utrecht Centraal",
+              "lng": 5.110997,
+              "lat": 52.089774,
+              "countryCode": "NL",
+              "uicCode": "8400621"
+            }
+          ],
+          "steps": [],
+          "crowdForecast": "MEDIUM",
+          "punctuality": 81.8,
+          "shorterStock": false,
+          "journeyDetail": [
+            {
+              "type": "TRAIN_XML",
+              "link": {
+                "uri": "https://ews-rpx.ns.nl/mobile-api-serviceinfo?companycode\u003dns\u0026ritnummer\u003d3122\u0026datetime\u003d2019-07-29T07:46:00+02:00"
+              }
+            }
+          ],
+          "reachable": false
+        }
+      ],
+      "overviewPolyLine": [],
+      "checksum": "dc2bc6a0_2",
+      "crowdForecast": "MEDIUM",
+      "punctuality": 81.8,
+      "ctxRecon": "arnu|fromStation\u003d8400071|toStation\u003d8400621|plannedFromTime\u003d2019-07-29T07:46:00+02:00|plannedArrivalTime\u003d2019-07-29T08:21:00+02:00|yearCard\u003dfalse|excludeHighSpeedTrains\u003dfalse",
+      "actualDurationInMinutes": 35,
+      "idx": 1,
+      "optimal": false,
+      "fares": [
+        {
+          "priceInCents": 1140,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 684,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 3762,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 2258,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 60700,
+          "product": "TRAJECT_VRIJ_MAAND",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 3010,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 912,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 582060,
+          "product": "BUSINESS_CARD_TRAJECT_VRIJ_JAAR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 48500,
+          "product": "TRAJECT_VRIJ_JAAR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 35900,
+          "product": "TRAJECT_VRIJ_MAAND",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 2280,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 1368,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 1881,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 1129,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 1505,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 345312,
+          "product": "BUSINESS_CARD_TRAJECT_VRIJ_JAAR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 28800,
+          "product": "TRAJECT_VRIJ_JAAR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 1824,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        }
+      ],
+      "productFare": {
+        "priceInCents": 1140,
+        "product": "OVCHIPKAART_ENKELE_REIS",
+        "travelClass": "SECOND_CLASS",
+        "priceInCentsExcludingSupplement": 1140,
+        "discountType": "NO_DISCOUNT"
+      },
+      "fareOptions": {
+        "isInternationalBookable": false,
+        "isInternational": false,
+        "isEticketBuyable": true,
+        "isPossibleWithOvChipkaart": true
+      },
+      "type": "NS",
+      "shareUrl": {
+        "uri": "https://www.ns.nl/rpx?ctx\u003darnu%7CfromStation%3D8400071%7CtoStation%3D8400621%7CplannedFromTime%3D2019-07-29T07%3A46%3A00%2B02%3A00%7CplannedArrivalTime%3D2019-07-29T08%3A21%3A00%2B02%3A00%7CyearCard%3Dfalse%7CexcludeHighSpeedTrains%3Dfalse"
+      },
+      "realtime": true,
+      "routeId": "1;64"
+    }
+  ],
+  "scrollRequestBackwardContext": "1|OB|111111111111-2222222222222|33333333333333333333",
+  "scrollRequestForwardContext": "1|OF|111111111111-2222222222222|444444444444444444444"
+}

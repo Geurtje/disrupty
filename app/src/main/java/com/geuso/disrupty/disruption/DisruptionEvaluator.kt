@@ -16,7 +16,12 @@ class DisruptionEvaluator(
         sharedPreferences: SharedPreferences
 ) {
 
-    private val disruptedStatuses : List<DisruptionStatus> = listOf(DisruptionStatus.NOT_POSSIBLE)
+    private val disruptedStatuses : List<DisruptionStatus> = listOf(
+            DisruptionStatus.NOT_POSSIBLE,
+            DisruptionStatus.CANCELLED,
+            DisruptionStatus.DELAYED,
+            DisruptionStatus.DISRUPTION
+    )
     private val minimumDelayInMs: Int
 
     init {

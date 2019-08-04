@@ -1,6 +1,5 @@
 package com.geuso.disrupty.ns.station
 
-import org.json.JSONArray
 import org.json.JSONObject
 
 class NsStationsJsonParser {
@@ -20,11 +19,11 @@ class NsStationsJsonParser {
         val stationsList = arrayListOf<Station>()
 
         if (json.has(PAYLOAD)) {
-            val stationsJsonArray = json.get(PAYLOAD) as JSONArray
+            val stationsJsonArray = json.getJSONArray(PAYLOAD)
 
             val numberOfStations = stationsJsonArray.length()
             for (i in 0 until numberOfStations) {
-                val station = parseStation(stationsJsonArray.get(i) as JSONObject)
+                val station = parseStation(stationsJsonArray.getJSONObject(i))
                 stationsList.add(station)
             }
         }
@@ -33,17 +32,17 @@ class NsStationsJsonParser {
     }
 
     private fun parseStation(jsonStation: JSONObject) : Station {
-        val code = jsonStation.get(STATION_CODE).toString()
-        val type = jsonStation.get(STATION_STATION_TYPE).toString()
+        val code = jsonStation.getString(STATION_CODE)
+        val type = jsonStation.getString(STATION_STATION_TYPE)
         val name = extractName(jsonStation)
-        val countryCode = jsonStation.get(STATION_COUNTRY_CODE).toString()
+        val countryCode = jsonStation.getString(STATION_COUNTRY_CODE)
 
         return Station(code, type, name, countryCode)
     }
 
     private fun extractName(jsonStation: JSONObject) : String {
-        val stationNamesJson = jsonStation.get(STATION_NAMES) as JSONObject
-        return stationNamesJson.get(STATION_NAME_LONG).toString()
+        val stationNamesJson = jsonStation.getJSONObject(STATION_NAMES)
+        return stationNamesJson.getString(STATION_NAME_LONG)
     }
 
 }

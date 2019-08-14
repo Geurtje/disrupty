@@ -4,7 +4,7 @@ import java.time.Instant
 import java.util.*
 
 data class TravelOption (
-        val notification: TravelOptionNotification?, // Will be removed with the public travel API
+        val notification: TravelOptionNotification?,
         val numberOfTransfers:  Int,
         val optimal: Boolean,
         val disruptionStatus: DisruptionStatus,

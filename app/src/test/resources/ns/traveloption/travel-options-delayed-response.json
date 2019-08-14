@@ -1,0 +1,496 @@
+{
+  "trips": [
+    {
+      "plannedDurationInMinutes": 12,
+      "transfers": 0,
+      "status": "NORMAL",
+      "legs": [
+        {
+          "name": "",
+          "travelType": "PUBLIC_TRANSIT",
+          "direction": "Weesp",
+          "cancelled": false,
+          "changePossible": true,
+          "alternativeTransport": false,
+          "origin": {
+            "type": "STATION",
+            "plannedTimeZoneOffset": 120,
+            "plannedDateTime": "2019-08-13T07:07:00+0200",
+            "actualTimeZoneOffset": 120,
+            "actualDateTime": "2019-08-13T07:07:00+0200",
+            "plannedTrack": "3",
+            "checkinStatus": "CHECKIN",
+            "name": "Hoofddorp",
+            "lng": 4.697703,
+            "lat": 52.292386,
+            "countryCode": "NL",
+            "uicCode": "8400332"
+          },
+          "destination": {
+            "type": "STATION",
+            "plannedTimeZoneOffset": 120,
+            "plannedDateTime": "2019-08-13T07:19:00+0200",
+            "actualTimeZoneOffset": 120,
+            "actualDateTime": "2019-08-13T07:19:00+0200",
+            "plannedTrack": "2",
+            "exitSide": "RIGHT",
+            "checkinStatus": "CHECKOUT",
+            "name": "Amsterdam Zuid",
+            "lng": 4.873205,
+            "lat": 52.339117,
+            "countryCode": "NL",
+            "uicCode": "8400061"
+          },
+          "product": {
+            "number": "5723",
+            "categoryCode": "SPR",
+            "shortCategoryName": "SPR",
+            "longCategoryName": "Sprinter",
+            "operatorCode": "NS",
+            "operatorName": "NS",
+            "type": "TRAIN",
+            "displayName": "NS Sprinter"
+          },
+          "notes": [],
+          "stops": [
+            {
+              "notes": [],
+              "plannedDepartureDateTime": "2019-08-13T07:07:00+0200",
+              "plannedDepartureTrack": "3",
+              "actualDepartureTrack": "3",
+              "plannedArrivalTrack": "3",
+              "actualArrivalTrack": "3",
+              "cancelled": false,
+              "name": "Hoofddorp",
+              "lng": 4.697703,
+              "lat": 52.292386,
+              "countryCode": "NL",
+              "uicCode": "8400332"
+            },
+            {
+              "notes": [],
+              "plannedDepartureDateTime": "2019-08-13T07:12:00+0200",
+              "plannedDepartureTrack": "3",
+              "actualDepartureTrack": "3",
+              "plannedArrivalDateTime": "2019-08-13T07:11:00+0200",
+              "plannedArrivalTrack": "3",
+              "actualArrivalTrack": "3",
+              "cancelled": false,
+              "name": "Schiphol",
+              "lng": 4.761818,
+              "lat": 52.30901,
+              "countryCode": "NL",
+              "uicCode": "8400561"
+            },
+            {
+              "notes": [],
+              "plannedDepartureDateTime": "2019-08-13T07:20:00+0200",
+              "plannedDepartureTrack": "2",
+              "actualDepartureTrack": "2",
+              "plannedArrivalDateTime": "2019-08-13T07:19:00+0200",
+              "plannedArrivalTrack": "2",
+              "actualArrivalTrack": "2",
+              "cancelled": false,
+              "name": "Amsterdam Zuid",
+              "lng": 4.873205,
+              "lat": 52.339117,
+              "countryCode": "NL",
+              "uicCode": "8400061"
+            }
+          ],
+          "steps": [],
+          "crowdForecast": "LOW",
+          "punctuality": 100.0,
+          "shorterStock": false,
+          "journeyDetail": [
+            {
+              "type": "TRAIN_XML",
+              "link": {
+                "uri": "https://ews-rpx.ns.nl/mobile-api-serviceinfo?companycode\u003dns\u0026ritnummer\u003d5723\u0026datetime\u003d2019-08-13T07:07:00+02:00"
+              }
+            }
+          ],
+          "reachable": false
+        }
+      ],
+      "overviewPolyLine": [],
+      "crowdForecast": "LOW",
+      "punctuality": 100.0,
+      "ctxRecon": "9292|fromStation\u003d8400332|toStation\u003d8400061|plannedFromTime\u003d2019-08-13T07:07:00+02:00|plannedArrivalTime\u003d2019-08-13T07:19:00+02:00|yearCard\u003dfalse|excludeHighSpeedTrains\u003dfalse",
+      "actualDurationInMinutes": 12,
+      "idx": 0,
+      "optimal": true,
+      "fares": [
+        {
+          "priceInCents": 644,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 386,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 20400,
+          "product": "TRAJECT_VRIJ_MAAND",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 16400,
+          "product": "TRAJECT_VRIJ_JAAR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 312,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 116412,
+          "product": "BUSINESS_CARD_TRAJECT_VRIJ_JAAR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 780,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 468,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 1030,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 624,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 772,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 1288,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 515,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 196200,
+          "product": "BUSINESS_CARD_TRAJECT_VRIJ_JAAR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 234,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 12200,
+          "product": "TRAJECT_VRIJ_MAAND",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 9700,
+          "product": "TRAJECT_VRIJ_JAAR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 390,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        }
+      ],
+      "productFare": {
+        "priceInCents": 390,
+        "product": "OVCHIPKAART_ENKELE_REIS",
+        "travelClass": "SECOND_CLASS",
+        "priceInCentsExcludingSupplement": 390,
+        "discountType": "NO_DISCOUNT"
+      },
+      "fareOptions": {
+        "isInternationalBookable": false,
+        "isInternational": false,
+        "isEticketBuyable": true,
+        "isPossibleWithOvChipkaart": true
+      },
+      "type": "NEGENTWEE",
+      "shareUrl": {
+        "uri": "https://www.ns.nl/rpx?ctx\u003d9292%7CfromStation%3D8400332%7CtoStation%3D8400061%7CplannedFromTime%3D2019-08-13T07%3A07%3A00%2B02%3A00%7CplannedArrivalTime%3D2019-08-13T07%3A19%3A00%2B02%3A00%7CyearCard%3Dfalse%7CexcludeHighSpeedTrains%3Dfalse"
+      },
+      "realtime": true,
+      "routeId": "1;64"
+    },
+    {
+      "plannedDurationInMinutes": 15,
+      "transfers": 1,
+      "status": "NORMAL",
+      "legs": [
+        {
+          "name": "",
+          "travelType": "PUBLIC_TRANSIT",
+          "direction": "Duivendrecht",
+          "cancelled": false,
+          "changePossible": true,
+          "alternativeTransport": false,
+          "origin": {
+            "type": "STATION",
+            "plannedTimeZoneOffset": 120,
+            "plannedDateTime": "2019-08-13T07:18:00+0200",
+            "actualTimeZoneOffset": 120,
+            "actualDateTime": "2019-08-13T07:24:00+0200",
+            "plannedTrack": "1-2",
+            "checkinStatus": "NOTHING",
+            "name": "Schiphol",
+            "lng": 4.761818,
+            "lat": 52.30901,
+            "countryCode": "NL",
+            "uicCode": "8400561"
+          },
+          "destination": {
+            "type": "STATION",
+            "plannedTimeZoneOffset": 120,
+            "plannedDateTime": "2019-08-13T07:24:00+0200",
+            "actualTimeZoneOffset": 120,
+            "actualDateTime": "2019-08-13T07:30:00+0200",
+            "plannedTrack": "1",
+            "exitSide": "LEFT",
+            "checkinStatus": "CHECKOUT",
+            "name": "Amsterdam Zuid",
+            "lng": 4.873205,
+            "lat": 52.339117,
+            "countryCode": "NL",
+            "uicCode": "8400061"
+          },
+          "product": {
+            "number": "2412",
+            "categoryCode": "IC",
+            "shortCategoryName": "IC",
+            "longCategoryName": "Intercity",
+            "operatorCode": "NS",
+            "operatorName": "NS",
+            "type": "TRAIN",
+            "displayName": "NS Intercity"
+          },
+          "notes": [],
+          "stops": [
+            {
+              "notes": [],
+              "plannedDepartureDateTime": "2019-08-13T07:18:00+0200",
+              "actualDepartureDateTime": "2019-08-13T07:24:00+0200",
+              "plannedDepartureTrack": "1-2",
+              "actualDepartureTrack": "1-2",
+              "plannedArrivalDateTime": "2019-08-13T07:16:00+0200",
+              "actualArrivalDateTime": "2019-08-13T07:22:00+0200",
+              "plannedArrivalTrack": "1-2",
+              "actualArrivalTrack": "1-2",
+              "cancelled": false,
+              "name": "Schiphol",
+              "lng": 4.761818,
+              "lat": 52.30901,
+              "countryCode": "NL",
+              "uicCode": "8400561"
+            },
+            {
+              "notes": [],
+              "plannedDepartureDateTime": "2019-08-13T07:26:00+0200",
+              "actualDepartureDateTime": "2019-08-13T07:32:00+0200",
+              "plannedDepartureTrack": "1",
+              "actualDepartureTrack": "1",
+              "plannedArrivalDateTime": "2019-08-13T07:24:00+0200",
+              "actualArrivalDateTime": "2019-08-13T07:30:00+0200",
+              "plannedArrivalTrack": "1",
+              "actualArrivalTrack": "1",
+              "cancelled": false,
+              "name": "Amsterdam Zuid",
+              "lng": 4.873205,
+              "lat": 52.339117,
+              "countryCode": "NL",
+              "uicCode": "8400061"
+            }
+          ],
+          "steps": [],
+          "crowdForecast": "LOW",
+          "punctuality": 100.0,
+          "shorterStock": false,
+          "journeyDetail": [
+            {
+              "type": "TRAIN_XML",
+              "link": {
+                "uri": "https://ews-rpx.ns.nl/mobile-api-serviceinfo?companycode\u003dns\u0026ritnummer\u003d2412\u0026datetime\u003d2019-08-13T07:18:00+02:00"
+              }
+            }
+          ],
+          "reachable": false
+        }
+      ],
+      "overviewPolyLine": [],
+      "crowdForecast": "LOW",
+      "punctuality": 100.0,
+      "ctxRecon": "9292|fromStation\u003d8400332|toStation\u003d8400061|plannedFromTime\u003d2019-08-13T07:09:00+02:00|plannedArrivalTime\u003d2019-08-13T07:24:00+02:00|yearCard\u003dfalse|excludeHighSpeedTrains\u003dfalse",
+      "actualDurationInMinutes": 21,
+      "idx": 1,
+      "optimal": false,
+      "fares": [
+        {
+          "priceInCents": 644,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 386,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 20400,
+          "product": "TRAJECT_VRIJ_MAAND",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 16400,
+          "product": "TRAJECT_VRIJ_JAAR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 312,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 116412,
+          "product": "BUSINESS_CARD_TRAJECT_VRIJ_JAAR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 780,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 468,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 1030,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 624,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 772,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 1288,
+          "product": "OVCHIPKAART_RETOUR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 515,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "DISCOUNT_20_PERCENT"
+        },
+        {
+          "priceInCents": 196200,
+          "product": "BUSINESS_CARD_TRAJECT_VRIJ_JAAR",
+          "travelClass": "FIRST_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 234,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "DISCOUNT_40_PERCENT"
+        },
+        {
+          "priceInCents": 12200,
+          "product": "TRAJECT_VRIJ_MAAND",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 9700,
+          "product": "TRAJECT_VRIJ_JAAR",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        },
+        {
+          "priceInCents": 390,
+          "product": "OVCHIPKAART_ENKELE_REIS",
+          "travelClass": "SECOND_CLASS",
+          "discountType": "NO_DISCOUNT"
+        }
+      ],
+      "productFare": {
+        "priceInCents": 390,
+        "product": "OVCHIPKAART_ENKELE_REIS",
+        "travelClass": "SECOND_CLASS",
+        "priceInCentsExcludingSupplement": 390,
+        "discountType": "NO_DISCOUNT"
+      },
+      "fareOptions": {
+        "isInternationalBookable": false,
+        "isInternational": false,
+        "isEticketBuyable": true,
+        "isPossibleWithOvChipkaart": true
+      },
+      "type": "NEGENTWEE",
+      "shareUrl": {
+        "uri": "https://www.ns.nl/rpx?ctx\u003d9292%7CfromStation%3D8400332%7CtoStation%3D8400061%7CplannedFromTime%3D2019-08-13T07%3A09%3A00%2B02%3A00%7CplannedArrivalTime%3D2019-08-13T07%3A24%3A00%2B02%3A00%7CyearCard%3Dfalse%7CexcludeHighSpeedTrains%3Dfalse"
+      },
+      "realtime": true,
+      "routeId": "1;64"
+    }
+  ],
+  "scrollRequestBackwardContext": "before_20190813T070700+0200_1748926908",
+  "scrollRequestForwardContext": "after_20190813T074900+0200_3940205193"
+}

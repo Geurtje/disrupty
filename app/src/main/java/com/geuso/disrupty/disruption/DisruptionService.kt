@@ -9,14 +9,20 @@ import com.geuso.disrupty.db.AppDatabase
 import com.geuso.disrupty.disruption.model.DisruptionCheck
 import com.geuso.disrupty.disruption.model.DisruptionCheckDao
 import com.geuso.disrupty.notification.DisruptionNotificationService
+import com.geuso.disrupty.ns.NsPublicTravelRestClient
 import com.geuso.disrupty.ns.NsRestClient
+import com.geuso.disrupty.ns.station.NsStationsJsonParser
+import com.geuso.disrupty.ns.traveloption.TravelOptionJsonParser
 import com.geuso.disrupty.ns.traveloption.TravelOptionXmlParser
+import com.geuso.disrupty.subscription.StationsListAdapter
 import com.geuso.disrupty.subscription.model.Status
 import com.geuso.disrupty.subscription.model.Subscription
 import com.geuso.disrupty.subscription.model.SubscriptionDao
 import com.geuso.disrupty.subscription.model.TimeConverter
+import com.loopj.android.http.JsonHttpResponseHandler
 import com.loopj.android.http.TextHttpResponseHandler
 import cz.msebera.android.httpclient.Header
+import org.json.JSONObject
 import java.time.Instant
 import java.util.*
 import kotlin.collections.ArrayList
@@ -49,51 +55,58 @@ class DisruptionService(val context: Context) {
     }
 
     private fun checkSubscriptionsAndNotifyIfDisrupted(subscriptions: List<Subscription>) {
-        val nsRestClient = NsRestClient(context)
+        val nsRestClient = NsPublicTravelRestClient(context)
 
         for (subscription in subscriptions) {
             val params = nsRestClient.paramsForTravelOptions(subscription.stationFrom, subscription.stationTo)
-            nsRestClient.get(NsRestClient.PATH_TRAVEL_OPTIONS, params, object: TextHttpResponseHandler() {
+            nsRestClient.get(NsPublicTravelRestClient.PATH_TRIPS, params, object: JsonHttpResponseHandler() {
 
-                override fun getUseSynchronousMode(): Boolean {
-                    return false
-                }
+                override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
+                    super.onSuccess(statusCode, headers, response)
+                    if (response != null) {
+                        val travelOptions = TravelOptionJsonParser().parseTravelOptions(response)
 
-                override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: String?) {
-                    val travelOptions = TravelOptionXmlParser().parse(responseBody!!.byteInputStream())
+                        val disruptionEvaluator = DisruptionEvaluator(context, PreferenceManager.getDefaultSharedPreferences(context))
+                        val disruptionCheckResult = disruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
 
+                        val isDisrupted = disruptionCheckResult.isDisrupted
+                        val disruptionMessage =  resolveDisruptionMessage(disruptionCheckResult)
 
-                    val disruptionEvaluator = DisruptionEvaluator(context, PreferenceManager.getDefaultSharedPreferences(context))
-                    val disruptionCheckResult = disruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
+                        val disruptionCheck = DisruptionCheck(subscription.id, Instant.now(), isDisrupted, disruptionMessage, response.toString(2))
+                        val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
 
-                    val isDisrupted = disruptionCheckResult.isDisrupted
-                    val disruptionMessage =  resolveDisruptionMessage(disruptionCheckResult)
+                        val oldSubscriptionStatus = subscription.status
 
-                    val disruptionCheck = DisruptionCheck(subscription.id, Instant.now(), isDisrupted, disruptionMessage, responseBody)
-                    val newSubscriptionStatus = if (isDisrupted) Status.NOT_OK else Status.OK
+                        insertDisruptionCheckAndAssignId(disruptionCheck)
+                        updateSubscriptionIfNecessary(subscription, newSubscriptionStatus)
 
-                    val oldSubscriptionStatus = subscription.status
+                        if (shouldNotifyStatusChange(oldSubscriptionStatus, newSubscriptionStatus)) {
+                            val disruptionStatus = disruptionCheckResult.disruptionStatus
+                            Log.i(TAG, "Sending notification for subscription: $subscription, new status: $newSubscriptionStatus, disruption status: $disruptionStatus")
 
-                    insertDisruptionCheckAndAssignId(disruptionCheck)
-                    updateSubscriptionIfNecessary(subscription, newSubscriptionStatus)
-
-                    if (shouldNotifyStatusChange(oldSubscriptionStatus, newSubscriptionStatus)) {
-                        val disruptionStatus = disruptionCheckResult.disruptionStatus
-                        Log.i(TAG, "Sending notification for subscription: $subscription, new status: $newSubscriptionStatus, disruption status: $disruptionStatus")
-
-                        DisruptionNotificationService.sendNotification(context, subscription, disruptionCheck, newSubscriptionStatus, disruptionStatus)
+                            DisruptionNotificationService.sendNotification(context, subscription, disruptionCheck, newSubscriptionStatus, disruptionStatus)
+                        }
                     }
-
                 }
 
-                override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, error: Throwable?) {
-                    Log.e(TAG, "Failure: $statusCode, body: $responseBody")
-                    val disruptionCheck = DisruptionCheck(subscription.id, Instant.now(), false, null, "$error\n\n\n$responseBody", false)
-                    insertDisruptionCheckAndAssignId(disruptionCheck)
-                    updateSubscriptionIfNecessary(subscription, Status.UNKNOWN)
+                override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: String?, throwable: Throwable?) {
+                    Log.e(TAG, "Failure: $statusCode, body: $responseBody", throwable)
+                    handleFailure(subscription, responseBody ?: "")
+                }
+
+                override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONObject?) {
+                    Log.e(TAG, "Failure: $statusCode, body: $errorResponse", throwable)
+                    handleFailure(subscription, errorResponse?.toString(2) ?: "")
+
                 }
             })
         }
+    }
+
+    private fun handleFailure(subscription: Subscription, responseBody: String) {
+        val disruptionCheck = DisruptionCheck(subscription.id, Instant.now(), false, null, responseBody, false)
+        insertDisruptionCheckAndAssignId(disruptionCheck)
+        updateSubscriptionIfNecessary(subscription, Status.UNKNOWN)
     }
 
     private fun resolveDisruptionMessage(disruptionCheckResult: DisruptionEvaluator.DisruptionCheckResult): String {

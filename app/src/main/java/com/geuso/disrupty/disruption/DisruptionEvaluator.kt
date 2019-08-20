@@ -2,7 +2,6 @@ package com.geuso.disrupty.disruption
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import com.geuso.disrupty.R
 import com.geuso.disrupty.ns.traveloption.DisruptionStatus
 import com.geuso.disrupty.ns.traveloption.TravelOption
@@ -16,11 +15,12 @@ class DisruptionEvaluator(
         sharedPreferences: SharedPreferences
 ) {
 
-    private val disruptedStatuses : List<DisruptionStatus> = listOf(
+    private val disruptedStatuses : Collection<DisruptionStatus> = setOf(
             DisruptionStatus.NOT_POSSIBLE,
             DisruptionStatus.CANCELLED,
             DisruptionStatus.DELAYED,
-            DisruptionStatus.DISRUPTION
+            DisruptionStatus.DISRUPTION,
+            DisruptionStatus.ALTERNATIVE_TRANSPORT
     )
     private val minimumDelayInMs: Int
 

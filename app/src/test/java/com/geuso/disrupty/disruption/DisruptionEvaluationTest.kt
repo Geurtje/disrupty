@@ -47,7 +47,7 @@ class DisruptionEvaluationTest {
     }
 
     @Test
-    fun `Test delayed travel option is disrupted not disrupted without departure times`(){
+    fun `Test delayed travel option is not disrupted without departure times`(){
         val undisruptedTravelOption = TravelOption(null, 2, true, DisruptionStatus.ACCORDING_TO_PLAN)
         val disruptedTravelOption = TravelOption(null, 0, false, DisruptionStatus.DELAYED)
         val disruptionCheckResult = DisruptionEvaluator(context, sharedPreferences).getDisruptionCheckResultFromTravelOptions(listOf(undisruptedTravelOption, disruptedTravelOption))

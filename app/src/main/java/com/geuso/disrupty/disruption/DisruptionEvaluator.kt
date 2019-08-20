@@ -18,7 +18,6 @@ class DisruptionEvaluator(
     private val disruptedStatuses : Collection<DisruptionStatus> = setOf(
             DisruptionStatus.NOT_POSSIBLE,
             DisruptionStatus.CANCELLED,
-            DisruptionStatus.DELAYED,
             DisruptionStatus.DISRUPTION,
             DisruptionStatus.ALTERNATIVE_TRANSPORT
     )

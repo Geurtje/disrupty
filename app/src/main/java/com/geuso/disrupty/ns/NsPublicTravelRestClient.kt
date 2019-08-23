@@ -17,9 +17,10 @@ class NsPublicTravelRestClient(val context: Context) {
 
         // https://gateway.apiportal.ns.nl/public-reisinformatie/api/v2/stations
         // GET /api/v3/trips
-        private const val BASE_URL = "https://gateway.apiportal.ns.nl/public-reisinformatie/api/v2/"
+        private const val BASE_URL = "https://gateway.apiportal.ns.nl/public-reisinformatie/api/"
         private const val API_KEY_HEADER = "Ocp-Apim-Subscription-Key"
-        const val PATH_STATIONS_LIST = "stations"
+        const val PATH_STATIONS_LIST = "v2/stations"
+        const val PATH_TRIPS = "v3/trips"
     }
 
     private val client = AsyncHttpClient()
@@ -37,6 +38,17 @@ class NsPublicTravelRestClient(val context: Context) {
         val url = BASE_URL + relativeUrl
         val headers = Array(1) { BasicHeader(API_KEY_HEADER, apiKey) }
         client.get(context, url, headers, params, responseHandler)
+    }
+
+    fun paramsForTravelOptions(stationFrom : String, stationTo : String) : RequestParams {
+        val paramsMap = HashMap<String, String>()
+
+        paramsMap["fromStation"] = stationFrom
+        paramsMap["toStation"] = stationTo
+        paramsMap["previousAdvices"] = "0"
+        paramsMap["nextAdvices"] = "2"
+
+        return RequestParams(paramsMap)
     }
 
 

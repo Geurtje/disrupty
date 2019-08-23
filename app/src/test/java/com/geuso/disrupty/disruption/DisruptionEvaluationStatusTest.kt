@@ -22,6 +22,19 @@ class DisruptionEvaluationStatusTest(
         @Parameterized.Parameters
         fun errorCode() = listOf(
                 arrayOf(DisruptionStatus.UNKNOWN, false),
+
+                // Status codes from the new trips API
+                arrayOf(DisruptionStatus.CANCELLED, true),
+                arrayOf(DisruptionStatus.CHANGE_COULD_BE_POSSIBLE, false),
+                arrayOf(DisruptionStatus.ALTERNATIVE_TRANSPORT, true),
+                arrayOf(DisruptionStatus.DISRUPTION, true),
+                arrayOf(DisruptionStatus.MAINTENANCE, false),
+                arrayOf(DisruptionStatus.REPLACEMENT, false),
+                arrayOf(DisruptionStatus.ADDITIONAL, false),
+                arrayOf(DisruptionStatus.SPECIAL, false),
+                arrayOf(DisruptionStatus.NORMAL, false),
+
+                // Status codes from the deprecated trips API
                 arrayOf(DisruptionStatus.ACCORDING_TO_PLAN, false),
                 arrayOf(DisruptionStatus.CHANGED, false),
                 arrayOf(DisruptionStatus.DELAYED, false),

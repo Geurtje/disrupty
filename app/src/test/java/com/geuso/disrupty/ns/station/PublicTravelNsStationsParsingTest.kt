@@ -19,7 +19,7 @@ class PublicTravelNsStationsParsingTest {
     }
 
     @Test
-    fun `Test if NS stations xml message is parsed correctly`() {
+    fun `Test if NS stations json message is parsed correctly`() {
         val file = NsStationsParsingTest::class.java.classLoader.getResource("ns/stationslist/stations-list-v2.json").content as InputStream
         val fileContents = file.bufferedReader().use(BufferedReader::readText)
 

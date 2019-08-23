@@ -121,6 +121,10 @@ class DisruptionService(val context: Context) {
         private val subscriptionDao: SubscriptionDao = AppDatabase.getInstance(context).subscriptionDao()
         private val disruptionCheckDao: DisruptionCheckDao = AppDatabase.getInstance(context).disruptionCheckDao()
 
+        override fun getUseSynchronousMode(): Boolean {
+            return false
+        }
+
         override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
             super.onSuccess(statusCode, headers, response)
             if (response != null) {

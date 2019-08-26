@@ -3,12 +3,10 @@ package com.geuso.disrupty.ns.station
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNotEmpty
-import org.json.JSONObject
+import com.geuso.disrupty.ns.readResourceAsJsonObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.io.BufferedReader
-import java.io.InputStream
 
 @RunWith(RobolectricTestRunner::class)
 class PublicTravelNsStationsParsingTest {
@@ -20,11 +18,7 @@ class PublicTravelNsStationsParsingTest {
 
     @Test
     fun `Test if NS stations json message is parsed correctly`() {
-        val file = NsStationsParsingTest::class.java.classLoader.getResource("ns/stationslist/stations-list-v2.json").content as InputStream
-        val fileContents = file.bufferedReader().use(BufferedReader::readText)
-
-        val json = JSONObject(fileContents)
-
+        val json = readResourceAsJsonObject("ns/stationslist/stations-list-v2.json")
         val stations = NsStationsJsonParser().parseStations(json)
 
         assertThat(stations, "Stations list").isNotEmpty()

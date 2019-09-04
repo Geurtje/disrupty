@@ -16,13 +16,10 @@ import com.geuso.disrupty.disruption.DisruptionEvaluator
 import com.geuso.disrupty.disruption.model.DisruptionCheck
 import com.geuso.disrupty.ns.traveloption.TravelOption
 import com.geuso.disrupty.ns.traveloption.TravelOptionJsonParser
-import com.geuso.disrupty.ns.traveloption.TravelOptionXmlParser
 import kotlinx.android.synthetic.main.disruption_check_detail_result_view.*
 import kotlinx.android.synthetic.main.disruption_check_detail_view.*
 import org.json.JSONException
 import org.json.JSONObject
-import org.xmlpull.v1.XmlPullParserException
-import java.io.ByteArrayInputStream
 
 class DisruptionCheckDetailActivity : AppCompatActivity() {
 
@@ -131,14 +128,6 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
         val jsonTravelOptions = parseJsonObject(disruptionCheck.response)
         jsonTravelOptions?.let {
             return TravelOptionJsonParser().parseTravelOptions(jsonTravelOptions)
-        }
-
-        // Then try XML
-        try {
-            return TravelOptionXmlParser().parse(ByteArrayInputStream(disruptionCheck.response.toByteArray(Charsets.UTF_8)))
-        } catch (e: XmlPullParserException) {
-            // Don't provide a summary in case of a malformed xml response
-            Log.w(TAG, "Failed to create disruption check summary from XML response.", e)
         }
 
         return null

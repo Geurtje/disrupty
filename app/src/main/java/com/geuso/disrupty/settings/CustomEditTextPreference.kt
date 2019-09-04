@@ -22,24 +22,3 @@ class FormattedSummaryEditTextPreference : EditTextPreference {
     }
 
 }
-
-/**
- * Custom EditTextPreference that will format the preference summary message with a set message or not.
- * Used for values which shouldn't be displayed in the settings screen.
- */
-class PasswordSetEditTextPreference : EditTextPreference {
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-    constructor(context: Context) : super(context)
-
-
-    override fun getSummary(): CharSequence {
-        val summary = super.getSummary().toString()
-
-        var setStr = context.resources.getString(R.string.pref_api_pass_not_set)
-        if (text != null && text.isNotEmpty()) {
-            setStr = context.resources.getString(R.string.pref_api_pass_set)
-        }
-        return String.format(summary, setStr)
-    }
-}

@@ -14,17 +14,6 @@
             android:title="@string/pref_ns_api_key"
             android:summary="@string/pref_ns_api_key_summary" />
 
-        <com.geuso.disrupty.settings.FormattedSummaryEditTextPreference
-            android:key="api_ns_username"
-            android:title="@string/pref_api_username"
-            android:summary="@string/pref_api_username_summary" />
-
-        <com.geuso.disrupty.settings.PasswordSetEditTextPreference
-            android:key="api_ns_password"
-            android:title="@string/pref_api_password"
-            android:summary="@string/pref_api_password_summary"
-            android:inputType="textPassword" />
-
     </PreferenceCategory>
 
     <PreferenceCategory

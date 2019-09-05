@@ -88,17 +88,17 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
 
         val disruptionEvaluator = DisruptionEvaluator(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
 
-        val (isDisrupted, message, disruptionStatus, departureDelay) = disruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
+        val evaluatedDisruptionCheck = disruptionEvaluator.getDisruptionCheckResultFromTravelOptions(travelOptions)
 
-        val disruptionImage = if (isDisrupted) R.drawable.ic_subscription_status_not_ok
+        val disruptionImage = if (evaluatedDisruptionCheck.isDisrupted) R.drawable.ic_subscription_status_not_ok
             else R.drawable.ic_subscription_status_ok
 
         dc_result_status_icon.setImageDrawable(ContextCompat.getDrawable(baseContext, disruptionImage))
 
-        setTextOrGreyedOutDefault(baseContext, dc_result_message, message, R.string.disruption_check_result_message, R.string.disruption_check_default_result_message)
-        setTextOrGreyedOutDefault(baseContext, dc_result_departure_delay, departureDelay, R.string.disruption_check_result_delay, R.string.disruption_check_default_result_delay)
+        setTextOrGreyedOutDefault(baseContext, dc_result_message, evaluatedDisruptionCheck.message, R.string.disruption_check_result_message, R.string.disruption_check_default_result_message)
+        setTextOrGreyedOutDefault(baseContext, dc_result_departure_delay, evaluatedDisruptionCheck.departureDelay, R.string.disruption_check_result_delay, R.string.disruption_check_default_result_delay)
 
-        dc_result_travel_option_status.text = disruptionStatus.key
+        dc_result_travel_option_status.text = evaluatedDisruptionCheck.disruptionStatus.key
     }
 
     /**

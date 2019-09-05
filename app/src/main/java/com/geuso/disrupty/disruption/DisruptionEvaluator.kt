@@ -49,14 +49,10 @@ class DisruptionEvaluator(
                     || hasSevereNotification(travelOption)
                     || hasSignificantDepartureDelay(travelOption)
             ) {
-                return DisruptionCheckResult(true,
-                        travelOption.notification?.text,
-                        travelOption.disruptionStatus,
-                        travelOption.departureDelay
-                )
+                return DisruptionCheckResult(true, travelOption)
             }
         }
-        return DisruptionCheckResult(false, null, DisruptionStatus.ACCORDING_TO_PLAN)
+        return DisruptionCheckResult(false, null)
     }
 
     private fun hasSevereNotification(travelOption: TravelOption) : Boolean =
@@ -81,15 +77,30 @@ class DisruptionEvaluator(
      * DisruptionCheckResult groups facts related to the result of a disruption check.
      *
      * @param isDisrupted A Boolean indicating if the subscription is considered disrupted or not.
-     * @param message A message from the TravelOption giving details about why this route is disrupted.
-     *          Only present if a disruption is found.
-     * @param disruptionStatus The DisruptionStatus that was used to determine if there is a disruption or not.
+     * @param travelOption The TravelOption that the DisruptionCheck is based on. Not present if
+     *          no disruption was found,
      */
     data class DisruptionCheckResult(
             val isDisrupted: Boolean,
-            val message: String?,
-            val disruptionStatus: DisruptionStatus,
-            val departureDelay: String? = null
-    )
+            val travelOption: TravelOption?
+    ) {
+
+        val disruptionStatus: DisruptionStatus
+        val message: String?
+        val departureDelay: String?
+
+        init {
+            if (travelOption != null) {
+                disruptionStatus = travelOption.disruptionStatus
+                message = travelOption.notification?.text
+                departureDelay = travelOption.departureDelay
+            }
+            else {
+                disruptionStatus = DisruptionStatus.ACCORDING_TO_PLAN
+                message = null
+                departureDelay = null
+            }
+        }
+    }
 
 }

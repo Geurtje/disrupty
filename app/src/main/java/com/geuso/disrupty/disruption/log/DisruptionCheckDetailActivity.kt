@@ -99,6 +99,9 @@ class DisruptionCheckDetailActivity : AppCompatActivity() {
         setTextOrGreyedOutDefault(baseContext, dc_result_departure_delay, evaluatedDisruptionCheck.departureDelay, R.string.disruption_check_result_delay, R.string.disruption_check_default_result_delay)
 
         dc_result_travel_option_status.text = evaluatedDisruptionCheck.disruptionStatus.key
+        if (evaluatedDisruptionCheck.travelOption?.plannedDepartureTime != null) {
+            dc_result_travel_option_planned_departure_time.text = InstantConverter().format(evaluatedDisruptionCheck.travelOption.plannedDepartureTime)
+        }
     }
 
     /**
